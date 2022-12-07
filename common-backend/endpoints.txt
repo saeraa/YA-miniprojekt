@@ -1,0 +1,26 @@
+    @CrossOrigin
+    @GetMapping("/products")
+    public List<Product> getAllProducts(){
+        return productService.getAllProducts();
+    }
+
+    @CrossOrigin
+    @GetMapping("/productsdetailed")
+    public List<Product> getAllProductsDetailed(){
+        return productService.getAllProductsDetailed();
+    }
+
+
+    @CrossOrigin
+    @GetMapping("/orders")
+    public List<Order> getAllOrders(){
+        return orderService.getAllorders();
+    }
+
+    @CrossOrigin
+    @GetMapping("/deleteOrder/{orderId}")
+    public int delete(@PathVariable Long orderId) { return orderService.deleteOrder(orderId); }
+
+    @CrossOrigin
+    @GetMapping("/addOrder/{customerId}/{productId}/")
+    public int add(@PathVariable String customerId, @PathVariable Long productId) { return orderService.addOrder(customerId, productId); }

@@ -1,0 +1,36 @@
+package com.example.foreigncurrency.model;
+
+import java.util.List;
+
+public class Price {
+	private double exchangeRate;
+	private String currency;
+	private double euroPrice;
+
+	public Price (double euroPrice) {
+	}
+
+	public double getExchangeRate () {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate (double exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
+
+	public String getCurrency () {
+		return currency;
+	}
+
+	public void setCurrency (String currency) {
+		this.currency = currency;
+	}
+
+	public double getEuroPrice () {
+		return euroPrice;
+	}
+
+	public void setEuroPrice (double euroPrice) {
+		this.euroPrice = euroPrice;
+	}
+}
