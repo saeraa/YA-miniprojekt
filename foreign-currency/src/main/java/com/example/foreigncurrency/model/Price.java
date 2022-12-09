@@ -7,7 +7,8 @@ public class Price {
 	private String currency;
 	private double euroPrice;
 
-	public Price (double euroPrice) {
+	public double calculatedPrice() {
+		return this.euroPrice / this.exchangeRate;
 	}
 
 	public double getExchangeRate () {

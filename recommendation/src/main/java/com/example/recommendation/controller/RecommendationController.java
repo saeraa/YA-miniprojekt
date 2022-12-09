@@ -5,7 +5,6 @@ import com.example.recommendation.repository.RecommendationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -21,8 +20,8 @@ public class RecommendationController {
 	}
 
 	@GetMapping("/recommendations/{productId}")
-	public Recommendation getRecommendation(@PathVariable long productId) {
-		return recommendationRepository.findById(productId).get();
+	public List<Recommendation> getRecommendation(@PathVariable int productId) {
+		return recommendationRepository.findAllByProductId(productId);
 	}
 
 	@PostMapping("/recommendation")
@@ -31,9 +30,12 @@ public class RecommendationController {
 	}
 
 	@DeleteMapping("/recommendation/{productId}")
-	public String removeRecommendations(@PathVariable Long productId) {
-		List<Recommendation> deletedEntries =
-				recommendationRepository.findAllById(Collections.singleton(productId));
-		return "Recommendations for: " + productId + " were deleted.";
+	public String removeRecommendations(@PathVariable int productId) {
+			var removedOrNot = recommendationRepository.deleteAllByProductId(productId);
+			if (removedOrNot > 0) {
+				return "Recommendations for productId: " + productId + " were deleted.";
+			} else {
+				return "Something went wrong. Did you enter the correct productId?";
+			}
 	}
 }

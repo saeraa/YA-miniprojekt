@@ -14,16 +14,16 @@ public class CurrencyController {
 	@Autowired
 	CurrencyService currencyService;
 
-	@GetMapping("/price")
-	public Price getPrice()  {
-		currencyService.getPrice();
-
-		return null;
-	}
+//	@GetMapping("/price")
+//	public String getPrice() {
+//		return currencyService.getPrice();
+//	}
 
 
 	@PostMapping("/price")
-	private ResponseEntity<String> getPrice(@RequestBody Object price) {
+	private ResponseEntity<String> getPrice(@RequestBody Price price) {
+
+
 // input: A price object contains europrice and currency.
 
 	// https://sdw-wsrest.ecb.europa.eu/service/data/EXR/M.USD.EUR.SP00.A?includeHistory=false&lastNObservations=1
@@ -34,7 +34,7 @@ public class CurrencyController {
 		//The currency is provided as price object as a request data. The endpoint returns a String
 		//representation of the resulting price.
 
-		return new ResponseEntity<String>("Hello", HttpStatus.OK);
+		return new ResponseEntity<String>(currencyService.getPrice(price), HttpStatus.OK);
 
 	}
 }
