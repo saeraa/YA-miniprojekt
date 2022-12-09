@@ -3,6 +3,8 @@ package com.example.customersupport.controller;
 import com.example.customersupport.model.Task;
 import com.example.customersupport.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/tasks/{customerId}")
-	public List<Task> getTasksForCustomer(@PathVariable int customerId) {
+	public ResponseEntity<?> getTasksForCustomer(@PathVariable int customerId) {
 		var allOfThem = taskRepository.findAll();
 		var result = new ArrayList<Task>();
 		for (Task task: allOfThem) {
@@ -30,7 +32,11 @@ public class TaskController {
 				result.add(task);
 			}
 		}
-		return result;
+		if (result.size() < 1) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tasks not found.") ;
+		} else {
+			return ResponseEntity.ok().body(result);
+		}
 	}
 
 	@PostMapping("/task")
@@ -44,14 +50,15 @@ public class TaskController {
 		taskToUpdate.setComment(task.getComment());
 		taskToUpdate.setPriority(task.getPriority());
 		taskToUpdate.setStatusType(task.getStatusType());
+		taskRepository.save(taskToUpdate);
 
 		return taskToUpdate;
 	}
 
 	@DeleteMapping("/tasks/{customerId}")
-	public String removeTask(@PathVariable int customerId) {
-		taskRepository.deleteById(customerId); // assuming delete by id won't work like this
-		return "Task successfully deleted";
+	public ResponseEntity<String> removeTask(@PathVariable int customerId) {
+		taskRepository.deleteTaskByCustomerId(customerId);
+		return ResponseEntity.ok().body("Task from customer " + customerId + " successfully deleted.");
 	}
 
 }

@@ -1,16 +1,21 @@
 package com.example.customersupport.model;
 
-import com.example.customersupport.Priority;
-import com.example.customersupport.StatusType;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private Integer id;
 
 
 	@Column(name = "CUSTOMER")
@@ -27,44 +32,17 @@ public class Task {
 	@Column(name = "STATUS")
 	private StatusType statusType;
 
-
-	public int getCustomerId () {
-		return customerId;
+	@Override
+	public boolean equals (Object o) {
+		if (this == o) return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+			return false;
+		Task task = (Task) o;
+		return id != null && Objects.equals(id, task.id);
 	}
 
-	public void setCustomerId (int customerId) {
-		this.customerId = customerId;
-	}
-
-	public Priority getPriority () {
-		return priority;
-	}
-
-	public void setPriority (Priority priority) {
-		this.priority = priority;
-	}
-
-	public String getComment () {
-		return comment;
-	}
-
-	public void setComment (String comment) {
-		this.comment = comment;
-	}
-
-	public StatusType getStatusType () {
-		return statusType;
-	}
-
-	public void setStatusType (StatusType statusType) {
-		this.statusType = statusType;
-	}
-
-	public Long getId () {
-		return id;
-	}
-
-	public void setId (Long id) {
-		this.id = id;
+	@Override
+	public int hashCode () {
+		return getClass().hashCode();
 	}
 }

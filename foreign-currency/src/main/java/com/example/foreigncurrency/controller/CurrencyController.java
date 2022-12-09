@@ -1,9 +1,7 @@
 package com.example.foreigncurrency.controller;
 
 import com.example.foreigncurrency.model.Price;
-import com.example.foreigncurrency.service.XMLService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.foreigncurrency.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,13 @@ import org.springframework.web.bind.annotation.*;
 public class CurrencyController {
 
 	@Autowired
-	XMLService xmlService;
-
-	private static Logger logger = LoggerFactory.getLogger(CurrencyController.class);
+	CurrencyService currencyService;
 
 	@GetMapping("/price")
-	public Price getPrice() {
-		Price price = xmlService.parsePrice();
-		return price;
+	public Price getPrice()  {
+		currencyService.getPrice();
+
+		return null;
 	}
 
 
