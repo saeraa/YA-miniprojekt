@@ -27,7 +27,7 @@ public class CurrencyService {
 		price.setExchangeRate(Double.parseDouble(exchangeRate));
 		var calculatedPrice = price.calculatedPrice();
 
-		return "The results are: " + calculatedPrice;
+		return calculatedPrice + "";
 
 
 	}
