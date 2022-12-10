@@ -3,10 +3,7 @@ package com.example.commonbackend.controller;
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,9 +24,9 @@ public class OrderController {
 		return "Order deleted.";
 	}
 
-	@GetMapping("/addOrder/{customerId}/{productId}")
+	@PostMapping ("/addOrder/{customerId}/{productId}")
 	public Order addOrder(@PathVariable int customerId, @PathVariable int productId) {
-		return null;
+		return orderRepository.save(new Order(customerId, productId));
 	}
 
 	//• Get all orders

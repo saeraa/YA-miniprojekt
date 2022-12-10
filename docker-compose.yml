@@ -1,9 +1,9 @@
 version: "3.0"
 services:
-  common-api:
-    hostname: common-api
-    container_name: common-api
-    build: ./common-api/
+  common-backend:
+    hostname: common-backend
+    container_name: common-backend
+    build: ./common-backend/
     # image: registry.gitlab.com/magnuslarssonxlent/productapi:be2626136090c56b59593bc52aa5b4e9e58721b5
     command: tail -F anything
     privileged: true
@@ -16,18 +16,18 @@ services:
       labnet.io:
         ipv4_address: 10.10.0.2
 
-  recommendation-service:
-    hostname: recommendation-service
-    container_name: recommendation-service
-    build: ./recommendation-service/
-    command: tail -F anything
-    privileged: true
-    depends_on: # used in each service that depends on the database
-      business-database:
-        condition: service_healthy
-    networks:
-      labnet.io:
-        ipv4_address: 10.10.0.3
+  # recommendation-service:
+  #   hostname: recommendation-service
+  #   container_name: recommendation-service
+  #   build: ./recommendation-service/
+  #   command: tail -F anything
+  #   privileged: true
+  #   depends_on: # used in each service that depends on the database
+  #     business-database:
+  #       condition: service_healthy
+  #   networks:
+  #     labnet.io:
+  #       ipv4_address: 10.10.0.3
 
   business-database:
     hostname: business-database
@@ -44,28 +44,28 @@ services:
       labnet.io:
         ipv4_address: 10.10.0.4
 
-  customer-support:
-    hostname: customer-support
-    container_name: customer-support
-    build: ./customer-support/
-    command: tail -F anything
-    privileged: true
-    depends_on: # used in each service that depends on the database
-      business-database:
-        condition: service_healthy
-    networks:
-      labnet.io:
-        ipv4_address: 10.10.0.5
+  # customer-support:
+  #   hostname: customer-support
+  #   container_name: customer-support
+  #   build: ./customer-support/
+  #   command: tail -F anything
+  #   privileged: true
+  #   depends_on: # used in each service that depends on the database
+  #     business-database:
+  #       condition: service_healthy
+  #   networks:
+  #     labnet.io:
+  #       ipv4_address: 10.10.0.5
 
-  foreign-currency:
-    hostname: foreign-currency
-    container_name: foreign-currency
-    build: ./foreign-currency/
-    command: tail -F anything
-    privileged: true
-    networks:
-      labnet.io:
-        ipv4_address: 10.10.0.6
+  # foreign-currency:
+  #   hostname: foreign-currency
+  #   container_name: foreign-currency
+  #   build: ./foreign-currency/
+  #   command: tail -F anything
+  #   privileged: true
+  #   networks:
+  #     labnet.io:
+  #       ipv4_address: 10.10.0.6
 
 networks:
   labnet.io:

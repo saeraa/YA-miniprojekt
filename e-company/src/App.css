@@ -1,0 +1,100 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header {
+  background-color: #282c34;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rTable {
+  display: table;
+  width: 100%;
+}
+.rTableRow {
+  display: table-row;
+}
+.rTableHeading {
+  display: table-header-group;
+  background-color: #ddd;
+}
+.rTableCell {
+  display: table-cell;
+  padding: 3px 10px;
+  border: 1px solid #111111;
+  background-color: #999;
+  text-align: left;
+}
+.rTableHead {
+  display: table-cell;
+  padding: 3px 10px;
+  border: 1px solid #999999;
+  background-color: #555555;
+}
+.rTableHeading {
+  display: table-header-group;
+  background-color: #ddd;
+  font-weight: bold;
+}
+.rTableFoot {
+  display: table-footer-group;
+  font-weight: bold;
+  background-color: #ddd;
+}
+.rTableBody {
+  display: table-row-group;
+}
+
+#search-div{
+  margin: 10px;
+}
+
+#search-div > label {
+  margin-right: 10px;
+}
+
+.clickable {
+  text-decoration: underline;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.chart {
+  text-align: left;
+  background-color: darkgray;
+  width: 400px;
+  padding: 10px;
+}

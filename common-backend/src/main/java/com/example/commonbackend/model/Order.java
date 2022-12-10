@@ -1,20 +1,22 @@
 package com.example.commonbackend.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Long id;
+	private int id;
 
-	public Long getId () {
-		return id;
-	}
-
-	public void setId (Long id) {
-		this.id = id;
+	public Order (int customerId, int productId) {
 	}
 }
 /*

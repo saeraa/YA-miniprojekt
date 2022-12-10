@@ -14,9 +14,6 @@ import java.util.List;
 public class ProductController {
 
 	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
 	private ProductService productService;
 
 	@GetMapping("/products")

@@ -1,6 +1,9 @@
 package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.SupportIssue;
+import com.example.commonbackend.service.SupportIssueService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,9 +11,24 @@ import java.util.List;
 @RestController
 public class SupportIssueController {
 
+	@Autowired
+	SupportIssueService supportIssueService;
+
+	// @RequestMapping("/api/v1")
+	// @DeleteMapping("/tasks/{customerId}") (@PathVariable int customerId)
+	// @PutMapping("/task") (@RequestBody Task task)
+	// @PostMapping("/task") (@RequestBody Task task)
+	// @GetMapping("/tasks/{customerId}")  (@PathVariable int customerId)
+	// @GetMapping("/tasks")
+
+	@GetMapping("/supportissues")
+	public List<SupportIssue> getAllIssues() {
+		return supportIssueService.getAllIssues();
+	}
+
 	@GetMapping("/supportissues/{customerId}")
 	public List<SupportIssue> getIssuesForCustomer(@PathVariable int customerId) {
-		return null;
+		return supportIssueService.getIssuesForCustomer(customerId);
 	}
 
 	@PostMapping("/supportissue/{customerId}")
@@ -18,10 +36,17 @@ public class SupportIssueController {
 		return null;
 	}
 
-	@GetMapping("/supportissues")
-	public List<SupportIssue> getAllIssues() {
-		return null;
+	@PutMapping("/supportissue")
+	public SupportIssue updateIssue(@RequestBody SupportIssue issue) {
+		return supportIssueService.updateIssue(issue);
 	}
+
+	@DeleteMapping("/supportissue/{customerId}")
+	public ResponseEntity<String> removeIssue(@PathVariable int customerId) {
+		return supportIssueService.removeIssue(customerId);
+	}
+
+
 
 	/*
 • Get all support tickets for customer

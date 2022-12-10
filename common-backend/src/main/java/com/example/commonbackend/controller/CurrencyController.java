@@ -1,18 +1,23 @@
 package com.example.commonbackend.controller;
 
+import com.example.commonbackend.model.Price;
+import com.example.commonbackend.service.CurrencyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CurrencyController {
 
-	@PostMapping("/convertCurrency/{currency}")
-	public String getPrice(@PathVariable String currency) {
-		return "HO HO HO";
-	}
+	@Autowired
+	CurrencyService currencyService;
 
-	// • Get price for cart in other currency
-	//POST /convertCurrency/{currency}
+	@PostMapping("/convertCurrency/{currency}")
+	public ResponseEntity<String> getPrice(@PathVariable String currency,
+																				 @RequestBody Price price) {
+		return currencyService.getPrice(price);
+	}
 }

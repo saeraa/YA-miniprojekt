@@ -1,46 +1,36 @@
 package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Recommendation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.commonbackend.service.RecommendationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class RecommendationController {
 
+	@Autowired
+	RecommendationService recommendationService;
+
 	@GetMapping("/recommendations")
 	public List<Recommendation> getRecommendations() {
-		return null;
+		return recommendationService.getRecommendations();
 	}
 
 	@PostMapping("/recommendation")
 	public Recommendation addRecommendation(@RequestBody Recommendation recommendation) {
-		return null;
+		return recommendationService.addRecommendation(recommendation);
 	}
 
-	//
-//	Provide the list of products as a request object.
-//• Get all recommendations
-//	GET /recommendations
-//	Returns an array of recommendation objects
-//• Add a recommendation
-//	POST /recommendation
-//	Provide a recommendation as request object
+	@GetMapping("/recommendations/{productId}")
+	public List<Recommendation> getRecommendation(@PathVariable int productId) {
+		return recommendationService.getRecommendation(productId);
+	}
 
-	/*
-	    @PostMapping("/recommendation")
-    public void addRecommendation(@RequestBody Recommendation recommendation) {
-        WebClient client = WebClient.create("http://recommendation-service.labnet.io:8001");
-        var result = client.post()
-                .uri("/recommendation")
-                .body(Mono.just(recommendation), Recommendation.class)
-                .retrieve()
-                .bodyToMono(JsonNode.class)
-                .block();
-    }
+	@DeleteMapping("/recommendation/{productId}")
+	public String removeRecommendations(@PathVariable int productId) {
+		return recommendationService.removeRecommendation(productId);
+	}
 
-	 */
 }
