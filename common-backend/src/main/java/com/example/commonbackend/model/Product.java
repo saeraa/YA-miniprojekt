@@ -10,13 +10,42 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "products")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private int id;
+	@Column(name = "ProductID", nullable = false)
+	private int productID;
+	@Column(name = "ProductName")
+	private String productName;
+	@Column(name = "CategoryID")
+	private int categoryID;
+	@Column(name = "UnitPrice", nullable = false)
+	private Double unitPrice;
+	@Column(name = "QuantityPerUnit")
+	private String quantityPerUnit;
+	@Column(name = "UnitsInStock")
+	private Integer unitsInStock;
 
 }
+
+/*     String query = "select
+ProductID,
+ProductName, CategoryID,
+QuantityPerUnit, UnitPrice,
+ UnitsInStock from products;";
+
+        if(detailed){
+            query = "select
+            ProductID,
+            ProductName, SupplierID,
+            CategoryID, QuantityPerUnit,
+            UnitPrice, UnitsInStock,
+            UnitsOnOrder, ReorderLevel,
+            Discontinued
+            from products;";
+        }
+        */
 
 /*
 CREATE TABLE `products` (

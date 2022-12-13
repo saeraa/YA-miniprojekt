@@ -14,13 +14,6 @@ public class SupportIssueController {
 	@Autowired
 	SupportIssueService supportIssueService;
 
-	// @RequestMapping("/api/v1")
-	// @DeleteMapping("/tasks/{customerId}") (@PathVariable int customerId)
-	// @PutMapping("/task") (@RequestBody Task task)
-	// @PostMapping("/task") (@RequestBody Task task)
-	// @GetMapping("/tasks/{customerId}")  (@PathVariable int customerId)
-	// @GetMapping("/tasks")
-
 	@GetMapping("/supportissues")
 	public List<SupportIssue> getAllIssues() {
 		return supportIssueService.getAllIssues();

@@ -16,6 +16,17 @@ services:
       labnet.io:
         ipv4_address: 10.10.0.2
 
+  e-shop:
+    hostname: e-shop
+    container_name: e-shop
+    build: ./frontend-products/
+    privileged: true
+    ports:
+      - 81:80
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.20
+
   # recommendation-service:
   #   hostname: recommendation-service
   #   container_name: recommendation-service
@@ -34,15 +45,15 @@ services:
     container_name: business-database
     build: ./business-database/
     privileged: true
-    # volumes:
-    #  - ./data:/var/lib/mysql
+    volumes:
+      - ./data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
     networks:
       labnet.io:
-        ipv4_address: 10.10.0.4
+        ipv4_address: 10.10.0.10
 
   # customer-support:
   #   hostname: customer-support

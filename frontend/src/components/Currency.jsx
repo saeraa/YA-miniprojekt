@@ -1,4 +1,5 @@
 import React from "react";
+import settings from "../properties/settings.json";
 
 function Currency(props) {
 	const [formData, setFormData] = React.useState({});
@@ -8,15 +9,17 @@ function Currency(props) {
 	});
 
 	async function callAPI() {
-		const baseURL = "http://localhost:8888/convertCurrency/";
+		const baseURL = settings.base_url + "/convertCurrency/";
 		const apiResponse = await fetch(baseURL + formData.currency, {
 			headers: {
 				"Content-Type": "application/json"
 			},
 			method: "POST",
 			body: JSON.stringify(formData)
+			// sends an object { euroPrice: x.yy, currency: xyz }
 		});
 		const result = await apiResponse.text();
+		// if you receive json data as a response, change .text() in the above line to .json()
 		return result;
 	}
 
@@ -65,7 +68,7 @@ function Currency(props) {
 					id="currency"
 				/>
 
-				<input type="submit" />
+				<input type="submit" value="Calculate" />
 			</form>
 
 			{calculatedPrice.price && (
