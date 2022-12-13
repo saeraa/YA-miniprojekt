@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "products")
 public class ProductDetailed extends Product {
-
 	@Column(name = "Discontinued")
 	private Boolean discontinued;
 	@Column(name = "ReorderLevel", nullable = false)
