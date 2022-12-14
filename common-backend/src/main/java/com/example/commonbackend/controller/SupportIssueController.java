@@ -2,7 +2,9 @@ package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.SupportIssue;
 import com.example.commonbackend.service.SupportIssueService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +28,13 @@ public class SupportIssueController {
 
 	@PostMapping("/supportissue/{customerId}")
 	public SupportIssue addIssue(@PathVariable int customerId, @RequestBody SupportIssue issue) {
-		return null;
+		return supportIssueService.addIssue(issue);
 	}
 
 	@PutMapping("/supportissue")
-	public SupportIssue updateIssue(@RequestBody SupportIssue issue) {
-		return supportIssueService.updateIssue(issue);
+	public ResponseEntity<?> updateIssue(@RequestBody SupportIssue issue) {
+		return new ResponseEntity<>(supportIssueService.updateIssue(issue), HttpStatus.OK);
+
 	}
 
 	@DeleteMapping("/supportissue/{customerId}")

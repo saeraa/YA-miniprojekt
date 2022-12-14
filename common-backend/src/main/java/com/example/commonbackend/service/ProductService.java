@@ -18,7 +18,8 @@ public class ProductService {
 		JdbcTemplate jdbcTemplate;
 
     public List<Product> getAllProducts(){
-      String query = "select ProductID, ProductName, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock from products;";
+      String query = "select ProductID, ProductName, CategoryID, QuantityPerUnit, UnitPrice, " +
+                         "UnitsInStock, Discontinued from products;";
       List<Product> products = new ArrayList<>();
 
       List<Map<String,Object>> rows = jdbcTemplate.queryForList(query);
@@ -30,6 +31,7 @@ public class ProductService {
         product.setQuantityPerUnit((String)row.get("QuantityPerUnit"));
         product.setUnitPrice(((BigDecimal)row.get("UnitPrice")).doubleValue());
         product.setUnitsInStock((Integer)row.get("UnitsInStock"));
+
         products.add(product);
       }
       return products;

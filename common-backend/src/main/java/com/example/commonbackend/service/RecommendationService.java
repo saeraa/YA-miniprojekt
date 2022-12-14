@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class RecommendationService {
 
-	String baseURL = "http://localhost:8181/api/v1/";
+	String baseURL = "http://localhost:8181/api/v1";
 	WebClient client = WebClient.create(baseURL);
 
 	public List<Recommendation> getRecommendations() {

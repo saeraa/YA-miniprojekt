@@ -11,7 +11,4 @@ public class Price {
 	private double exchangeRate;
 	private String currency;
 	private double euroPrice;
-
-	public Price (String currency, double euroPrice) {
-	}
 }

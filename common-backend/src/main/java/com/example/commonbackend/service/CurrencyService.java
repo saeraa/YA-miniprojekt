@@ -9,13 +9,13 @@ import reactor.core.publisher.Mono;
 @Service
 public class CurrencyService {
 
-	String baseURL = "http://localhost:8383";
+	String baseURL = "http://localhost:8383/api/v1";
 
 	public ResponseEntity<String> getPrice(Price price) {
 		WebClient client = WebClient.create(baseURL);
 		var results = client
 											.post()
-											.uri("api/v1/price")
+											.uri("/price")
 											.body(Mono.just(price), Price.class)
 											.retrieve()
 											.bodyToMono(String.class)

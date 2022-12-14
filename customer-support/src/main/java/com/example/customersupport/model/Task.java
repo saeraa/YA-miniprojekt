@@ -1,10 +1,8 @@
 package com.example.customersupport.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -16,7 +14,6 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id", nullable = false)
 	private Integer id;
-
 
 	@Column(name = "CUSTOMER")
 	private int customerId;
@@ -31,18 +28,4 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	private StatusType statusType;
-
-	@Override
-	public boolean equals (Object o) {
-		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
-			return false;
-		Task task = (Task) o;
-		return id != null && Objects.equals(id, task.id);
-	}
-
-	@Override
-	public int hashCode () {
-		return getClass().hashCode();
-	}
 }

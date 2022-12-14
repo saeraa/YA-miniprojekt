@@ -1,8 +1,13 @@
 package com.example.recommendation.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 public class Recommendation {
 
 	@Id
@@ -20,44 +25,4 @@ public class Recommendation {
 
 	@Column(name = "CREATED_BY")
 	private String email;
-
-	public long getId () {
-		return id;
-	}
-
-	public void setId (int id) {
-		this.id = id;
-	}
-
-	public int getRating () {
-		return rating;
-	}
-
-	public void setRating (int rating) {
-		this.rating = rating;
-	}
-
-	public String getComment () {
-		return comment;
-	}
-
-	public void setComment (String comment) {
-		this.comment = comment;
-	}
-
-	public int getProductId () {
-		return productId;
-	}
-
-	public void setProductId (int productId) {
-		this.productId = productId;
-	}
-
-	public String getEmail () {
-		return email;
-	}
-
-	public void setEmail (String email) {
-		this.email = email;
-	}
 }
