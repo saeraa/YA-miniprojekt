@@ -29,7 +29,7 @@ public class OrderController {
 //	}
 
 	@GetMapping("/order/{orderID}")
-	public List<OrderRow> getOrderBlah (@PathVariable int orderID) {
+	public List<OrderRow> getOrderRows (@PathVariable int orderID) {
 		return orderService.getOrderRows(orderID);
 	}
 
@@ -46,7 +46,7 @@ public class OrderController {
 	}
 
 
-	// TODO: First add order detail row
+	// TODO: Implement below postmapping
 	@PostMapping("/addOrder/{customerId}/{productId}")
 	public Order addOrder (@PathVariable String customerId, @PathVariable int productId) {
 		return orderService.addOrder(new Order(customerId, productId));

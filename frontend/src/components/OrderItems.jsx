@@ -1,43 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
+import OrderRow from "./OrderRow.jsx";
 
-class OrderItems extends Component {
-	createTasks = (order) => {
-		const shippedDate = new Date(order.shippedDate).toLocaleDateString();
-		const orderDate = new Date(order.orderDate).toLocaleDateString();
-		return (
-			<div className="rTableRow" key={order.id}>
-				<div className="rTableCell">{order.id}</div>
-				<div className="rTableCell">{order.customerID}</div>
-				<div className="rTableCell">
-					<p>{orderDate}</p>
-				</div>
-				<div className="rTableCell">
-					<p>{shippedDate}</p>
-				</div>
-				<div
-					className="rTableCell clickable"
-					onClick={() => this.props.editOrder(order.id)}
-				>
-					Edit
-				</div>
-				<div
-					className="rTableCell clickable"
-					onClick={() => this.props.deleteItem(order.id)}
-				>
-					Delete
-				</div>
+const OrderItem = (props) => {
+	const { showDetails, deleteItem } = props;
+	const { orderDate, shippedDate, customerID, id } = props.order;
+	const shippedDateString = new Date(shippedDate).toLocaleDateString();
+	const orderDateString = new Date(orderDate).toLocaleDateString();
+
+	const orderRows = props.orderRows.map((row, index) => {
+		return <OrderRow key={row + index} order={row} />;
+	});
+
+	return (
+		<>
+			<div className="rTableCell">{id}</div>
+			<div className="rTableCell">{customerID}</div>
+			<div className="rTableCell">{orderDateString}</div>
+			<div className="rTableCell">{shippedDateString}</div>
+			<div className="rTableCell clickable" onClick={() => showDetails(id)}>
+				Details
 			</div>
-		);
-	};
-	render() {
-		const todoEntries = this.props.entries;
-		const listItems = todoEntries.map(this.createTasks);
+			<div className="rTableCell clickable" onClick={() => deleteItem(id)}>
+				🗑️
+			</div>
 
-		return listItems;
-	}
-}
+			{props.orderRows.length > 0 && orderRows}
+		</>
+	);
+};
 
-export default OrderItems;
+export default OrderItem;
 
 /* 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import settings from "../properties/settings.json";
 
-function Currency(props) {
+const Currency = () => {
 	const [formData, setFormData] = React.useState({});
 	const [calculatedPrice, setCalculatedPrice] = React.useState({
 		price: null,
@@ -76,6 +76,6 @@ function Currency(props) {
 			)}
 		</div>
 	);
-}
+};
 
 export default Currency;

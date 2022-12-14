@@ -12,11 +12,39 @@ const SupportIssues = () => {
 	return (
 		<form onSubmit={onFormSubmit}>
 			<select onChange={onInputChange}>
-				<option value="" name=""></option>
-				<option value="" name=""></option>
-				<option value="" name=""></option>
+				<option value="LOW" name="LOW">
+					Low priority
+				</option>
+				<option value="MEDIUM" name="MEDIUM">
+					Medium priority
+				</option>
+				<option value="HIGH" name="HIGH">
+					High priority
+				</option>
 			</select>
-			<input type="text" placeholder="" onChange={onInputChange} />
+			<select>
+				<option value="pending" name="">
+					Pending
+				</option>
+				<option value="inprogress" name="">
+					In progress
+				</option>
+				<option value="done" name="">
+					Done
+				</option>
+			</select>
+			<input
+				type="text"
+				name="comment"
+				placeholder="Comment"
+				onChange={onInputChange}
+			/>
+			<input
+				type="text"
+				name="customerId"
+				placeholder="Customer ID"
+				onChange={onInputChange}
+			/>
 		</form>
 	);
 };

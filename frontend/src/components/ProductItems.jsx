@@ -1,28 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ProductItems extends Component {
-	createTasks = (product) => {
-		return (
-			<div className="rTableRow" key={product.productID}>
-				<div className="rTableCell">{product.productID}</div>
-				<div className="rTableCell">{product.productName}</div>
-				<div className="rTableCell">{product.quantityPerUnit}</div>
-				<div className="rTableCell">{product.unitPrice}</div>
-				<div
-					className="rTableCell clickable"
-					onClick={() => this.props.buyItem(product)}
-				>
-					Buy
-				</div>
+const ProductItem = (props) => {
+	const { buyItem } = props;
+	const { productID, productName, quantityPerUnit, unitPrice } = props.product;
+
+	return (
+		<>
+			<div className="rTableCell">{productID}</div>
+			<div className="rTableCell">{productName}</div>
+			<div className="rTableCell">{quantityPerUnit}</div>
+			<div className="rTableCell">{unitPrice}</div>
+			<div
+				className="rTableCell clickable"
+				onClick={() => buyItem(props.product)}
+			>
+				Buy
 			</div>
-		);
-	};
-	render() {
-		const productEntries = this.props.entries;
-		const listItems = productEntries.map(this.createTasks);
+		</>
+	);
+};
 
-		return listItems;
-	}
-}
-
-export default ProductItems;
+export default ProductItem;

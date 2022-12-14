@@ -4,7 +4,8 @@ import Currency from "./components/Currency";
 import Navigation from "./components/Navigation";
 import Orders from "./components/Orders";
 import Recommendations from "./components/Recommendations";
-import SupportIssues from "./components/SupportIssues";
+import SupportIssues from "./components/SupportIssues.jsx";
+import Welcome from "./components/Welcome";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -13,6 +14,7 @@ function App() {
 		<>
 			<Routes>
 				<Route path="/" element={<Navigation />}>
+					<Route path="/" element={<Welcome />} />
 					<Route path="products" element={<Products />} />
 					<Route path="currency" element={<Currency />} />
 					<Route path="orders" element={<Orders />} />

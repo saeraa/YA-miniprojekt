@@ -1,10 +1,10 @@
 import React from "react";
 import settings from "../properties/settings.json";
 import ProductItems from "./ProductItems";
-import ProductChart from "./ProductChart";
+import ProductCart from "./ProductCart";
 import ProductsArray from "../properties/products.js";
 
-function Products() {
+const Products = () => {
 	const [originalProducts, setOriginalProducts] = React.useState([]);
 	const [products, setProducts] = React.useState([]);
 	const [state, setState] = React.useState({
@@ -16,7 +16,7 @@ function Products() {
 	});
 	const [search, setSearch] = React.useState("");
 	const [subTotal, setSubTotal] = React.useState(0.0);
-	const [chartProducts, setChartProducts] = React.useState([]);
+	const [cartProducts, setCartProducts] = React.useState([]);
 
 	const url = settings.api_url + ":" + settings.api_port;
 
@@ -50,30 +50,39 @@ function Products() {
 		setProducts([...filteredProducts]);
 	};
 
-	const buyItem = (key) => {
-		setChartProducts((prevData) => {
-			const productIndex = chartProducts.findIndex;
+	const buyItem = (product) => {
+		setCartProducts((prevData) => {
+			const productIndex = cartProducts.findIndex;
 			if (productIndex == -1) {
-				return [...prevData, key];
+				return [...prevData, product];
 			} else {
-				return [...prevData, key];
+				return [...prevData, product];
 			}
 		});
 
 		setSubTotal((prevData) => {
-			return prevData + key.unitPrice;
+			return prevData + product.unitPrice;
 		});
 	};
+
+	const productItems = products.map((product) => {
+		return (
+			<ProductItems
+				product={product}
+				key={product.productID}
+				buyItem={buyItem}
+			/>
+		);
+	});
 
 	return (
 		<>
 			<header className="App-header">
 				<h2>Buy from Company.com NOW!</h2>
 				<div>
-					<h3>Your cart:</h3>
-					<div className="chart">
-						<ProductChart chartProducts={chartProducts} subTotal={subTotal} />
-					</div>
+					{cartProducts.length > 0 && (
+						<ProductCart cartProducts={cartProducts} subTotal={subTotal} />
+					)}
 				</div>
 				<div id="search-div">
 					<input
@@ -84,19 +93,17 @@ function Products() {
 						onChange={updateSearch}
 					/>
 				</div>
-				<div className="rTable">
-					<div className="rTableRow">
-						<div className="rTableHead">ProductID</div>
-						<div className="rTableHead">ProductName</div>
-						<div className="rTableHead">Quantity per unit</div>
-						<div className="rTableHead">Unit price</div>
-						<div className="rTableHead"></div>
-					</div>
-					<ProductItems entries={products} buyItem={buyItem} />
+				<div className="rTable-products">
+					<div className="rTableHead">ProductID</div>
+					<div className="rTableHead">ProductName</div>
+					<div className="rTableHead">Quantity per unit</div>
+					<div className="rTableHead">Unit price</div>
+					<div className="rTableHead">🧺</div>
+					{productItems.length > 0 && productItems}
 				</div>
 			</header>
 		</>
 	);
-}
+};
 
 export default Products;

@@ -45,48 +45,43 @@ main {
 }
 
 .rTable {
-  display: table;
+  /* display: table; */
   width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(6, 1fr);
 }
 
-.rTableRow {
-  display: table-row;
-}
-
-.rTableHeading {
-  display: table-header-group;
-  background-color: #ddd;
+.rTable-products {
+  /* display: table; */
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 15% 35% 25% 15% 10%;
 }
 
 .rTableCell {
-  display: table-cell;
-  padding: 3px 10px;
+  padding: 8px 10px;
   border: 1px solid #111111;
   background-color: rgb(71, 73, 68);
-  text-align: left;
+  display: grid;
+  place-content: center;
 }
 
 .rTableHead {
-  display: table-cell;
   padding: 3px 10px;
   border: 1px solid #000000;
   background-color: #233b1a;
 }
 
 .rTableHeading {
-  display: table-header-group;
   background-color: #ddd;
   font-weight: bold;
 }
 
 .rTableFoot {
-  display: table-footer-group;
   font-weight: bold;
   background-color: #ddd;
-}
-
-.rTableBody {
-  display: table-row-group;
 }
 
 #search-div {
@@ -98,18 +93,67 @@ main {
 }
 
 .clickable {
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(147, 191, 132);
 }
 
 .clickable:hover {
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.chart {
+.product-list {
   text-align: left;
-  background-color: rgb(145, 145, 145);
+  background-color: rgb(105, 105, 105);
   width: 400px;
   padding: 10px;
   margin-inline: auto;
+}
+
+.product-list-entry {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.product-list-total {
+  text-align: right;
+}
+
+.order-row {
+  grid-column: 1 / -1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: rgb(47, 48, 46);
+  border: 1px solid black;
+  padding: 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.order-row-quantity {
+  font-size: .8em;
+}
+
+.order-row-product-name {
+  padding-inline: 20px;
+  font-weight: bolder;
+  letter-spacing: .6px;
+  color: rgb(194, 255, 176);
+}
+
+.order-row-price {
+  margin-right: 15px;
 }
