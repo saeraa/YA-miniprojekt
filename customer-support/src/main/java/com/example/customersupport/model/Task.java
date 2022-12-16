@@ -28,4 +28,5 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	private StatusType statusType;
+
 }
