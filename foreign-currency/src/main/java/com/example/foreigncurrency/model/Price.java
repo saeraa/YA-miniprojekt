@@ -1,7 +1,5 @@
 package com.example.foreigncurrency.model;
 
-import java.util.List;
-
 public class Price {
 	private double exchangeRate;
 	private String currency;
