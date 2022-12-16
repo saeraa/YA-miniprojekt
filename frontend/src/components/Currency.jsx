@@ -2,6 +2,39 @@ import React from "react";
 import settings from "../properties/settings.json";
 
 const Currency = () => {
+	const currencies = [
+		"USD",
+		"JPY",
+		"BGN",
+		"CZK",
+		"DKK",
+		"GBP",
+		"HUF",
+		"PLN",
+		"RON",
+		"SEK",
+		"CHF",
+		"ISK",
+		"NOK",
+		"HRK",
+		"TRY",
+		"AUD",
+		"BRL",
+		"CAD",
+		"CNY",
+		"HKD",
+		"IDR",
+		"ILS",
+		"INR",
+		"KRW",
+		"MXN",
+		"MYR",
+		"NZD",
+		"PHP",
+		"SGD",
+		"THB",
+		"ZAR"
+	];
 	const [formData, setFormData] = React.useState({});
 	const [calculatedPrice, setCalculatedPrice] = React.useState({
 		price: null,
@@ -10,7 +43,7 @@ const Currency = () => {
 
 	async function callAPI() {
 		const baseURL = settings.base_url + "/convertCurrency/";
-		const apiResponse = await fetch(baseURL + formData.currency, {
+		const apiResponse = await fetch(baseURL, {
 			headers: {
 				"Content-Type": "application/json"
 			},
@@ -42,7 +75,7 @@ const Currency = () => {
 		setFormData((prevData) => {
 			return {
 				...prevData,
-				[name]: value
+				[name]: value.toUpperCase()
 			};
 		});
 	}
@@ -59,14 +92,20 @@ const Currency = () => {
 					id="amount"
 				/>
 
-				<label htmlFor="currency">Enter your currency</label>
-				<input
-					className="currency-currency"
-					name="currency"
+				<label htmlFor="currency">Choose currency</label>
+				<select
+					value={formData.currency}
 					onChange={onInputChange}
-					type="text"
+					className="currency-currency"
 					id="currency"
-				/>
+					name="currency"
+				>
+					{currencies.map((currency) => (
+						<option key={currency} value={currency}>
+							{currency}
+						</option>
+					))}
+				</select>
 
 				<input type="submit" value="Calculate" />
 			</form>

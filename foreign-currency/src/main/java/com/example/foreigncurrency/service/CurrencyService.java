@@ -15,19 +15,24 @@ public class CurrencyService {
 
 		String currency = price.getCurrency();
 
-		String baseurl =
-				"https://sdw-wsrest.ecb.europa.eu/service/data/EXR/M." + currency + ".EUR.SP00.A";
-		String restOfTheURL = "?lastNObservations=1&format=jsondata&detail=dataonly";
+		String baseurl = "https://sdw-wsrest.ecb.europa.eu";
 
-		WebClient client = WebClient.builder()
-													 .baseUrl(baseurl + restOfTheURL)
-													 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-													 .build();
+		WebClient client = WebClient
+											 .builder()
+											 .baseUrl(baseurl)
+											 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+											 .build();
 		String jsonString = client
-														.get()
-														.retrieve()
-														.bodyToMono(String.class)
-														.block();
+												.get()
+												.uri(uriBuilder -> uriBuilder
+													.path("/service/data/EXR/D." + currency + ".EUR.SP00.A")
+													.queryParam("lastNObservations", "1")
+													.queryParam("format", "jsondata")
+													.queryParam("detail", "dataonly")
+													.build())
+												.retrieve()
+												.bodyToMono(String.class)
+												.block();
 
 		JSONObject obj = new JSONObject(jsonString);
 		JSONArray arr = obj.getJSONArray("dataSets");
