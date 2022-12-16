@@ -6,7 +6,7 @@ public class Price {
 	private double euroPrice;
 
 	public double calculatedPrice() {
-		return this.euroPrice / this.exchangeRate;
+		return this.euroPrice * this.exchangeRate;
 	}
 
 	public double getExchangeRate () {
