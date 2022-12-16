@@ -19,7 +19,7 @@ services:
   e-shop:
     hostname: e-shop
     container_name: e-shop
-    build: ./frontend-products/
+    build: ./frontend/
     privileged: true
     ports:
       - 81:80
