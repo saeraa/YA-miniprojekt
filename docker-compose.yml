@@ -4,7 +4,6 @@ services:
     hostname: common-backend
     container_name: common-backend
     build: ./common-backend/
-    # image: registry.gitlab.com/magnuslarssonxlent/productapi:be2626136090c56b59593bc52aa5b4e9e58721b5
     command: tail -F anything
     privileged: true
     ports:
