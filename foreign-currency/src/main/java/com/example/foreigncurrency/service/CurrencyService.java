@@ -1,34 +1,52 @@
 package com.example.foreigncurrency.service;
 
 import com.example.foreigncurrency.model.Price;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class CurrencyService {
 
-	public String getPrice (Price price)  {
+	public Double getPrice (Price price) {
 
-		String baseurl = "https://sdw-wsrest.ecb.europa.eu/service/data/EXR/M.USD.EUR.SP00.A";
-		String restOfTheURL = "?lastNObservations=1&format=jsondata&detail=dataonly";
+		String currency = price.getCurrency();
 
-		WebClient client = WebClient.create(baseurl + restOfTheURL);
-		var results = client
-											.get()
-											.retrieve()
-											.bodyToMono(String.class)
-											.block();
+		String baseurl = "https://sdw-wsrest.ecb.europa.eu";
 
-		String substring = "\"observations\":{\"0\":[";
-		assert results != null;
-		int test = results.indexOf(substring);
-		String exchangeRate = results.substring(test + 21, test + 26);
+		WebClient client = WebClient
+											 .builder()
+											 .baseUrl(baseurl)
+											 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+											 .build();
+		String jsonString = client
+												.get()
+												.uri(uriBuilder -> uriBuilder
+													.path("/service/data/EXR/D." + currency + ".EUR.SP00.A")
+													.queryParam("lastNObservations", "1")
+													.queryParam("format", "jsondata")
+													.queryParam("detail", "dataonly")
+													.build())
+												.retrieve()
+												.bodyToMono(String.class)
+												.block();
 
-		price.setExchangeRate(Double.parseDouble(exchangeRate));
-		var calculatedPrice = price.calculatedPrice();
+		JSONObject obj = new JSONObject(jsonString);
+		JSONArray arr = obj.getJSONArray("dataSets");
+		JSONObject obj1 = arr.getJSONObject(0);
+		JSONObject obj2 = obj1.getJSONObject("series");
+		JSONObject obj3 = obj2.getJSONObject("0:0:0:0:0");
+		JSONObject obj4 = obj3.getJSONObject("observations");
+		JSONArray arr2 = obj4.getJSONArray("0");
+		double exchangeRate = arr2.getDouble(0);
+		price.setExchangeRate(exchangeRate);
 
-		return calculatedPrice + "";
-
-
+		return price.calculatedPrice();
 	}
 }
+
+
+

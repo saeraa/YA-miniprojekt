@@ -15,7 +15,7 @@ public class CurrencyController {
 	CurrencyService currencyService;
 
 	@PostMapping("/price")
-	private ResponseEntity<String> getPrice(@RequestBody Price price) {
-		return new ResponseEntity<String>(currencyService.getPrice(price), HttpStatus.OK);
+	private ResponseEntity<Double> getPrice(@RequestBody Price price) {
+		return new ResponseEntity<Double>(currencyService.getPrice(price), HttpStatus.OK);
 	}
 }

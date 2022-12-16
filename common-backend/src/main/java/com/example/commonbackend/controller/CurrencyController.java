@@ -12,10 +12,9 @@ public class CurrencyController {
 	@Autowired
 	CurrencyService currencyService;
 
-	@PostMapping("/convertCurrency/{currency}")
+	@PostMapping("/convertCurrency")
 	@CrossOrigin
-	public ResponseEntity<String> getPrice(@PathVariable String currency,
-																				 @RequestBody Price price) {
+	public ResponseEntity<String> getPrice(@RequestBody Price price) {
 		return currencyService.getPrice(price);
 	}
 }

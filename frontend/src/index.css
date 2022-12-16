@@ -34,7 +34,8 @@ form {
   align-items: flex-end
 }
 
-input {
+input,
+select {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
