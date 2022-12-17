@@ -3,38 +3,49 @@ package com.example.recommendation.controller;
 import com.example.recommendation.model.Recommendation;
 import com.example.recommendation.repository.RecommendationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class RecommendationController {
 
+	private final RecommendationRepository recommendationRepository;
+
 	@Autowired
-	private RecommendationRepository recommendationRepository;
+	public RecommendationController (RecommendationRepository recommendationRepository) {
+		Assert.notNull(recommendationRepository, "Recommendation Repository must not be null.");
+		this.recommendationRepository = recommendationRepository;
+	}
 
 	@GetMapping("/recommendations")
-	public List<Recommendation> getRecommendations() {
-		return recommendationRepository.findAll();
+	public ResponseEntity<?> getRecommendations() {
+		var result = recommendationRepository.findAll();
+		return result.size() == 0 ?
+				new ResponseEntity<>(null, HttpStatus.OK) :
+				new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/recommendations/{productId}")
-	public List<Recommendation> getRecommendation(@PathVariable int productId) {
-		return recommendationRepository.findAllByProductId(productId);
+	public ResponseEntity<?> getRecommendation(@PathVariable int productId) {
+		var result = recommendationRepository.findAllByProductId(productId);
+		return result.size() == 0 ?
+				new ResponseEntity<>(null, HttpStatus.OK) :
+				new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PostMapping("/recommendation")
-	public Recommendation addRecommendation(@RequestBody Recommendation recommendation) {
-		return recommendationRepository.save(recommendation);
+	public ResponseEntity<?> addRecommendation(@RequestBody Recommendation recommendation) {
+		var result = recommendationRepository.save(recommendation);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/recommendation/{productId}")
-	public String removeRecommendations(@PathVariable int productId) {
-			var removedOrNot = recommendationRepository.deleteAllByProductId(productId);
-			if (removedOrNot > 0) {
-				return "Recommendations for productId: " + productId + " were deleted.";
-			} else {
-				return "Something went wrong. Did you enter the correct productId?";
-			}
+	public ResponseEntity<?> removeRecommendations(@PathVariable int productId) {
+			var result = recommendationRepository.deleteAllByProductId(productId);
+			return result > 0 ?
+				new ResponseEntity<>(result.toString(), HttpStatus.OK) :
+				new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }
