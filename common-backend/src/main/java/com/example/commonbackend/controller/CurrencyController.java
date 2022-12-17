@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CurrencyController {
 
-	final	CurrencyService currencyService;
+	final CurrencyService currencyService;
 
 	@Autowired
 	public CurrencyController (CurrencyService currencyService) {
@@ -20,7 +20,7 @@ public class CurrencyController {
 
 	@PostMapping("/convertCurrency")
 	@CrossOrigin
-	public ResponseEntity<String> getPrice(@RequestBody Price price) {
+	public ResponseEntity<String> getPrice (@RequestBody Price price) {
 		return currencyService.getPrice(price);
 	}
 }

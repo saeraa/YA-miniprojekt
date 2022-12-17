@@ -49,15 +49,15 @@ public class OrderService {
 //		return result.size() == 0 ? null : result;
 //	}
 
-	public List<OrderRow> getOrderRows(int orderID) {
+	public List<OrderRow> getOrderRows (int orderID) {
 		String query = "SELECT `order details`.OrderID, `order details`.ProductID, `order details`" +
-											 ".Quantity, `order details`.UnitPrice, `order details`.Discount, " +
-											 "`products`" +
-											 ".ProductName FROM `order" +
-											 " details` " +
-											 "INNER JOIN " +
-											 "`products`	ON `order details`.ProductID=`products`.ProductID WHERE " +
-											 "OrderID=" + orderID + ";";
+				".Quantity, `order details`.UnitPrice, `order details`.Discount, " +
+				"`products`" +
+				".ProductName FROM `order" +
+				" details` " +
+				"INNER JOIN " +
+				"`products`	ON `order details`.ProductID=`products`.ProductID WHERE " +
+				"OrderID=" + orderID + ";";
 		var result =
 				jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(OrderRow.class));
 		return result;

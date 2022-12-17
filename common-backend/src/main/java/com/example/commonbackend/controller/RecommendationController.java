@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class RecommendationController {
 
-	final	RecommendationService recommendationService;
+	final RecommendationService recommendationService;
 
 	@Autowired
 	public RecommendationController (RecommendationService recommendationService) {
@@ -20,22 +20,22 @@ public class RecommendationController {
 	}
 
 	@GetMapping("/recommendations")
-	public List<Recommendation> getRecommendations() {
+	public List<Recommendation> getRecommendations () {
 		return recommendationService.getRecommendations();
 	}
 
 	@PostMapping("/recommendation")
-	public Recommendation addRecommendation(@RequestBody Recommendation recommendation) {
+	public Recommendation addRecommendation (@RequestBody Recommendation recommendation) {
 		return recommendationService.addRecommendation(recommendation);
 	}
 
 	@GetMapping("/recommendations/{productId}")
-	public List<Recommendation> getRecommendation(@PathVariable int productId) {
+	public List<Recommendation> getRecommendation (@PathVariable int productId) {
 		return recommendationService.getRecommendation(productId);
 	}
 
 	@DeleteMapping("/recommendation/{productId}")
-	public String removeRecommendations(@PathVariable int productId) {
+	public String removeRecommendations (@PathVariable int productId) {
 		return recommendationService.removeRecommendation(productId);
 	}
 

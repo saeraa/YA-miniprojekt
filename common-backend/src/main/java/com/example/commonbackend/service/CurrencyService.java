@@ -11,15 +11,15 @@ public class CurrencyService {
 
 	String baseURL = "http://localhost:8383/api/v1";
 
-	public ResponseEntity<String> getPrice(Price price) {
+	public ResponseEntity<String> getPrice (Price price) {
 		WebClient client = WebClient.create(baseURL);
 		var results = client
-											.post()
-											.uri("/price")
-											.body(Mono.just(price), Price.class)
-											.retrieve()
-											.bodyToMono(String.class)
-											.block();
+				.post()
+				.uri("/price")
+				.body(Mono.just(price), Price.class)
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
 
 		return ResponseEntity.ok().body(results);
 	}

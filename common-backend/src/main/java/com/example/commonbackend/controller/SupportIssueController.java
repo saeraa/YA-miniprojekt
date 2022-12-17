@@ -3,17 +3,14 @@ package com.example.commonbackend.controller;
 import com.example.commonbackend.model.SupportIssue;
 import com.example.commonbackend.service.SupportIssueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class SupportIssueController {
 
-	final	SupportIssueService supportIssueService;
+	final SupportIssueService supportIssueService;
 
 	@Autowired
 	public SupportIssueController (SupportIssueService supportIssueService) {
@@ -22,27 +19,27 @@ public class SupportIssueController {
 	}
 
 	@GetMapping("/supportissues")
-	public ResponseEntity<?> getAllIssues() {
+	public ResponseEntity<?> getAllIssues () {
 		return supportIssueService.getAllIssues();
 	}
 
 	@GetMapping("/supportissues/{customerId}")
-	public ResponseEntity<?> getIssuesForCustomer(@PathVariable int customerId) {
+	public ResponseEntity<?> getIssuesForCustomer (@PathVariable int customerId) {
 		return supportIssueService.getIssuesForCustomer(customerId);
 	}
 
 	@PostMapping("/supportissue/{customerId}")
-	public ResponseEntity<?> addIssue(@PathVariable int customerId, @RequestBody SupportIssue issue) {
+	public ResponseEntity<?> addIssue (@PathVariable int customerId, @RequestBody SupportIssue issue) {
 		return supportIssueService.addIssue(issue);
 	}
 
 	@PutMapping("/supportissue")
-	public ResponseEntity<?> updateIssue(@RequestBody SupportIssue issue) {
+	public ResponseEntity<?> updateIssue (@RequestBody SupportIssue issue) {
 		return supportIssueService.updateIssue(issue);
 	}
 
 	@DeleteMapping("/supportissue/{customerId}")
-	public ResponseEntity<?> removeIssue(@PathVariable int customerId) {
+	public ResponseEntity<?> removeIssue (@PathVariable int customerId) {
 		return supportIssueService.removeIssue(customerId);
 	}
 

@@ -24,12 +24,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/products")
-	public List<Product> getProducts() {
+	public List<Product> getProducts () {
 		return productService.getAllProducts();
 	}
 
 	@GetMapping("/productsdetailed")
-	public List<ProductDetailed> getAllProductsDetailed(){
+	public List<ProductDetailed> getAllProductsDetailed () {
 		return productService.getAllProductsDetailed();
 	}
 }
