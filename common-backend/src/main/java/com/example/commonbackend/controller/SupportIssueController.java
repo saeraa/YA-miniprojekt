@@ -5,6 +5,7 @@ import com.example.commonbackend.service.SupportIssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,32 +13,36 @@ import java.util.List;
 @RestController
 public class SupportIssueController {
 
+	final	SupportIssueService supportIssueService;
+
 	@Autowired
-	SupportIssueService supportIssueService;
+	public SupportIssueController (SupportIssueService supportIssueService) {
+		Assert.notNull(supportIssueService, "Support Issue Service may not be null.");
+		this.supportIssueService = supportIssueService;
+	}
 
 	@GetMapping("/supportissues")
-	public List<SupportIssue> getAllIssues() {
+	public ResponseEntity<?> getAllIssues() {
 		return supportIssueService.getAllIssues();
 	}
 
 	@GetMapping("/supportissues/{customerId}")
-	public List<SupportIssue> getIssuesForCustomer(@PathVariable int customerId) {
+	public ResponseEntity<?> getIssuesForCustomer(@PathVariable int customerId) {
 		return supportIssueService.getIssuesForCustomer(customerId);
 	}
 
 	@PostMapping("/supportissue/{customerId}")
-	public SupportIssue addIssue(@PathVariable int customerId, @RequestBody SupportIssue issue) {
+	public ResponseEntity<?> addIssue(@PathVariable int customerId, @RequestBody SupportIssue issue) {
 		return supportIssueService.addIssue(issue);
 	}
 
 	@PutMapping("/supportissue")
 	public ResponseEntity<?> updateIssue(@RequestBody SupportIssue issue) {
-		return new ResponseEntity<>(supportIssueService.updateIssue(issue), HttpStatus.OK);
-
+		return supportIssueService.updateIssue(issue);
 	}
 
 	@DeleteMapping("/supportissue/{customerId}")
-	public ResponseEntity<String> removeIssue(@PathVariable int customerId) {
+	public ResponseEntity<?> removeIssue(@PathVariable int customerId) {
 		return supportIssueService.removeIssue(customerId);
 	}
 
@@ -48,7 +53,7 @@ public class SupportIssueController {
 GET /supportissues/{customerId}
 Returns an array of customer support objects
 • Add a support issue
-POST /supportissue/{customerId}
+POST /supportissue/{customerId}   --> TODO: This currently not using customerId pathvariable
 Provide a customer support object as request object
 • Get all support tickets
 GET /supportissues

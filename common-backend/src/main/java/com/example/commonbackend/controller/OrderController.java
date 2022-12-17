@@ -4,6 +4,7 @@ import com.example.commonbackend.model.Order;
 import com.example.commonbackend.model.OrderRow;
 import com.example.commonbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +13,13 @@ import java.util.List;
 @CrossOrigin
 public class OrderController {
 
+	private final OrderService orderService;
+
 	@Autowired
-	private OrderService orderService;
+	public OrderController (OrderService orderService) {
+		Assert.notNull(orderService, "Order Service may not be null.");
+		this.orderService = orderService;
+	}
 
 	@GetMapping("/orders")
 	public List<Order> getOrders () {

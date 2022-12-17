@@ -15,24 +15,31 @@ public class SupportIssueService {
 
 	String baseURL = "http://localhost:8282/api/v1";
 	WebClient client = WebClient.create(baseURL);
-	public List<SupportIssue> getIssuesForCustomer (int customerId) {
+	public ResponseEntity<?> getIssuesForCustomer (int customerId) {
 		var results = client
 											.get()
 											.uri("/tasks/" + customerId)
 											.retrieve()
 											.bodyToMono(new ParameterizedTypeReference<List<SupportIssue>>() {})
 											.block();
-		return results;
+		return results == null ?
+							 new ResponseEntity<>(String.format("Sorry, no support issues found for customer " +
+																											"with ID %s.",
+									 customerId) ,
+									 HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public List<SupportIssue> getAllIssues () {
+	public ResponseEntity<?> getAllIssues () {
 		var results = client
 											.get()
 											.uri("/tasks")
 											.retrieve()
 											.bodyToMono(new ParameterizedTypeReference<List<SupportIssue>>() {})
 											.block();
-		return results;
+		return results == null ?
+							 new ResponseEntity<>("Sorry, no support issues found.", HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> updateIssue (SupportIssue issue) {
@@ -43,15 +50,14 @@ public class SupportIssueService {
 											.retrieve()
 											.bodyToMono(ResponseEntity.class)
 											.block();
-		return results;
-		/*
-		If issue is not found,
-		 throws Exception: WebClientResponseException: 418 I'm a teapot from PUT
-		 How to solve?
-		 */
+		return results == null ?
+							 new ResponseEntity<>("Something went wrong. Did you enter the correct task " +
+																				"format? \n" + issue.toString(),
+									 HttpStatus.BAD_REQUEST) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public SupportIssue addIssue (SupportIssue issue) {
+	public ResponseEntity<?> addIssue (SupportIssue issue) {
 		var results = client
 											.post()
 											.uri("/task")
@@ -59,16 +65,31 @@ public class SupportIssueService {
 											.retrieve()
 											.bodyToMono(SupportIssue.class)
 											.block();
-		return results;
+		return results == null ?
+							 new ResponseEntity<>("Something went wrong. Did you enter the correct task " +
+																				"format? \n" + issue.toString(),
+									 HttpStatus.BAD_REQUEST) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public ResponseEntity<String> removeIssue (int customerId) {
+	public ResponseEntity<?> removeIssue (int customerId) {
 		var results = client
 											.delete()
 											.uri("/tasks/" + customerId)
 											.retrieve()
 											.bodyToMono(String.class)
 											.block();
-		return new ResponseEntity<>(results, HttpStatus.OK);
+		String pluralOrNot = new String();
+		if (results != null) {
+			pluralOrNot = Integer.parseInt(results) > 1 ? " tasks" : " task";
+		}
+		return results == null || Integer.parseInt(results) == 0  ?
+							 new ResponseEntity<>(String.format("Could not find support issues for customer " +
+																											"with the ID %s",
+									 customerId), HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(String.format(
+									 "%s %s from the customer with the ID %s successfully deleted", results,
+									 pluralOrNot, customerId
+							 ), HttpStatus.OK);
 	}
 }

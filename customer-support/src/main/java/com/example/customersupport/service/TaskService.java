@@ -6,23 +6,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class TaskService {
 
+	private final TaskRepository taskRepository;
+
 	@Autowired
-	private TaskRepository taskRepository;
+	public TaskService (TaskRepository taskRepository) {
+		Assert.notNull(taskRepository, "Task Repository may not be null.");
+		this.taskRepository = taskRepository;
+	}
 
 	public ResponseEntity<?> getTasks () {
 		var result = taskRepository.findAll();
-		return result.size() == 0 ? new ResponseEntity<>("Sorry, no tasks found.",
-				HttpStatus.NOT_FOUND) :
+		return result.size() == 0 ?
+							 new ResponseEntity<>(null, HttpStatus.OK) :
 							 new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> getTasksForId (int customerId) {
 		var result = taskRepository.getTaskByCustomerId(customerId);
-		return result.size() == 0 ? new ResponseEntity<>(null, HttpStatus.NOT_FOUND) :
+		return result.size() == 0 ?
+							 new ResponseEntity<>(null, HttpStatus.OK) :
 							 new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -42,8 +49,7 @@ public class TaskService {
 		}
 
 		return allOK ? new ResponseEntity<>(task, HttpStatus.CREATED) :
-							 ResponseEntity.badRequest().body("Something went wrong, did you enter the correct " +
-																										"body? " + task);
+							 new ResponseEntity<>(null, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> updateTask (Task task) {
@@ -57,19 +63,14 @@ public class TaskService {
 			taskRepository.save(taskToUpdate);
 			return new ResponseEntity<>(taskToUpdate, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Sorry, task not found.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.OK);
 		}
 	}
 
-	public ResponseEntity<String> removeTask (int customerId) {
+	public ResponseEntity<?> removeTask (int customerId) {
 		var result = taskRepository.deleteTaskByCustomerId(customerId);
-		String pluralOrNot = result > 1 ? " tasks" : " task";
-		return result != 0 ? ResponseEntity
-														 .ok()
-														 .body(result + pluralOrNot + " from customer with the ID: " + customerId + " " +
-																			 "successfully " +
-																			 "deleted.")
-							 : new ResponseEntity<>("Sorry, no tasks found for customerID: " + customerId,
-				HttpStatus.NOT_FOUND);
+		return result != 0 ?
+							 new ResponseEntity<>(String.valueOf(result), HttpStatus.OK)
+							 : new ResponseEntity<>(null,	HttpStatus.OK);
 	}
 }

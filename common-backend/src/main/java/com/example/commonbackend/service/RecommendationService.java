@@ -14,6 +14,12 @@ public class RecommendationService {
 	String baseURL = "http://localhost:8181/api/v1";
 	WebClient client = WebClient.create(baseURL);
 
+	// TODO: Replace all with ResponseEntity
+	/* 		return results == null ?
+							 new ResponseEntity<>("Sorry, no support issues found.", HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
+	 */
+
 	public List<Recommendation> getRecommendations() {
 		var results = client
 											.get()

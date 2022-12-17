@@ -7,17 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
 @Service
 public class OrderService {
 
-	@Autowired
-	private OrderRepository orderRepository;
+	private final OrderRepository orderRepository;
+
+	private final JdbcTemplate jdbcTemplate;
+
+	// TODO: Replace all with ResponseEntity
+	/* 		return results == null ?
+							 new ResponseEntity<>("Sorry, no support issues found.", HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
+	 */
 
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate) {
+		Assert.notNull(orderRepository, "OrderRepository must not be null!");
+		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
+		this.orderRepository = orderRepository;
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 
 	public List<Order> getOrders () {

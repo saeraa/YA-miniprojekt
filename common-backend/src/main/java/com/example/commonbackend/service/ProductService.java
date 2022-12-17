@@ -5,6 +5,7 @@ import com.example.commonbackend.model.ProductDetailed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,10 +15,21 @@ import java.util.Map;
 @Service
 public class ProductService {
 
-    @Autowired
-		JdbcTemplate jdbcTemplate;
+  final JdbcTemplate jdbcTemplate;
 
-    public List<Product> getAllProducts(){
+  @Autowired
+  public ProductService (JdbcTemplate jdbcTemplate) {
+    Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
+    this.jdbcTemplate = jdbcTemplate;
+  }
+
+  // TODO: Replace all with ResponseEntity
+	/* 		return results == null ?
+							 new ResponseEntity<>("Sorry, no support issues found.", HttpStatus.NOT_FOUND) :
+							 new ResponseEntity<>(results, HttpStatus.OK);
+	 */
+
+  public List<Product> getAllProducts(){
       String query = "select ProductID, ProductName, CategoryID, QuantityPerUnit, UnitPrice, " +
                          "UnitsInStock, Discontinued from products;";
       List<Product> products = new ArrayList<>();
