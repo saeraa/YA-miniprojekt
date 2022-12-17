@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 	@Transactional
-	int deleteTaskByCustomerId(int customerId);
+	int deleteTaskByCustomerId (int customerId);
 
-	List<Task> getTaskByCustomerId(int customerId);
+	List<Task> getTaskByCustomerId (int customerId);
 
 }

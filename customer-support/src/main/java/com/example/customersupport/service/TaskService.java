@@ -22,15 +22,15 @@ public class TaskService {
 	public ResponseEntity<?> getTasks () {
 		var result = taskRepository.findAll();
 		return result.size() == 0 ?
-							 new ResponseEntity<>(null, HttpStatus.OK) :
-							 new ResponseEntity<>(result, HttpStatus.OK);
+				new ResponseEntity<>(null, HttpStatus.OK) :
+				new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> getTasksForId (int customerId) {
 		var result = taskRepository.getTaskByCustomerId(customerId);
 		return result.size() == 0 ?
-							 new ResponseEntity<>(null, HttpStatus.OK) :
-							 new ResponseEntity<>(result, HttpStatus.OK);
+				new ResponseEntity<>(null, HttpStatus.OK) :
+				new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> createTask (Task task) {
@@ -49,7 +49,7 @@ public class TaskService {
 		}
 
 		return allOK ? new ResponseEntity<>(task, HttpStatus.CREATED) :
-							 new ResponseEntity<>(null, HttpStatus.OK);
+				new ResponseEntity<>(null, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> updateTask (Task task) {
@@ -70,7 +70,7 @@ public class TaskService {
 	public ResponseEntity<?> removeTask (int customerId) {
 		var result = taskRepository.deleteTaskByCustomerId(customerId);
 		return result != 0 ?
-							 new ResponseEntity<>(String.valueOf(result), HttpStatus.OK)
-							 : new ResponseEntity<>(null,	HttpStatus.OK);
+				new ResponseEntity<>(String.valueOf(result), HttpStatus.OK)
+				: new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }
