@@ -21,7 +21,7 @@ public class Recommendation {
 	private String comment;
 
 	@Column(name = "PRODUCT_ID")
-	private int productId; // this should be connected to an existing productId in the db?
+	private int productId;
 
 	@Column(name = "CREATED_BY")
 	private String email;
