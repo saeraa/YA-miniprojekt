@@ -2,11 +2,7 @@ package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.model.OrderRow;
-import com.example.commonbackend.model.Product;
 import com.example.commonbackend.repository.OrderRepository;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

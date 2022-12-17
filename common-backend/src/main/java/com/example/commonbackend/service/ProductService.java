@@ -23,7 +23,7 @@ public class ProductService {
       List<Product> products = new ArrayList<>();
 
       List<Map<String,Object>> rows = jdbcTemplate.queryForList(query);
-      for (Map row : rows) {
+      for (Map<String,Object> row : rows) {
         Product product = new Product();
         product.setProductID((Integer)row.get("ProductID"));
         product.setProductName((String)row.get("ProductName"));
@@ -41,7 +41,7 @@ public class ProductService {
       String query = "select ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued from products;";
       List<ProductDetailed> products = new ArrayList<>();
       List<Map<String,Object>> rows = jdbcTemplate.queryForList(query);
-      for (Map row : rows) {
+      for (Map<String,Object> row : rows) {
         ProductDetailed product = new ProductDetailed();
         product.setProductID((Integer)row.get("ProductID"));
         product.setProductName((String)row.get("ProductName"));

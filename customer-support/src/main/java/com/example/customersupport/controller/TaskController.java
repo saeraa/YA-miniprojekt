@@ -1,14 +1,10 @@
 package com.example.customersupport.controller;
 
 import com.example.customersupport.model.Task;
-import com.example.customersupport.repository.TaskRepository;
 import com.example.customersupport.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class TaskController {
