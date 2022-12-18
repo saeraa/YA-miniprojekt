@@ -1,6 +1,7 @@
 package com.example.commonbackend.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,10 +9,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "order details")
 public class OrderRow {
 	@Id
-	@Column(name="OrderID")
+	@JoinColumn(table = "orders", name="OrderID")
 	private int orderID;
 	@Column(name="ProductID")
 	private int productID;
@@ -23,4 +25,7 @@ public class OrderRow {
 	private double discount;
 	@JoinColumn(table = "products", name="ProductName")
 	private String productName;
+
+	public OrderRow (int orderId, int productId) {
+	}
 }
