@@ -1,13 +1,12 @@
 package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Order;
-import com.example.commonbackend.model.OrderRow;
 import com.example.commonbackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,43 +21,31 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders")
-	public List<Order> getOrders () {
+	public ResponseEntity<?> getOrders () {
 		return orderService.getOrders();
 	}
 
-//	@GetMapping("/order/{id}")
-//	public List<OrderRow> getOrderRows(@PathVariable int id) {
-//		return orderService.getOrderRows(id);
-//	}
-
 	@GetMapping("/order/{orderID}")
-	public List<OrderRow> getOrderRows (@PathVariable int orderID) {
+	public ResponseEntity<?> getOrderRows (@PathVariable int orderID) {
 		return orderService.getOrderRows(orderID);
 	}
 
 	@PostMapping("/orders")
-	public String addOrder (@RequestBody Order order) {
-		orderService.addOrder(order);
-		return "Order successfully created.";
+	public ResponseEntity<?> addOrder (@RequestBody(required = false) Order order) {
+		return order == null ?
+				new ResponseEntity<>("That didn't work. Did you forget to include order details?",
+						HttpStatus.BAD_REQUEST) : orderService.addOrder(order);
 	}
 
 	@DeleteMapping("/deleteOrder/{orderId}")
-	public String deleteOrder (@PathVariable int orderId) {
-		orderService.deleteOrder(orderId);
-		return "Order deleted.";
+	public ResponseEntity<?> deleteOrder (@PathVariable int orderId) {
+		return orderService.deleteOrder(orderId);
 	}
 
-
-	// TODO: Implement below postmapping
 	@PostMapping("/addOrder/{customerId}/{productId}")
-	public Order addOrder (@PathVariable String customerId, @PathVariable int productId) {
-		return orderService.addOrder(new Order(customerId, productId));
+	public ResponseEntity<?> addOrderWithRows (@PathVariable String customerId,
+			@PathVariable int productId) {
+		return orderService.addOrderWithRows(customerId, productId);
 	}
 
-	//• Get all orders
-	//GET /orders
-	//• Delete an order based on orderId
-	//GET /deleteOrder/{orderId}
-	//• Add a product for a customer (create order) (Optional)
-	//GET /addOrder/{customerId}/{productId}
 }

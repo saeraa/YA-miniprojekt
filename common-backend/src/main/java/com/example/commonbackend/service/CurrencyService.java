@@ -23,5 +23,4 @@ public class CurrencyService {
 
 		return ResponseEntity.ok().body(results);
 	}
-
 }
