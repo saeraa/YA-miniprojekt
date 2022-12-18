@@ -3,7 +3,10 @@ package com.example.commonbackend.service;
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.model.OrderRow;
 import com.example.commonbackend.repository.OrderRepository;
+import com.example.commonbackend.repository.OrderRowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -16,40 +19,35 @@ public class OrderService {
 
 	private final OrderRepository orderRepository;
 
+	private final OrderRowRepository orderRowRepository;
+
 	private final JdbcTemplate jdbcTemplate;
 
-	// TODO: Replace all with ResponseEntity
-	/* 		return results == null ?
-							 new ResponseEntity<>("Sorry, no support issues found.", HttpStatus.NOT_FOUND) :
-							 new ResponseEntity<>(results, HttpStatus.OK);
-	 */
-
 	@Autowired
-	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate) {
+	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate,
+			OrderRowRepository orderRowRepository) {
 		Assert.notNull(orderRepository, "OrderRepository must not be null!");
+		Assert.notNull(orderRowRepository, "OrderRowRepository must not be null!");
 		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
 		this.orderRepository = orderRepository;
+		this.orderRowRepository = orderRowRepository;
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
 
-	public List<Order> getOrders () {
-		return orderRepository.findAll();
+	public ResponseEntity<?> getOrders () {
+		var results = orderRepository.findAll();
+		return results.size() == 0 ?
+				new ResponseEntity<>("Sorry, no orders found.", HttpStatus.NOT_FOUND) :
+				new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public Order addOrder (Order order) {
-		return orderRepository.save(order);
+	public ResponseEntity<?> addOrder (Order order) {
+		var results = orderRepository.save(order);
+		return new ResponseEntity<>(results, HttpStatus.CREATED);
 	}
 
-//	public List<OrderRow> getOrderRows(int orderID) {
-//		var result =
-//				jdbcTemplate.query("select * from `order details` where OrderID=" + orderID + ";",
-//						BeanPropertyRowMapper.newInstance(OrderRow.class));
-//
-//		return result.size() == 0 ? null : result;
-//	}
-
-	public List<OrderRow> getOrderRows (int orderID) {
+	public ResponseEntity<?> getOrderRows (int orderID) {
 		String query = "SELECT `order details`.OrderID, `order details`.ProductID, `order details`" +
 				".Quantity, `order details`.UnitPrice, `order details`.Discount, " +
 				"`products`" +
@@ -58,15 +56,50 @@ public class OrderService {
 				"INNER JOIN " +
 				"`products`	ON `order details`.ProductID=`products`.ProductID WHERE " +
 				"OrderID=" + orderID + ";";
-		var result =
+		var results =
 				jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(OrderRow.class));
-		return result;
+		return results.size() == 0 ?
+				new ResponseEntity<>(String.format("Order rows not found for ID: %s.", orderID),
+						HttpStatus.NOT_FOUND) :
+				new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public void deleteOrder (int orderId) {
-		var result = jdbcTemplate.update("delete from `order details` where OrderID='" + orderId + "';");
-		System.out.println(result);
+	public ResponseEntity<?> deleteOrder (int orderID) {
+		var order = orderRepository.findById(orderID);
+		if (order.isPresent()) {
+			var result = jdbcTemplate
+					.update("delete from `order details` where OrderID='" + orderID + "';");
+			orderRepository.deleteById(orderID);
+			return new ResponseEntity<>(String.format("Order with the ID: %s successfully deleted. %s " +
+					"order row(s) deleted.", orderID, result),
+					HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(String.format("Order not found for ID: %s.", orderID),
+					HttpStatus.NOT_FOUND);
+		}
+	}
 
-		orderRepository.deleteById(orderId);
+	public ResponseEntity<?> addOrderWithRows (String customerId, int productId) {
+		String customerQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.customers t " +
+						" WHERE CustomerID='%s');", customerId);
+		Boolean customer = jdbcTemplate.queryForObject(customerQuery, Boolean.class);
+		String productQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.products t " +
+		"WHERE ProductID='%s');", productId);
+		Boolean product = jdbcTemplate.queryForObject(productQuery, Boolean.class);
+		if (Boolean.FALSE.equals(customer)) {
+			return new ResponseEntity<>(String.format("Customer with the ID: %s not found.", customerId),
+					HttpStatus.NOT_FOUND);
+			} else if (Boolean.FALSE.equals(product)) {
+			return new ResponseEntity<>(String.format("Product with the ID: %s not found.", productId),
+					HttpStatus.NOT_FOUND);
+		}
+		Order order = orderRepository.save(new Order(customerId));
+		int orderId = order.getId();
+
+		String orderRowQuery = String.format("INSERT INTO northwind.`order details` (OrderID, " +
+				"ProductID) VALUES (%s, %s)", orderId, productId);
+		var result = jdbcTemplate.update(orderRowQuery);
+
+		return new ResponseEntity<>(order, HttpStatus.CREATED);
 	}
 }
