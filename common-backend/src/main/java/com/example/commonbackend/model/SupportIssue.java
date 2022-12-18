@@ -17,6 +17,7 @@ public class SupportIssue {
 	enum Priority {
 		LOW, MEDIUM, HIGH
 	}
+
 	enum StatusType {
 		PENDING, INPROGRESS, DONE
 	}

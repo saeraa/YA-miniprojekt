@@ -3,7 +3,6 @@ package com.example.commonbackend.service;
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.model.OrderRow;
 import com.example.commonbackend.repository.OrderRepository;
-import com.example.commonbackend.repository.OrderRowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,28 +11,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.List;
-
 @Service
 public class OrderService {
 
 	private final OrderRepository orderRepository;
 
-	private final OrderRowRepository orderRowRepository;
-
 	private final JdbcTemplate jdbcTemplate;
 
 	@Autowired
-	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate,
-			OrderRowRepository orderRowRepository) {
+	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate) {
 		Assert.notNull(orderRepository, "OrderRepository must not be null!");
-		Assert.notNull(orderRowRepository, "OrderRowRepository must not be null!");
 		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
 		this.orderRepository = orderRepository;
-		this.orderRowRepository = orderRowRepository;
 		this.jdbcTemplate = jdbcTemplate;
 	}
-
 
 	public ResponseEntity<?> getOrders () {
 		var results = orderRepository.findAll();
@@ -89,15 +80,15 @@ public class OrderService {
 
 	public ResponseEntity<?> addOrderWithRows (String customerId, int productId) {
 		String customerQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.customers t " +
-						" WHERE CustomerID='%s');", customerId);
+				" WHERE CustomerID='%s');", customerId);
 		Boolean customer = jdbcTemplate.queryForObject(customerQuery, Boolean.class);
 		String productQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.products t " +
-		"WHERE ProductID='%s');", productId);
+				"WHERE ProductID='%s');", productId);
 		Boolean product = jdbcTemplate.queryForObject(productQuery, Boolean.class);
 		if (Boolean.FALSE.equals(customer)) {
 			return new ResponseEntity<>(String.format("Customer with the ID: %s not found.", customerId),
 					HttpStatus.NOT_FOUND);
-			} else if (Boolean.FALSE.equals(product)) {
+		} else if (Boolean.FALSE.equals(product)) {
 			return new ResponseEntity<>(String.format("Product with the ID: %s not found.", productId),
 					HttpStatus.NOT_FOUND);
 		}
@@ -106,7 +97,7 @@ public class OrderService {
 
 		String orderRowQuery = String.format("INSERT INTO northwind.`order details` (OrderID, " +
 				"ProductID) VALUES (%s, %s)", orderId, productId);
-		var result = jdbcTemplate.update(orderRowQuery);
+		jdbcTemplate.update(orderRowQuery);
 
 		return new ResponseEntity<>(order, HttpStatus.CREATED);
 	}
