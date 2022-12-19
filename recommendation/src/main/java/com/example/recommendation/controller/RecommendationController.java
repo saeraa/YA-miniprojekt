@@ -37,8 +37,12 @@ public class RecommendationController {
 
 	@PostMapping("/recommendation")
 	public ResponseEntity<?> addRecommendation(@RequestBody Recommendation recommendation) {
-		var result = recommendationRepository.save(recommendation);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		try {
+			var result = recommendationRepository.save(recommendation);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
 	}
 
 	@DeleteMapping("/recommendation/{productId}")

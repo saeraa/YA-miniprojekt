@@ -38,7 +38,8 @@ public class RecommendationService {
 				.bodyToMono(Recommendation.class)
 				.block();
 		return results == null ?
-				new ResponseEntity<>("Something went wrong.", HttpStatus.BAD_REQUEST) :
+				new ResponseEntity<>("Something went wrong. Did you enter the correct information? \n" + recommendation.toString(),
+						HttpStatus.BAD_REQUEST) :
 				new ResponseEntity<>(results, HttpStatus.CREATED);
 	}
 
