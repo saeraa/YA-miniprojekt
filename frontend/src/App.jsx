@@ -1,11 +1,11 @@
 import React from "react";
-import Products from "./components/Products";
-import Currency from "./components/Currency";
+import Products from "./routes/Products";
+import Currency from "./routes/Currency";
 import Navigation from "./components/Navigation";
-import Orders from "./components/Orders";
-import Recommendations from "./components/Recommendations";
-import SupportIssues from "./components/SupportIssues.jsx";
-import Welcome from "./components/Welcome";
+import Orders from "./routes/Orders";
+import Recommendations from "./routes/Recommendations";
+import SupportIssues from "./routes/SupportIssues.jsx";
+import Welcome from "./routes/Welcome";
 
 import { Routes, Route } from "react-router-dom";
 

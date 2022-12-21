@@ -108,3 +108,50 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  writing-mode: vertical-lr;
+  width: 100%;
+}
+
+option {
+  padding: 2px;
+  font-size: .8rem;
+  font-family: 'Courier New', Courier, monospace;
+  transform: rotate(-90deg) translateX(3px);
+}
+
+label {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+input[type="range"],
+textarea {
+  width: 100%;
+  margin: 0;
+  resize: none;
+  rowspan: 5;
+  border-radius: 3px;
+  border: none;
+  font-family: inherit;
+}
+
+textarea {
+  padding: .3rem;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  margin-top: 1rem;
+}
+
+.recommendations-form {
+  background-color: rgb(27, 27, 27);
+  padding: 2rem 5rem;
+}

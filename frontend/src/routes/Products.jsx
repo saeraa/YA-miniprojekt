@@ -1,7 +1,7 @@
 import React from "react";
 import settings from "../properties/settings.json";
-import ProductItems from "./ProductItems";
-import ProductCart from "./ProductCart";
+import ProductItems from "../components/ProductItems";
+import ProductCart from "../components/ProductCart";
 import ProductsArray from "../properties/products.js";
 
 const Products = () => {

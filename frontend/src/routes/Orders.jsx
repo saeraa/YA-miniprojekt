@@ -1,5 +1,5 @@
 import React from "react";
-import OrderItems from "./OrderItems.jsx";
+import OrderItems from "../components/OrderItems.jsx";
 import settings from "../properties/settings.json";
 
 const Orders = () => {

@@ -52,6 +52,14 @@ main {
   grid-template-columns: repeat(6, 1fr);
 }
 
+.rTable-recommendations {
+  /* display: table; */
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .rTable-products {
   /* display: table; */
   width: 100%;
