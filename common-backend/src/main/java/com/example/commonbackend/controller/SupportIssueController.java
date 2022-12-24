@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class SupportIssueController {
 
 	final SupportIssueService supportIssueService;

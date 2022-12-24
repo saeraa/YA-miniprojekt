@@ -1,23 +1,26 @@
+import settings from "../properties/settings.json";
 import React from "react";
 import RecommendationsForm from "../components/RecommendationsForm";
 import RecommendationItem from "../components/RecommendationItem";
-import recommendationsDummy from "../properties/recommendations";
+// import recommendationsDummy from "../properties/recommendations";
 
 const Recommendations = () => {
 	const [recommendations, setRecommendations] = React.useState([]);
+	const url = settings.api_url + ":" + settings.api_port;
+
 	React.useEffect(() => {
 		// dummydata example
-		setRecommendations(recommendationsDummy);
+		//		setRecommendations(recommendationsDummy);
 
-		// 	const getData = async () => {
-		// 		const results = await fetch(url + "/recommendations");
-		// 		const data = await results.json();
-		// 		setRecommendations(() => {
-		// 			return [...data];
-		// 		});
-		//};
+		const getData = async () => {
+			const results = await fetch(url + "/recommendations");
+			const data = await results.json();
+			setRecommendations(() => {
+				return [...data];
+			});
+		};
 
-		// 	getData().catch((error) => console.log(error));
+		getData().catch((error) => console.log(error));
 	}, []);
 
 	const recommendationItems = recommendations.map((recommendation) => {
@@ -47,12 +50,3 @@ const Recommendations = () => {
 };
 
 export default Recommendations;
-
-/* 
-public class Recommendation {
-	private int id;
-	private int rating;
-	private String comment;
-	private int productId;
-	private String email;
-	*/
