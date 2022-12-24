@@ -2,32 +2,40 @@ import React from "react";
 import settings from "../properties/settings.json";
 
 const RecommendationsForm = () => {
-	const [formData, setFormData] = React.useState({});
+	const [recommendationSent, setRecommendationSent] = React.useState(false);
+	const [formData, setFormData] = React.useState({
+		rating: 10
+	});
 	const [sending, setSending] = React.useState(false);
 
 	async function callAPI() {
-		// const baseURL = settings.base_url + "/recommendations/";
-		// const apiResponse = await fetch(baseURL, {
-		// 	headers: {
-		// 		"Content-Type": "application/json"
-		// 	},
-		// 	method: "POST",
-		// 	body: JSON.stringify(formData)
-		// 	// sends an object { euroPrice: x.yy, currency: xyz }
-		// });
-		// const result = await apiResponse.text();
-		// // if you receive json data as a response, change .text() in the above line to .json()
-		// return result;
-		return "hello";
+		const baseURL = settings.base_url + "/recommendation/";
+		console.log(formData);
+		const apiResponse = await fetch(baseURL, {
+			headers: {
+				"Content-Type": "application/json"
+			},
+			method: "POST",
+			body: JSON.stringify(formData)
+		});
+		const result = await apiResponse.json();
+
+		return result;
 	}
 
 	async function submitForm(e) {
 		e.preventDefault();
-		console.log(formData);
 		setSending(true);
 		const response = await callAPI();
-		if (response) setTimeout(() => setSending(false), 2000);
-		//e.target.reset();
+		if (response)
+			setTimeout(() => {
+				setSending(false);
+				e.target.reset();
+				setRecommendationSent(true);
+				setTimeout(() => {
+					setRecommendationSent(false);
+				}, 3000);
+			}, 2000);
 	}
 
 	function onInputChange(e) {
@@ -44,6 +52,7 @@ const RecommendationsForm = () => {
 		<form className="recommendations-form" onSubmit={submitForm}>
 			<label htmlFor="rating">Rating</label>
 			<input
+				value={formData.rating}
 				onChange={onInputChange}
 				list="tickmarks"
 				type="range"
@@ -95,6 +104,11 @@ const RecommendationsForm = () => {
 				name="submit"
 				value={sending ? "Submitting.." : "Send"}
 			/>
+			{recommendationSent && (
+				<p className="recommendation-thanks">
+					Thank you for your recommendation!
+				</p>
+			)}
 		</form>
 	);
 };

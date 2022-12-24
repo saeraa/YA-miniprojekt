@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class RecommendationController {
 
 	final RecommendationService recommendationService;
@@ -23,6 +24,7 @@ public class RecommendationController {
 		return recommendationService.getRecommendations();
 	}
 
+	@CrossOrigin
 	@PostMapping("/recommendation")
 	public ResponseEntity<?> addRecommendation (@RequestBody Recommendation recommendation) {
 		return recommendationService.addRecommendation(recommendation);
