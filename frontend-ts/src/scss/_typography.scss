@@ -1,0 +1,21 @@
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
+}
+a {
+	font-weight: 500;
+	color: $c-primary;
+	text-decoration: inherit;
+}
+
+a:hover {
+	color: $c-gray-light;
+}
+
+:root {
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}

@@ -13,7 +13,6 @@ public class RecommendationController {
 
 	private final RecommendationRepository recommendationRepository;
 
-	@Autowired
 	public RecommendationController (RecommendationRepository recommendationRepository) {
 		Assert.notNull(recommendationRepository, "Recommendation Repository must not be null.");
 		this.recommendationRepository = recommendationRepository;

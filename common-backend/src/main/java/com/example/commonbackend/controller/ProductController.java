@@ -1,7 +1,6 @@
 package com.example.commonbackend.controller;
 
 import com.example.commonbackend.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +13,6 @@ public class ProductController {
 
 	private final ProductService productService;
 
-	@Autowired
 	public ProductController (ProductService productService) {
 		Assert.notNull(productService, "Product Service may not be null.");
 		this.productService = productService;

@@ -1,0 +1,47 @@
+.rTable {
+	/* display: table; */
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: repeat(6, 1fr);
+}
+
+.rTable-recommendations {
+	/* display: table; */
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.rTable-products {
+	/* display: table; */
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: 15% 35% 25% 15% 10%;
+}
+
+.rTableCell {
+	padding: 8px 10px;
+	// border: 1px solid #111111;
+	// background-color: rgb(71, 73, 68);
+	display: grid;
+	place-content: center;
+}
+
+.rTableHead {
+	padding: 3px 10px;
+	// border: 1px solid #000000;
+	// background-color: #233b1a;
+}
+
+.rTableHeading {
+	// background-color: #ddd;
+	font-weight: bold;
+}
+
+.rTableFoot {
+	font-weight: bold;
+	// background-color: #ddd;
+}

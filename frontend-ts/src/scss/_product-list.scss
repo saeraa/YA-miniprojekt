@@ -1,0 +1,20 @@
+.product-list {
+	text-align: left;
+	background-color: $c-gray-mid;
+	width: 400px;
+	padding: 10px;
+	margin-inline: auto;
+}
+
+.product-list-entry {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.product-list-total {
+	text-align: right;
+}

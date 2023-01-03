@@ -2,7 +2,6 @@ package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -14,7 +13,6 @@ public class OrderController {
 
 	private final OrderService orderService;
 
-	@Autowired
 	public OrderController (OrderService orderService) {
 		Assert.notNull(orderService, "Order Service may not be null.");
 		this.orderService = orderService;
@@ -47,5 +45,4 @@ public class OrderController {
 			@PathVariable int productId) {
 		return orderService.addOrderWithRows(customerId, productId);
 	}
-
 }

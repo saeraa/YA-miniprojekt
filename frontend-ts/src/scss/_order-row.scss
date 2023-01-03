@@ -1,0 +1,33 @@
+.order-row {
+	grid-column: 1 / -1;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	width: 100%;
+	background-color: $c-green-dark;
+	border: 1px solid $c-gray-darker;
+	padding: 8px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+
+.order-row-quantity {
+	font-size: 0.8em;
+}
+
+.order-row-product-name {
+	padding-inline: 20px;
+	font-weight: bolder;
+	letter-spacing: 0.6px;
+	color: $c-green-light;
+}
+
+.order-row-price {
+	margin-right: 15px;
+}

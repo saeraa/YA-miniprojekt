@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap");
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+input,
+select {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.2em 0.5em;
+  font: inherit;
+  border-radius: 5px;
+  margin: 5px;
+  border: none;
+}
+
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  writing-mode: vertical-lr;
+  width: 100%;
+}
+
+option {
+  padding: 2px;
+  font-size: 0.8rem;
+  font-family: "Courier New", Courier, monospace;
+  transform: rotate(-90deg) translateX(3px);
+}
+
+label {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+input[type=range],
+textarea {
+  width: 100%;
+  margin: 0;
+  resize: none;
+  border-radius: 3px;
+  border: none;
+  font-family: inherit;
+}
+
+textarea {
+  padding: 0.3rem;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  margin-top: 1rem;
+}
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  gap: 1em;
+  font-size: 1rem;
+  margin-bottom: auto;
+  padding: 1rem;
+}
+nav .active {
+  color: rgb(224, 154, 62);
+}
+
+nav a {
+  border-radius: 5px;
+  padding: 0.2em 0.4em;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.order-row {
+  grid-column: 1/-1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: rgb(47, 48, 46);
+  border: 1px solid black;
+  padding: 8px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.order-row-quantity {
+  font-size: 0.8em;
+}
+
+.order-row-product-name {
+  padding-inline: 20px;
+  font-weight: bolder;
+  letter-spacing: 0.6px;
+  color: rgb(194, 255, 176);
+}
+
+.order-row-price {
+  margin-right: 15px;
+}
+
+.recommendations-form {
+  background-color: rgb(27, 27, 27);
+  padding: 2rem 5rem;
+}
+
+.recommendation-thanks {
+  position: fixed;
+  background-color: rgb(27, 27, 27);
+  padding: 0.5em 1em;
+  color: red;
+}
+
+.rTable {
+  /* display: table; */
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.rTable-recommendations {
+  /* display: table; */
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.rTable-products {
+  /* display: table; */
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 15% 35% 25% 15% 10%;
+}
+
+.rTableCell {
+  padding: 8px 10px;
+  border: 1px solid #111111;
+  background-color: rgb(71, 73, 68);
+  display: grid;
+  place-content: center;
+}
+
+.rTableHead {
+  padding: 3px 10px;
+  border: 1px solid #000000;
+  background-color: #233b1a;
+}
+
+.rTableHeading {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+.rTableFoot {
+  font-weight: bold;
+  background-color: #ddd;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+a {
+  font-weight: 500;
+  color: rgb(200, 187, 171);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: rgb(255, 157, 29);
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.product-list {
+  text-align: left;
+  background-color: rgb(105, 105, 105);
+  width: 400px;
+  padding: 10px;
+  margin-inline: auto;
+}
+
+.product-list-entry {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.product-list-total {
+  text-align: right;
+}
+
+:root {
+  font-family: "Andika", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgb(224, 224, 224);
+  background-color: #242424;
+}
+
+body {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  -webkit-transition: border-color 0.25s;
+  -o-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.app {
+  text-align: center;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  min-height: 80vh;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+#search-div {
+  margin: 10px;
+}
+
+#search-div > label {
+  margin-right: 10px;
+}
+
+.clickable {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(147, 191, 132);
+}
+
+.clickable:hover {
+  text-decoration: none;
+  cursor: pointer;
+}

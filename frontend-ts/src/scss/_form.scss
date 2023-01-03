@@ -1,0 +1,71 @@
+form {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: end;
+	-ms-flex-align: end;
+	align-items: flex-end;
+}
+
+input,
+select {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.2em 0.5em;
+	font: inherit;
+	border-radius: 5px;
+	margin: 5px;
+	border: none;
+}
+
+datalist {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	writing-mode: vertical-lr;
+	width: 100%;
+}
+
+option {
+	padding: 2px;
+	font-size: 0.8rem;
+	font-family: "Courier New", Courier, monospace;
+	transform: rotate(-90deg) translateX(3px);
+}
+
+label {
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+input[type="range"],
+textarea {
+	width: 100%;
+	margin: 0;
+	resize: none;
+	border-radius: 3px;
+	border: none;
+	font-family: inherit;
+}
+
+textarea {
+	padding: 0.3rem;
+	margin: 5px;
+	box-sizing: border-box;
+}
+
+input[type="submit"] {
+	margin-top: 1rem;
+}
+
+rect#background {
+	fill: $c-gray-darker;
+}

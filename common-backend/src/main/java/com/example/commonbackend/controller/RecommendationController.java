@@ -2,7 +2,6 @@ package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Recommendation;
 import com.example.commonbackend.service.RecommendationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ public class RecommendationController {
 
 	final RecommendationService recommendationService;
 
-	@Autowired
 	public RecommendationController (RecommendationService recommendationService) {
 		Assert.notNull(recommendationService, "Recommendation Service may not be null.");
 		this.recommendationService = recommendationService;

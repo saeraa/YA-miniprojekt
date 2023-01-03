@@ -17,9 +17,10 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
 		http
+				.cors().disable()
 				.csrf().disable()
 				.authorizeHttpRequests()
-				//.antMatchers("/api/v1/").hasRole("USER")
+				//.antMatchers("/**").hasRole("USER")
 				.antMatchers("/api/**").permitAll()
 				.and()
 				.httpBasic();
@@ -29,10 +30,9 @@ public class WebSecurityConfig {
 	@Bean
 	public UserDetailsService userDetailsService () {
 		UserDetails user = User.withUsername("user")
-				.password("password")
+				.password("{noop}password")
 				.roles("USER")
 				.build();
 		return new InMemoryUserDetailsManager(user);
 	}
-
 }

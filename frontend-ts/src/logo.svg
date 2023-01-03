@@ -1,0 +1,18 @@
+<svg viewBox="-8.95 -36.054 143.833 69.368" xmlns="http://www.w3.org/2000/svg">
+  <defs></defs>
+  <g id="root" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="matrix(1, 0, 0, 1, -17.622177, -82.349528)">
+    <rect id="background.accent" fill="#2d4059" x="8.855" y="46.497" width="143.948" height="69.221" style=""></rect>
+    <rect id="shape.primary" fill="#fde9c9" x="14" y="51" width="97" height="41"></rect>
+    <rect id="shape.secondary" fill="#ea5455" x="111" y="74" width="36" height="36"></rect>
+    <rect id="icon.primary" x="114" y="77" width="30" height="30" display="none" fill="#fde9c9"></rect>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" version="1.1" fill="#fde9c9" id="svg_icon.primary" x="114" y="77" width="30" height="30">
+      <g id="surface1">
+        <path style=" " d="M 18 2 L 18 6 L 22 6 L 22 2 Z M 12.3125 3 L 10 6.25 L 13.25 8.59375 L 15.59375 5.3125 Z M 2 8 L 2 12 L 6 12 L 6 8 Z M 16.78125 9.59375 L 13.59375 12 L 16 15.1875 L 19.1875 12.78125 Z M 2 13 L 2 17 L 6 17 L 6 13 Z M 7 13 L 7 17 L 11 17 L 11 13 Z M 2 18 L 2 22 L 6 22 L 6 18 Z M 7 18 L 7 22 L 11 22 L 11 18 Z M 12 18 L 12 22 L 16 22 L 16 18 Z "></path>
+      </g>
+    </svg>
+    <g id="group" transform="translate(21.000000, 61.000000)">
+      <rect id="Rectangle" x="0" y="2" width="84" height="18"></rect>
+      <text id="headerText.secondary" font-family="Noto Serif" font-size="16.628218714241054" font-weight="700" letter-spacing="NaN" fill="#ea5455" data-text-alignment="C" font-style="normal" style="white-space: pre;"><tspan x="2.5114364624023438" y="15">Company</tspan></text>
+    </g>
+  </g>
+</svg>

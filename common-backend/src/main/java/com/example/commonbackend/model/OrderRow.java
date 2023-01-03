@@ -25,7 +25,4 @@ public class OrderRow {
 	private double discount;
 	@JoinColumn(table = "products", name="ProductName")
 	private String productName;
-
-	public OrderRow (int orderId, int productId) {
-	}
 }
