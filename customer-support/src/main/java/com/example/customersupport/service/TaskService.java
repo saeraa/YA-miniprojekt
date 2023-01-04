@@ -2,7 +2,6 @@ package com.example.customersupport.service;
 
 import com.example.customersupport.model.Task;
 import com.example.customersupport.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ public class TaskService {
 
 	private final TaskRepository taskRepository;
 
-	@Autowired
 	public TaskService (TaskRepository taskRepository) {
 		Assert.notNull(taskRepository, "Task Repository may not be null.");
 		this.taskRepository = taskRepository;
