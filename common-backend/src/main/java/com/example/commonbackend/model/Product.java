@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
+@DiscriminatorValue("0")
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
