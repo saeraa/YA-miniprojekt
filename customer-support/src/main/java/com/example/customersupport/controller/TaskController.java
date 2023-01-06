@@ -22,7 +22,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/tasks/{customerId}")
-	public ResponseEntity<?> getTasksForId (@PathVariable int customerId) {
+	public ResponseEntity<?> getTasksForId (@PathVariable String customerId) {
 		return taskService.getTasksForId(customerId);
 	}
 
@@ -37,7 +37,7 @@ public class TaskController {
 	}
 
 	@DeleteMapping("/tasks/{customerId}")
-	public ResponseEntity<?> removeTask (@PathVariable int customerId) {
+	public ResponseEntity<?> removeTask (@PathVariable String customerId) {
 		return taskService.removeTask(customerId);
 	}
 

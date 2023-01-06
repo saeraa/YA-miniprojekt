@@ -14,7 +14,6 @@ public class CurrencyService {
 	public Double getPrice (Price price) {
 
 		String currency = price.getCurrency();
-
 		String baseurl = "https://sdw-wsrest.ecb.europa.eu";
 
 		WebClient client = WebClient

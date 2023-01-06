@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import settings from "../utils/settings.json";
 import SupportIssueItem from "../components/SupportIssueItem";
 import SupportIssueForm from "../components/SupportIssueForm";
+import { Customer, SupportIssue } from "../utils/interfaces";
 
 const SupportIssues = () => {
-	const [supportIssues, setSupportIssues] = useState([]);
+	const [supportIssues, setSupportIssues] = useState<SupportIssue[] | []>([]);
 	const url = settings.api_url + ":" + settings.api_port;
 
 	useEffect(() => {
@@ -27,14 +28,6 @@ const SupportIssues = () => {
 			<SupportIssueItem key={supportIssue.id} supportIssue={supportIssue} />
 		);
 	});
-
-	function onFormSubmit(event) {
-		event.preventDefault();
-	}
-
-	function onInputChange() {
-		console.log("hi");
-	}
 
 	return (
 		<>

@@ -23,12 +23,12 @@ public class SupportIssueController {
 	}
 
 	@GetMapping("/supportissues/{customerId}")
-	public ResponseEntity<?> getIssuesForCustomer (@PathVariable int customerId) {
+	public ResponseEntity<?> getIssuesForCustomer (@PathVariable String customerId) {
 		return supportIssueService.getIssuesForCustomer(customerId);
 	}
 
 	@PostMapping("/supportissue/{customerId}")
-	public ResponseEntity<?> addIssue (@PathVariable int customerId, @RequestBody SupportIssue issue) {
+	public ResponseEntity<?> addIssue (@PathVariable String customerId, @RequestBody SupportIssue issue) {
 		return supportIssueService.addIssue(issue);
 	}
 
@@ -38,7 +38,7 @@ public class SupportIssueController {
 	}
 
 	@DeleteMapping("/supportissue/{customerId}")
-	public ResponseEntity<?> removeIssue (@PathVariable int customerId) {
+	public ResponseEntity<?> removeIssue (@PathVariable String customerId) {
 		return supportIssueService.removeIssue(customerId);
 	}
 }

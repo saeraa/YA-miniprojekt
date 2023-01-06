@@ -2,19 +2,23 @@ import settings from "../utils/settings.json";
 import { useState, useEffect } from "react";
 import RecommendationsForm from "../components/RecommendationForm";
 import RecommendationItem from "../components/RecommendationItem";
-// import recommendationsDummy from "../properties/recommendations";
+//import recommendationsDummy from "../utils/recommendations";
+import { Recommendation } from "../utils/interfaces";
 
 const Recommendations = () => {
-	const [recommendations, setRecommendations] = useState([]);
+	const [recommendations, setRecommendations] = useState<Recommendation[] | []>(
+		[]
+	);
 	const url = settings.api_url + ":" + settings.api_port;
 
 	useEffect(() => {
 		// dummydata example
-		//		setRecommendations(recommendationsDummy);
+		//setRecommendations(recommendationsDummy);
 
 		const getData = async () => {
 			const results = await fetch(url + "/recommendations");
 			const data = await results.json();
+			console.log(data);
 			setRecommendations(() => {
 				return [...data];
 			});

@@ -16,7 +16,7 @@ public class SupportIssueService {
 	String baseURL = "http://localhost:8282/api/v1";
 	WebClient client = WebClient.create(baseURL);
 
-	public ResponseEntity<?> getIssuesForCustomer (int customerId) {
+	public ResponseEntity<?> getIssuesForCustomer (String customerId) {
 		var results = client
 				.get()
 				.uri("/tasks/" + customerId)
@@ -75,7 +75,7 @@ public class SupportIssueService {
 				new ResponseEntity<>(results, HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> removeIssue (int customerId) {
+	public ResponseEntity<?> removeIssue (String customerId) {
 		var results = client
 				.delete()
 				.uri("/tasks/" + customerId)

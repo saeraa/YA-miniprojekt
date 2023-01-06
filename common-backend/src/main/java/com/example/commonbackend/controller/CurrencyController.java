@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CurrencyController {
 
-	final CurrencyService currencyService;
+	private final CurrencyService currencyService;
 
 	public CurrencyController (CurrencyService currencyService) {
 		Assert.notNull(currencyService, "Currency Service may not be null.");

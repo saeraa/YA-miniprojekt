@@ -1,4 +1,10 @@
-const SupportIssueItem = (props) => {
+import { SupportIssue } from "../utils/interfaces";
+
+interface SupportIssueItemProps {
+	supportIssue: SupportIssue;
+}
+
+const SupportIssueItem = (props: SupportIssueItemProps) => {
 	const { customerId, comment, priority, statusType } = props.supportIssue;
 
 	return (

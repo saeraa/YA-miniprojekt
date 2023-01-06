@@ -1,4 +1,10 @@
-const RecommendationItem = (props) => {
+import { Recommendation } from "../utils/interfaces";
+
+interface RecommendationItemProps {
+	recommendation: Recommendation;
+}
+
+const RecommendationItem = (props: RecommendationItemProps) => {
 	const { comment, productId, rating, email } = props.recommendation;
 
 	return (
