@@ -1,4 +1,11 @@
-const ProductCart = (props) => {
+import { Product } from "../utils/interfaces";
+
+interface ProductCartProps {
+	subTotal: number;
+	cartProducts: Product[];
+}
+
+const ProductCart = (props: ProductCartProps) => {
 	const { subTotal, cartProducts: productEntries } = props;
 
 	const listItems = productEntries.map((product) => {
@@ -17,7 +24,9 @@ const ProductCart = (props) => {
 		<div className="product-list">
 			<div>{listItems}</div>
 			<hr />
-			<div className="product-list-total">{"Total: €" + subTotal}</div>
+			<div className="product-list-total">
+				{"Total: €" + subTotal.toFixed(2)}
+			</div>
 		</div>
 	);
 };

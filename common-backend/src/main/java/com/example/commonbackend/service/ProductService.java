@@ -2,7 +2,6 @@ package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.Product;
 import com.example.commonbackend.model.ProductDetailed;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +18,6 @@ public class ProductService {
 
 	final JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	public ProductService (JdbcTemplate jdbcTemplate) {
 		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
 		this.jdbcTemplate = jdbcTemplate;

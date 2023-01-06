@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 import settings from "../utils/settings.json";
 import ProductItems from "../components/ProductItem";
 import ProductCart from "../components/ProductCart";
+import { Product } from "../utils/interfaces";
+//import ProductsArray from "../utils/products";
 
 const Products = () => {
-	const [originalProducts, setOriginalProducts] = useState([]);
-	const [products, setProducts] = useState([]);
-	const [search, setSearch] = useState("");
-	const [subTotal, setSubTotal] = useState(0.0);
-	const [cartProducts, setCartProducts] = useState([]);
+	const [originalProducts, setOriginalProducts] = useState<Product[] | []>([]);
+	const [products, setProducts] = useState<Product[] | []>([]);
+	const [search, setSearch] = useState<string>("");
+	const [subTotal, setSubTotal] = useState<number>(0.0);
+	const [cartProducts, setCartProducts] = useState<Product[] | []>([]);
 
 	const url = settings.api_url + ":" + settings.api_port;
 
 	useEffect(() => {
 		// dummydata example
-		//setOriginalProducts(ProductsArray);
+		// setOriginalProducts(ProductsArray);
+		// setProducts(ProductsArray);
 
 		const getData = async () => {
 			const results = await fetch(url + "/products");
@@ -30,7 +33,7 @@ const Products = () => {
 		getData().catch((error) => console.log(error));
 	}, []);
 
-	const updateSearch = (event) => {
+	const updateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value);
 		let filteredProducts = originalProducts.filter((item) => {
 			return (
@@ -42,9 +45,11 @@ const Products = () => {
 		setProducts([...filteredProducts]);
 	};
 
-	const buyItem = (product) => {
+	const buyItem = (product: Product) => {
 		setCartProducts((prevData) => {
-			const productIndex = cartProducts.findIndex;
+			const productIndex = cartProducts.findIndex(
+				(product) => product.productID
+			);
 			if (productIndex == -1) {
 				return [...prevData, product];
 			} else {

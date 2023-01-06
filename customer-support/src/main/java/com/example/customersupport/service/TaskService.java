@@ -24,7 +24,7 @@ public class TaskService {
 				new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> getTasksForId (int customerId) {
+	public ResponseEntity<?> getTasksForId (String customerId) {
 		var result = taskRepository.getTaskByCustomerId(customerId);
 		return result.size() == 0 ?
 				new ResponseEntity<>(null, HttpStatus.OK) :
@@ -39,7 +39,7 @@ public class TaskService {
 		var priority = task.getPriority();
 		var statusType = task.getStatusType();
 
-		if (priority == null || statusType == null || comment == null || comment.length() < 1 || id == 0) {
+		if (priority == null || statusType == null || comment == null || comment.length() < 1 || id == null) {
 			allOK = false;
 		} else {
 			allOK = true;
@@ -65,7 +65,7 @@ public class TaskService {
 		}
 	}
 
-	public ResponseEntity<?> removeTask (int customerId) {
+	public ResponseEntity<?> removeTask (String customerId) {
 		var result = taskRepository.deleteTaskByCustomerId(customerId);
 		return result != 0 ?
 				new ResponseEntity<>(String.valueOf(result), HttpStatus.OK)

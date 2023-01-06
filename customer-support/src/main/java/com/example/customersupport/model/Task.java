@@ -16,7 +16,7 @@ public class Task {
 	private Integer id;
 
 	@Column(name = "CUSTOMER")
-	private int customerId;
+	private String customerId;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PRIORITY")

@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class SupportIssue {
 	private Integer id;
-	private int customerId;
+	private String customerId;
 	private Priority priority;
 	private String comment;
 	private StatusType statusType;

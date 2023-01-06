@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import settings from "../utils/settings.json";
+import { Recommendation } from "../utils/interfaces";
 
 const RecommendationsForm = () => {
 	const [recommendationSent, setRecommendationSent] = useState(false);
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<Recommendation>({
+		id: 0,
+		productId: 0,
+		comment: "",
+		email: "",
 		rating: 10
 	});
 	const [sending, setSending] = useState(false);
@@ -23,14 +28,15 @@ const RecommendationsForm = () => {
 		return result;
 	}
 
-	async function submitForm(e) {
+	async function submitForm(e: FormEvent<HTMLFormElement>) {
+		const target = e.target as HTMLFormElement;
 		e.preventDefault();
 		setSending(true);
 		const response = await callAPI();
 		if (response)
 			setTimeout(() => {
 				setSending(false);
-				e.target.reset();
+				target.reset();
 				setRecommendationSent(true);
 				setTimeout(() => {
 					setRecommendationSent(false);
@@ -38,7 +44,9 @@ const RecommendationsForm = () => {
 			}, 2000);
 	}
 
-	function onInputChange(e) {
+	function onInputChange(
+		e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+	) {
 		const { name, value } = e.target;
 		setFormData((prevData) => {
 			return {
@@ -76,6 +84,7 @@ const RecommendationsForm = () => {
 			</datalist>
 			<label htmlFor="productId">Product ID</label>
 			<input
+				required
 				onChange={onInputChange}
 				type="number"
 				name="productId"
@@ -84,6 +93,7 @@ const RecommendationsForm = () => {
 			/>
 			<label htmlFor="email">Email</label>
 			<input
+				required
 				onChange={onInputChange}
 				type="email"
 				name="email"
@@ -92,8 +102,8 @@ const RecommendationsForm = () => {
 			/>
 			<label htmlFor="comment">Comment (max 1000 characters)</label>
 			<textarea
+				required
 				onChange={onInputChange}
-				type="text"
 				name="comment"
 				id="comment"
 				rows={5}

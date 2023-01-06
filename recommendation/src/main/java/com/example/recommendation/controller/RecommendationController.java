@@ -2,7 +2,6 @@ package com.example.recommendation.controller;
 
 import com.example.recommendation.model.Recommendation;
 import com.example.recommendation.repository.RecommendationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;

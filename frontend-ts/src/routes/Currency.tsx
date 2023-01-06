@@ -1,5 +1,6 @@
 import { useState } from "react";
 import settings from "../utils/settings.json";
+import { CurrencyType } from "../utils/interfaces";
 
 const Currency = () => {
 	const currencies = [
@@ -35,10 +36,13 @@ const Currency = () => {
 		"THB",
 		"ZAR"
 	];
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState<CurrencyType>({
+		euroPrice: 0,
+		currency: "USD"
+	});
 	const [calculatedPrice, setCalculatedPrice] = useState({
-		price: null,
-		resultString: null
+		price: "",
+		resultString: ""
 	});
 
 	async function callAPI() {
@@ -56,7 +60,8 @@ const Currency = () => {
 		return result;
 	}
 
-	async function submitForm(e) {
+	async function submitForm(e: React.FormEvent<HTMLFormElement>) {
+		const target = e.target as HTMLFormElement;
 		e.preventDefault();
 
 		let result = await callAPI();
@@ -67,11 +72,15 @@ const Currency = () => {
 				formData.euroPrice
 			} is equal to ${result} in ${formData.currency.toUpperCase()}.`
 		});
-		e.target.reset();
+		target.reset();
 	}
 
-	function onInputChange(e) {
-		const { name, value } = e.target;
+	function onInputChange(
+		event:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLSelectElement>
+	) {
+		const { name, value } = event.target;
 		setFormData((prevData) => {
 			return {
 				...prevData,

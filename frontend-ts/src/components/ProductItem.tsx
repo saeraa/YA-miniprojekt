@@ -1,4 +1,11 @@
-const ProductItem = (props) => {
+import { Product } from "../utils/interfaces";
+
+interface ProductItemProps {
+	buyItem: (arg0: Product) => void;
+	product: Product;
+}
+
+const ProductItem = (props: ProductItemProps) => {
 	const { buyItem } = props;
 	const { productID, productName, quantityPerUnit, unitPrice } = props.product;
 

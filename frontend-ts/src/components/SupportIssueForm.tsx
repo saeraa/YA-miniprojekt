@@ -1,17 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { Customer } from "../utils/interfaces";
 import settings from "../utils/settings.json";
+import { useAxiosFetch } from "../utils/useAxiosFetch";
 
 const RecommendationsForm = () => {
 	const [supportIssueSent, setSupportIssueSent] = useState(false);
 	const [formData, setFormData] = useState({
 		priority: "LOW",
-		statusType: "PENDING"
+		statusType: "PENDING",
+		comment: "",
+		customerId: "ALFKI"
 	});
 	const [sending, setSending] = useState(false);
+	const [customers, setCustomers] = useState<Customer[] | []>([]);
+
+	const [data, error, loading, fetchData] = useAxiosFetch({
+		method: "GET",
+		url: "/customers"
+	});
+
+	useEffect(() => {
+		if (data) {
+			setCustomers(data);
+		} else {
+			setCustomers([]);
+		}
+	}, [data]);
+
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+		}
+	}, [error]);
+
+	const url = settings.api_url + ":" + settings.api_port;
 
 	async function callAPI() {
-		const baseURL = settings.base_url + "/supportissue/" + formData.customerId;
-		console.log(formData);
+		const baseURL = url + "/supportissue/" + formData.customerId;
 		const apiResponse = await fetch(baseURL, {
 			headers: {
 				"Content-Type": "application/json"
@@ -24,14 +49,15 @@ const RecommendationsForm = () => {
 		return result;
 	}
 
-	async function submitForm(e) {
+	async function submitForm(e: FormEvent<HTMLFormElement>) {
+		const target = e.target as HTMLFormElement;
 		e.preventDefault();
 		setSending(true);
 		const response = await callAPI();
 		if (response)
 			setTimeout(() => {
 				setSending(false);
-				e.target.reset();
+				target.reset();
 				setSupportIssueSent(true);
 				setTimeout(() => {
 					setSupportIssueSent(false);
@@ -39,7 +65,9 @@ const RecommendationsForm = () => {
 			}, 2000);
 	}
 
-	function onInputChange(e) {
+	function onInputChange(
+		e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+	) {
 		const { name, value } = e.target;
 		setFormData((prevData) => {
 			return {
@@ -51,27 +79,23 @@ const RecommendationsForm = () => {
 
 	return (
 		<form onSubmit={submitForm}>
-			<select onChange={onInputChange} value={formData.priority}>
-				<option value="LOW" name="LOW">
-					Low priority
-				</option>
-				<option value="MEDIUM" name="MEDIUM">
-					Medium priority
-				</option>
-				<option value="HIGH" name="HIGH">
-					High priority
-				</option>
+			<select
+				name="priority"
+				onChange={onInputChange}
+				value={formData.priority}
+			>
+				<option value="LOW">Low priority</option>
+				<option value="MEDIUM">Medium priority</option>
+				<option value="HIGH">High priority</option>
 			</select>
-			<select onChange={onInputChange} value={formData.statusType}>
-				<option value="pending" name="">
-					Pending
-				</option>
-				<option value="inprogress" name="">
-					In progress
-				</option>
-				<option value="done" name="">
-					Done
-				</option>
+			<select
+				name="statusType"
+				onChange={onInputChange}
+				value={formData.statusType}
+			>
+				<option value="PENDING">Pending</option>
+				<option value="INPROGRESS">In progress</option>
+				<option value="DONE">Done</option>
 			</select>
 			<input
 				type="text"
@@ -80,13 +104,22 @@ const RecommendationsForm = () => {
 				placeholder="Comment"
 				onChange={onInputChange}
 			/>
-			<input
-				type="text"
+			<select
 				name="customerId"
-				id="customerId"
-				placeholder="Customer ID"
 				onChange={onInputChange}
-			/>
+				value={formData.customerId}
+			>
+				{customers?.map((customer) => {
+					return (
+						<option
+							key={customer.customerId}
+							value={customer.customerId.toLowerCase()}
+						>
+							{customer.customerId}
+						</option>
+					);
+				})}
+			</select>
 			<input
 				type="submit"
 				name="submit"
