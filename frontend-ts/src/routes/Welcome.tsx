@@ -1,6 +1,7 @@
 const Welcome = () => {
 	return (
 		<>
+			<h1>Welcome</h1>
 			<p>
 				This is a website created for a school project focused on Java with
 				Spring Boot.

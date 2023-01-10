@@ -37,16 +37,17 @@ const Recommendations = () => {
 	});
 	return (
 		<>
+			<h1>Recommendations</h1>
 			<details>
 				<summary>Add a recommendation</summary>
 				<RecommendationsForm />
 			</details>
-			<hr />
-			<div className="rTable-recommendations">
-				<div className="rTableHead">ProductID</div>
-				<div className="rTableHead">Email</div>
-				<div className="rTableHead">Comment</div>
-				<div className="rTableHead">Rating</div>
+
+			<div className="table table-recommendations">
+				<div className="table-head">ProductID</div>
+				<div className="table-head">Email</div>
+				<div className="table-head">Comment</div>
+				<div className="table-head">Rating</div>
 				{recommendationItems.length > 0 && recommendationItems}
 			</div>
 		</>

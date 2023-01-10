@@ -6,24 +6,27 @@ form {
 	-webkit-box-direction: normal;
 	-ms-flex-direction: column;
 	flex-direction: column;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-	-webkit-box-align: end;
-	-ms-flex-align: end;
-	align-items: flex-end;
+	max-width: 500px;
+	padding: 1rem;
 }
 
 input,
-select {
+select,
+textarea {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	width: 100%;
+	width: 95%;
 	padding: 0.2em 0.5em;
 	font: inherit;
 	border-radius: 5px;
 	margin: 5px;
-	border: none;
+	border: 3px solid rgba($c-accent1, 0.511);
+	background: rgba($c-gray-dark, 0.3);
+	color: inherit;
+
+	&:focus-visible {
+		outline: 3px $c-accent1 solid;
+	}
 }
 
 datalist {
@@ -35,6 +38,7 @@ datalist {
 }
 
 option {
+	background-color: rgba($c-gray-dark, 0.9) !important;
 	padding: 2px;
 	font-size: 0.8rem;
 	font-family: "Courier New", Courier, monospace;
@@ -47,12 +51,13 @@ label {
 }
 
 input[type="range"],
-textarea {
-	width: 100%;
+textarea,
+option {
+	accent-color: $c-accent1;
+	width: 95%;
 	margin: 0;
 	resize: none;
 	border-radius: 3px;
-	border: none;
 	font-family: inherit;
 }
 
@@ -64,8 +69,4 @@ textarea {
 
 input[type="submit"] {
 	margin-top: 1rem;
-}
-
-rect#background {
-	fill: $c-gray-darker;
 }

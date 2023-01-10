@@ -78,7 +78,7 @@ const RecommendationsForm = () => {
 	}
 
 	return (
-		<form onSubmit={submitForm}>
+		<form className="recommendations-form" onSubmit={submitForm}>
 			<select
 				name="priority"
 				onChange={onInputChange}

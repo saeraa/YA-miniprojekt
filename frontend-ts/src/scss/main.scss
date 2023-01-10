@@ -12,10 +12,9 @@
 	font-size: 16px;
 	line-height: 24px;
 	font-weight: 400;
-
 	color-scheme: light dark;
 	color: $c-gray-light;
-	background-color: $c-gray-dark;
+	//background-color: $c-gray-dark;
 }
 
 body {
@@ -26,6 +25,16 @@ body {
 	place-items: center;
 	min-width: 320px;
 	min-height: 100vh;
+	background-image: url("/david-marcu-78A265wPiO4-unsplash.jpg");
+	background-color: rgb(177, 179, 117);
+	background-blend-mode: multiply;
+	background-size: cover;
+	object-fit: scale-down;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 button {
@@ -43,7 +52,7 @@ button {
 }
 
 button:hover {
-	border-color: #646cff;
+	border-color: $c-accent1;
 }
 
 button:focus,
@@ -52,8 +61,6 @@ button:focus-visible {
 }
 
 .app {
-	text-align: center;
-	min-height: 100vh;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -69,17 +76,17 @@ button:focus-visible {
 }
 
 main {
-	min-height: 80vh;
-	max-width: 900px;
+	width: clamp(70%, 100vw, 100vw - 340px);
+	position: absolute;
+	right: 0;
+	top: 0;
+	min-height: 100%;
 	margin-inline: auto;
-}
-
-#search-div {
-	margin: 10px;
-}
-
-#search-div > label {
-	margin-right: 10px;
+	display: flex;
+	flex-direction: column;
+	padding-left: 1rem;
+	box-sizing: border-box;
+	// background: rgba(0 0 0 / 0.3);
 }
 
 .clickable {

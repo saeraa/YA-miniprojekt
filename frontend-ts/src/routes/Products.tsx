@@ -74,8 +74,8 @@ const Products = () => {
 
 	return (
 		<>
+			<h1>Products</h1>
 			<header className="App-header">
-				<h2>Buy from Company.com NOW!</h2>
 				<div>
 					{cartProducts.length > 0 && (
 						<ProductCart cartProducts={cartProducts} subTotal={subTotal} />
@@ -90,12 +90,12 @@ const Products = () => {
 						onChange={updateSearch}
 					/>
 				</div>
-				<div className="rTable-products">
-					<div className="rTableHead">ProductID</div>
-					<div className="rTableHead">ProductName</div>
-					<div className="rTableHead">Quantity per unit</div>
-					<div className="rTableHead">Unit price</div>
-					<div className="rTableHead">🧺</div>
+				<div className="table table-products">
+					<div className="table-head">ProductID</div>
+					<div className="table-head">ProductName</div>
+					<div className="table-head">Quantity per unit</div>
+					<div className="table-head">Unit price</div>
+					<div className="table-head">🧺</div>
 					{productItems.length > 0 && productItems}
 				</div>
 			</header>

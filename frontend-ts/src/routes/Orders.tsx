@@ -1,6 +1,7 @@
 import { useState, useEffect, SyntheticEvent } from "react";
 import OrderItems from "../components/OrderItem";
 import { Order, OrderRowType } from "../utils/interfaces";
+import { keycloak } from "../utils/keycloak";
 import settings from "../utils/settings.json";
 
 const Orders = () => {
@@ -13,7 +14,12 @@ const Orders = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const results = await fetch(url + "/orders");
+			const results = await fetch(url + "/orders", {
+				headers: {
+					Authorization: `Bearer ${keycloak.token}`
+				}
+			});
+			//console.log(results);
 			const data = await results.json();
 			setOriginalOrders(() => {
 				return [...data];
@@ -84,8 +90,8 @@ const Orders = () => {
 
 	return (
 		<div className="App">
+			<h1>Orders</h1>
 			<header className="App-header">
-				<h2>All orders at Company.com</h2>
 				<div id="search-div">
 					<input
 						placeholder="Search customer"
@@ -95,13 +101,13 @@ const Orders = () => {
 						onChange={updateSearch}
 					/>
 				</div>
-				<div className="rTable">
-					<div className="rTableHead">OrderID</div>
-					<div className="rTableHead">CustomerID</div>
-					<div className="rTableHead">Order date</div>
-					<div className="rTableHead">Shipping date</div>
-					<div className="rTableHead"></div>
-					<div className="rTableHead"></div>
+				<div className="table table-orders">
+					<div className="table-head">OrderID</div>
+					<div className="table-head">CustomerID</div>
+					<div className="table-head">Order date</div>
+					<div className="table-head">Shipping date</div>
+					<div className="table-head"></div>
+					<div className="table-head"></div>
 
 					{orderDisplay}
 				</div>

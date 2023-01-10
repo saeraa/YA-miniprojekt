@@ -1,19 +1,17 @@
 nav {
-	background-color: $c-gray-darker;
-	width: 100%;
+	background-color: rgba($c-gray-darker, 0.4);
+	width: 30%;
+	max-width: 300px;
+	position: fixed;
+	top: 0;
+	min-height: 100vh;
+	overflow: hidden;
 
 	.nav-container {
 		max-width: 600px;
 		margin-inline: auto;
-		display: grid;
-		grid-template-columns: 300px 1fr;
-		gap: 1em;
 		font-size: 1rem;
 		padding: 1rem 1rem 1rem;
-
-		@media (max-width: 550px) {
-			grid-template-columns: 100%;
-		}
 
 		span {
 			text-transform: uppercase;
@@ -24,62 +22,75 @@ nav {
 			width: 25px;
 			height: 25px;
 			object-fit: cover;
-			transform: translateY(6px) translateX(-4px);
+			transform: translateY(6px) translateX(-7px);
 		}
 	}
 
 	div.nav-logo {
-		min-height: 150px;
-		grid-column: 2;
+		max-width: 300px;
+		position: relative;
 
-		@media (max-width: 767px) {
-			grid-column: 1;
-			grid-row: 1;
+		rect#shape-primary {
+			fill: $c-primary;
+		}
+
+		rect#shape-secondary {
+			fill: $c-accent1;
+		}
+
+		rect#icon-primary {
+			fill: $c-accent1;
+		}
+
+		svg#svg_icon-primary {
+			fill: $c-primary;
+		}
+
+		text#headerText-secondary {
+			fill: darken($c-orange, 15%);
+		}
+
+		// rect#background {
+		// 	fill: $c-gray-darker;
+		// }
+
+		.nav-login {
+			background: transparent;
+			position: absolute;
+			bottom: 5%;
+			font-size: clamp(0.3rem, 1.5vw, 0.8rem);
 		}
 
 		svg {
-			min-height: 150px;
-
 			@media (max-width: 550px) {
-				max-width: 250px;
+				max-width: 200px;
 			}
 		}
 	}
 
 	div.nav-links {
-		grid-column: 1;
-		grid-row: 1;
 		display: flex;
-		flex-direction: row-reverse;
-		align-content: center;
 		flex-wrap: wrap;
-		max-height: min-content;
-		max-width: 400px;
-
-		@media (max-width: 767px) {
-			grid-row: 1;
-			grid-column: 2;
-			flex-direction: column;
-		}
-
-		@media (max-width: 550px) {
-			grid-row: 2;
-			grid-column: 1;
-			flex-direction: column;
-			margin-inline: auto;
-		}
+		max-width: 300px;
+		align-items: stretch;
+		justify-content: space-evenly;
+		flex-direction: column;
 
 		a {
 			letter-spacing: 0.5px;
 			font-size: 0.9rem;
-			min-width: max-content;
 			background-color: $c-accent1;
-			padding: 0em 0.7em 0.4em;
+			padding: 0em 0.9em 0.4em;
 			margin: 1px;
+			display: block;
+			max-width: 90%;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			text-align: left;
 
 			&.active {
 				background-color: darken($c-accent1, 5%);
-				color: lighten($c-primary, 5%);
 			}
 		}
 	}

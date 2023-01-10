@@ -90,7 +90,8 @@ const Currency = () => {
 	}
 
 	return (
-		<div>
+		<div className="app">
+			<h1>Currency</h1>
 			<form onSubmit={submitForm}>
 				<label htmlFor="amount">Enter amount to calculate</label>
 				<input

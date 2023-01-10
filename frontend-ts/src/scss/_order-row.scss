@@ -7,8 +7,8 @@
 	-ms-flex-pack: end;
 	justify-content: flex-end;
 	width: 100%;
-	background-color: $c-green-dark;
-	border: 1px solid $c-gray-darker;
+	background-color: rgba($c-gray-light, 0.1);
+	//	border: 1px solid $c-gray-darker;
 	padding: 8px;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;

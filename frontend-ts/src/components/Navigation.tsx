@@ -21,20 +21,27 @@ const Navigation = () => {
 
 	return (
 		<div className="app">
-			{loggedIn && (
-				<button type="button" className="" onClick={() => keycloak.logout()}>
-					Logout ({username})
-				</button>
-			)}
-			{!loggedIn && (
-				<button type="button" className="" onClick={() => keycloak.login()}>
-					Login
-				</button>
-			)}
-
 			<nav>
 				<div className="nav-container">
 					<div className="nav-logo">
+						{loggedIn && (
+							<button
+								type="button"
+								className="nav-login"
+								onClick={() => keycloak.logout()}
+							>
+								Logout ({username})
+							</button>
+						)}
+						{!loggedIn && (
+							<button
+								type="button"
+								className="nav-login"
+								onClick={() => keycloak.login()}
+							>
+								Login
+							</button>
+						)}
 						<NavLink to={"/"}>
 							<Logo />
 						</NavLink>

@@ -1,5 +1,6 @@
 .recommendations-form {
-	background-color: $c-gray-darker;
+	background-color: rgba($c-gray-darker, 0.3);
+	border: 1px solid rgba($c-gray-darker, 0.7);
 	padding: 2rem 5rem;
 }
 

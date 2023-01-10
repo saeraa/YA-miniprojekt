@@ -9,10 +9,10 @@ const RecommendationItem = (props: RecommendationItemProps) => {
 
 	return (
 		<>
-			<div className="rTableCell">{productId}</div>
-			<div className="rTableCell">{email}</div>
-			<div className="rTableCell">{comment}</div>
-			<div className="rTableCell">{rating}</div>
+			<div className="table-cell">{productId}</div>
+			<div className="table-cell">{email}</div>
+			<div className="table-cell">{comment}</div>
+			<div className="table-cell">{rating}</div>
 		</>
 	);
 };

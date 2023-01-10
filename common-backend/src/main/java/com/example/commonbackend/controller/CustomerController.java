@@ -30,6 +30,8 @@ public class CustomerController {
 
     @PostMapping("/customer")
     public String addCustomer(@Validated @NonNull @RequestBody Customer customer) {
+        System.out.println(customer.getCustomerId());
+        System.out.println(customer.getCompanyName());
         customerRepository.save(customer);
         return "OK";
     }

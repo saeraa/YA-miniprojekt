@@ -11,12 +11,12 @@ const ProductItem = (props: ProductItemProps) => {
 
 	return (
 		<>
-			<div className="rTableCell">{productID}</div>
-			<div className="rTableCell">{productName}</div>
-			<div className="rTableCell">{quantityPerUnit}</div>
-			<div className="rTableCell">{unitPrice}</div>
+			<div className="table-cell">{productID}</div>
+			<div className="table-cell">{productName}</div>
+			<div className="table-cell">{quantityPerUnit}</div>
+			<div className="table-cell">{unitPrice}</div>
 			<div
-				className="rTableCell clickable"
+				className="table-cell clickable"
 				onClick={() => buyItem(props.product)}
 			>
 				Buy

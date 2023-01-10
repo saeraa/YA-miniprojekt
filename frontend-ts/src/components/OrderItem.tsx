@@ -20,14 +20,14 @@ const OrderItem = (props: OrderItemProps) => {
 
 	return (
 		<>
-			<div className="rTableCell">{id}</div>
-			<div className="rTableCell">{customerID}</div>
-			<div className="rTableCell">{orderDateString}</div>
-			<div className="rTableCell">{shippedDateString}</div>
-			<div className="rTableCell clickable" onClick={() => showDetails(id)}>
+			<div className="table-cell">{id}</div>
+			<div className="table-cell">{customerID}</div>
+			<div className="table-cell">{orderDateString}</div>
+			<div className="table-cell">{shippedDateString}</div>
+			<div className="table-cell clickable" onClick={() => showDetails(id)}>
 				Details
 			</div>
-			<div className="rTableCell clickable" onClick={() => deleteItem(id)}>
+			<div className="table-cell clickable" onClick={() => deleteItem(id)}>
 				🗑️
 			</div>
 

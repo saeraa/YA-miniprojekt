@@ -9,16 +9,16 @@ const SupportIssueItem = (props: SupportIssueItemProps) => {
 
 	return (
 		<>
-			<div className="rTableCell">{customerId}</div>
-			<div className="rTableCell">{comment}</div>
-			<div className="rTableCell">
+			<div className="table-cell">{customerId}</div>
+			<div className="table-cell">{comment}</div>
+			<div className="table-cell">
 				{priority == "HIGH"
 					? "High priority"
 					: priority == "LOW"
 					? "Low priority"
 					: "Medium priority"}
 			</div>
-			<div className="rTableCell">
+			<div className="table-cell">
 				{statusType == "INPROGRESS"
 					? "In progress"
 					: statusType == "DONE"

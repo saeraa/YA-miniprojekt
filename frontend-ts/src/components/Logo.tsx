@@ -20,37 +20,21 @@ const Logo = () => {
 					width="143.948"
 					height="69.221"
 				></rect>
+				<rect id="shape-primary" x="14" y="51" width="97" height="41"></rect>
+				<rect id="shape-secondary" x="111" y="74" width="36" height="36"></rect>
 				<rect
-					id="shape.primary"
-					fill="#fde9c9"
-					x="14"
-					y="51"
-					width="97"
-					height="41"
-				></rect>
-				<rect
-					id="shape.secondary"
-					fill="#ea5455"
-					x="111"
-					y="74"
-					width="36"
-					height="36"
-				></rect>
-				<rect
-					id="icon.primary"
+					id="icon-primary"
 					x="114"
 					y="77"
 					width="30"
 					height="30"
-					display="none"
-					fill="#fde9c9"
+					// display="none"
 				></rect>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					version="1.1"
-					fill="#fde9c9"
-					id="svg_icon.primary"
+					id="svg_icon-primary"
 					x="114"
 					y="77"
 					width="30"
@@ -63,12 +47,11 @@ const Logo = () => {
 				<g id="group" transform="translate(21.000000, 61.000000)">
 					<rect id="Rectangle" x="0" y="2" width="84" height="18"></rect>
 					<text
-						id="headerText.secondary"
+						id="headerText-secondary"
 						fontFamily="Noto Serif"
 						fontSize="16.628218714241054"
 						fontWeight="700"
 						letterSpacing="NaN"
-						fill="#ea5455"
 						fontStyle="normal"
 					>
 						<tspan x="2.5114364624023438" y="15">

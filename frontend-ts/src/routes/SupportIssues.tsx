@@ -31,16 +31,17 @@ const SupportIssues = () => {
 
 	return (
 		<>
+			<h1>Support Issues</h1>
 			<details>
 				<summary>Add a support issue</summary>
 				<SupportIssueForm />
 			</details>
-			<hr />
-			<div className="rTable-recommendations">
-				<div className="rTableHead">Customer ID</div>
-				<div className="rTableHead">Comment</div>
-				<div className="rTableHead">Priority</div>
-				<div className="rTableHead">Status Type</div>
+
+			<div className="table table-supportissues">
+				<div className="table-head">Customer ID</div>
+				<div className="table-head">Comment</div>
+				<div className="table-head">Priority</div>
+				<div className="table-head">Status Type</div>
 				{supportIssueItems.length > 0 && supportIssueItems}
 			</div>
 		</>
