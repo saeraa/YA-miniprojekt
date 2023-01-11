@@ -2,20 +2,14 @@ h1 {
 	font-size: 3.2em;
 	line-height: 1.1;
 }
+
 a {
 	font-weight: 500;
 	color: $c-primary;
 	text-decoration: inherit;
-}
+	transition: all 0.5s ease-in-out;
 
-a:hover {
-	color: $c-orange;
-}
-
-:root {
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
+	&:hover {
+		color: $c-orange;
+	}
 }

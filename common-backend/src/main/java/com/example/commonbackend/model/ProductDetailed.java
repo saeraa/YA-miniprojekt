@@ -7,13 +7,11 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "products")
 @DiscriminatorValue("1")
 public class ProductDetailed extends Product {
 	@Column(name = "Discontinued")

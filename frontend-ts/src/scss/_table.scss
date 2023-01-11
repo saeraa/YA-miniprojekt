@@ -1,3 +1,14 @@
+.clickable {
+	text-decoration: none;
+	font-weight: bold;
+	color: rgb(147, 191, 132);
+}
+
+.clickable:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .table {
 	width: 95%;
 	display: grid;

@@ -34,7 +34,10 @@ public class WebSecurityConfig {
 				//.cors()
 				.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/*")
+				.antMatchers("/orders")
+//				.authenticated()
+//				.anyRequest()
+//				.permitAll();
 				//.hasRole("USER")
 				//.anyRequest()
 				.anonymous().anyRequest()
@@ -57,7 +60,7 @@ public class WebSecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService () {
-		UserDetails user = User.withUsername("user")
+		UserDetails user = User.withUsername("sara")
 				.password("{noop}password")
 				.roles("USER")
 				.build();

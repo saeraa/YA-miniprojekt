@@ -35,6 +35,10 @@ datalist {
 	justify-content: space-evenly;
 	writing-mode: vertical-lr;
 	width: 100%;
+
+	& option {
+		background-color: rgba($c-gray-dark, 0) !important;
+	}
 }
 
 option {

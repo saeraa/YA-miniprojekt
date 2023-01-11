@@ -6,7 +6,7 @@
 
 .recommendation-thanks {
 	position: fixed;
-	background-color: $c-gray-darker;
+	background-color: rgba($c-gray-darker, 0.3);
 	padding: 0.5em 1em;
 	color: $c-red;
 }

@@ -2,7 +2,9 @@ package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.Order;
 import com.example.commonbackend.model.OrderRow;
+import com.example.commonbackend.repository.CustomerRepository;
 import com.example.commonbackend.repository.OrderRepository;
+import com.example.commonbackend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +17,20 @@ import org.springframework.util.Assert;
 public class OrderService {
 
 	private final OrderRepository orderRepository;
-
 	private final JdbcTemplate jdbcTemplate;
+	private final CustomerRepository customerRepository;
+	private final ProductRepository productRepository;
 
 	@Autowired
-	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate) {
+	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate,
+						 CustomerRepository customerRepository,
+						 ProductRepository productRepository) {
 		Assert.notNull(orderRepository, "OrderRepository must not be null!");
 		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
 		this.orderRepository = orderRepository;
 		this.jdbcTemplate = jdbcTemplate;
+		this.customerRepository = customerRepository;
+		this.productRepository = productRepository;
 	}
 
 	public ResponseEntity<?> getOrders () {
@@ -34,10 +41,8 @@ public class OrderService {
 	}
 
 	public ResponseEntity<?> addOrder (Order order) {
-		String customerQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.customers t " +
-				" WHERE CustomerID='%s');", order.getCustomerID());
-		Boolean customer = jdbcTemplate.queryForObject(customerQuery, Boolean.class);
-		if (Boolean.FALSE.equals(customer)) {
+		Boolean doesCustomerExist = customerRepository.existsById(order.getCustomerID());
+		if (Boolean.FALSE.equals(doesCustomerExist)) {
 			return new ResponseEntity<>("You need to enter an existing customerID to create an order.",
 					HttpStatus.BAD_REQUEST);
 		} else {
@@ -66,8 +71,7 @@ public class OrderService {
 	public ResponseEntity<?> deleteOrder (int orderID) {
 		var order = orderRepository.findById(orderID);
 		if (order.isPresent()) {
-			var result = jdbcTemplate
-					.update("delete from `order details` where OrderID='" + orderID + "';");
+			var result = orderRepository.deleteOrderRow(orderID);
 			orderRepository.deleteById(orderID);
 			return new ResponseEntity<>(String.format("Order with the ID: %s successfully deleted. %s " +
 					"order row(s) deleted.", orderID, result),
@@ -79,16 +83,12 @@ public class OrderService {
 	}
 
 	public ResponseEntity<?> addOrderWithRows (String customerId, int productId) {
-		String customerQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.customers t " +
-				" WHERE CustomerID='%s');", customerId);
-		Boolean customer = jdbcTemplate.queryForObject(customerQuery, Boolean.class);
-		String productQuery = String.format("SELECT EXISTS(SELECT t.* FROM northwind.products t " +
-				"WHERE ProductID='%s');", productId);
-		Boolean product = jdbcTemplate.queryForObject(productQuery, Boolean.class);
-		if (Boolean.FALSE.equals(customer)) {
+		Boolean doesCustomerExist = customerRepository.existsById(customerId);
+		Boolean doesProductExist = productRepository.existsById(productId);
+		if (Boolean.FALSE.equals(doesCustomerExist)) {
 			return new ResponseEntity<>(String.format("Customer with the ID: %s not found.", customerId),
 					HttpStatus.NOT_FOUND);
-		} else if (Boolean.FALSE.equals(product)) {
+		} else if (Boolean.FALSE.equals(doesProductExist)) {
 			return new ResponseEntity<>(String.format("Product with the ID: %s not found.", productId),
 					HttpStatus.NOT_FOUND);
 		}

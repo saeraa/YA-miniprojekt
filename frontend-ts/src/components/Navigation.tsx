@@ -24,7 +24,7 @@ const Navigation = () => {
 			<nav>
 				<div className="nav-container">
 					<div className="nav-logo">
-						{loggedIn && (
+						{loggedIn ? (
 							<button
 								type="button"
 								className="nav-login"
@@ -32,8 +32,7 @@ const Navigation = () => {
 							>
 								Logout ({username})
 							</button>
-						)}
-						{!loggedIn && (
+						) : (
 							<button
 								type="button"
 								className="nav-login"

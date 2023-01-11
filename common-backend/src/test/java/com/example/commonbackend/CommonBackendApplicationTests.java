@@ -40,7 +40,7 @@ class CommonBackendApplicationTests {
 				.readValue(result
 								.getResponse()
 								.getContentAsString(),
-						new TypeReference<List<Order>>() {
+						new TypeReference<>() {
 						});
 	}
 
@@ -65,8 +65,8 @@ class CommonBackendApplicationTests {
 				.readValue(result
 						.getResponse()
 						.getContentAsString(),
-						new TypeReference<List<Customer>>() {
-				});
+						new TypeReference<>() {
+						});
 	}
 
 	@Test
@@ -80,7 +80,7 @@ class CommonBackendApplicationTests {
 				.readValue(result
 								.getResponse()
 								.getContentAsString(),
-						new TypeReference<List<ProductDetailed>>() {
+						new TypeReference<>() {
 						});
 	}
 
