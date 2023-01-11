@@ -50,7 +50,8 @@ public class TaskService {
 				new ResponseEntity<>(null, HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> updateTask (Task task) {
+	public ResponseEntity<?> updateTask(Task task) {
+		// TODO: update with existsById
 		var id = task.getId();
 		boolean taskExists = taskRepository.findById(id).isPresent();
 		if (taskExists) {

@@ -1,2 +1,1 @@
 CREATE DATABASE  IF NOT EXISTS `supportissues`
-CREATE DATABASE  IF NOT EXISTS `recommendations`
