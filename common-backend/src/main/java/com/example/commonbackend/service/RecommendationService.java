@@ -13,13 +13,18 @@ import java.util.List;
 @Service
 public class RecommendationService {
 
-	String baseURL = "http://localhost:8181/api/v1";
-	WebClient client = WebClient.create(baseURL);
+	private final WebClient webClient;
+
+	String baseURL = "http://recommendation:8181/api/v1";
+
+	public RecommendationService(WebClient webClient) {
+		this.webClient = webClient;
+	}
 
 	public ResponseEntity<?> getRecommendations () {
-		var results = client
+		var results = webClient
 				.get()
-				.uri("/recommendations")
+				.uri(baseURL + "/recommendations")
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<Recommendation>>() {
 				})
@@ -30,9 +35,9 @@ public class RecommendationService {
 	}
 
 	public ResponseEntity<?> addRecommendation (Recommendation recommendation) {
-		var results = client
+		var results = webClient
 				.post()
-				.uri("/recommendation")
+				.uri(baseURL + "/recommendation")
 				.body(Mono.just(recommendation), Recommendation.class)
 				.retrieve()
 				.bodyToMono(Recommendation.class)
@@ -44,9 +49,9 @@ public class RecommendationService {
 	}
 
 	public ResponseEntity<?> getRecommendation (int productId) {
-		var results = client
+		var results = webClient
 				.get()
-				.uri("/recommendations/" + productId)
+				.uri(baseURL + "/recommendations/" + productId)
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<Recommendation>>() {
 				})
@@ -59,9 +64,9 @@ public class RecommendationService {
 	}
 
 	public ResponseEntity<?> removeRecommendation (int productId) {
-		var results = client
+		var results = webClient
 				.delete()
-				.uri("/recommendation/" + productId)
+				.uri(baseURL + "/recommendation/" + productId)
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();

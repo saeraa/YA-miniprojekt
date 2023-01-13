@@ -4,8 +4,8 @@ import Keycloak from "keycloak-js";
 // Pass initialization options as required or leave blank to load from 'keycloak.json'
 const keycloak = new Keycloak({
 	url: "http://localhost:8080/auth",
-	realm: "react",
-	clientId: "react"
+	realm: "realm",
+	clientId: "my-microservice"
 });
 
 function initKeycloak() {

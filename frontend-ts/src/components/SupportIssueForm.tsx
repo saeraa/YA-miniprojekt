@@ -3,7 +3,12 @@ import { Customer } from "../utils/interfaces";
 import settings from "../utils/settings.json";
 import { useAxiosFetch } from "../utils/useAxiosFetch";
 
-const RecommendationsForm = () => {
+interface Props {
+	update: () => void;
+}
+
+const SupportIssueForm = (props: Props) => {
+	const { update } = props;
 	const [supportIssueSent, setSupportIssueSent] = useState(false);
 	const [formData, setFormData] = useState({
 		priority: "LOW",
@@ -63,6 +68,7 @@ const RecommendationsForm = () => {
 					setSupportIssueSent(false);
 				}, 3000);
 			}, 2000);
+		update();
 	}
 
 	function onInputChange(
@@ -134,4 +140,4 @@ const RecommendationsForm = () => {
 	);
 };
 
-export default RecommendationsForm;
+export default SupportIssueForm;

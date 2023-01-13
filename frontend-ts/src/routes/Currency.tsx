@@ -1,6 +1,7 @@
 import { useState } from "react";
 import settings from "../utils/settings.json";
 import { CurrencyType } from "../utils/interfaces";
+import { keycloak } from "../utils/keycloak";
 
 const Currency = () => {
 	const currencies = [
@@ -49,6 +50,7 @@ const Currency = () => {
 		const baseURL = settings.base_url + "/convertCurrency/";
 		const apiResponse = await fetch(baseURL, {
 			headers: {
+				Authorization: `Bearer ${keycloak.token}`,
 				"Content-Type": "application/json"
 			},
 			method: "POST",

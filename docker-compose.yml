@@ -1,4 +1,9 @@
 version: "3.0"
+
+volumes:
+  postgres_data:
+    driver: local
+
 services:
   common-backend:
     hostname: common-backend
@@ -18,7 +23,7 @@ services:
   e-shop:
     hostname: e-shop
     container_name: e-shop
-    build: ./frontend/
+    build: ./frontend-ts/
     privileged: true
     ports:
       - 81:80
@@ -26,18 +31,18 @@ services:
       labnet.io:
         ipv4_address: 10.10.0.20
 
-  # recommendation-service:
-  #   hostname: recommendation-service
-  #   container_name: recommendation-service
-  #   build: ./recommendation-service/
-  #   command: tail -F anything
-  #   privileged: true
-  #   depends_on: # used in each service that depends on the database
-  #     business-database:
-  #       condition: service_healthy
-  #   networks:
-  #     labnet.io:
-  #       ipv4_address: 10.10.0.3
+  recommendation-service:
+    hostname: recommendation
+    container_name: recommendation
+    build: ./recommendation/
+    command: tail -F anything
+    privileged: true
+    depends_on: # used in each service that depends on the database
+      business-database:
+        condition: service_healthy
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.7
 
   business-database:
     hostname: business-database
@@ -54,28 +59,60 @@ services:
       labnet.io:
         ipv4_address: 10.10.0.10
 
-  # customer-support:
-  #   hostname: customer-support
-  #   container_name: customer-support
-  #   build: ./customer-support/
-  #   command: tail -F anything
-  #   privileged: true
-  #   depends_on: # used in each service that depends on the database
-  #     business-database:
-  #       condition: service_healthy
-  #   networks:
-  #     labnet.io:
-  #       ipv4_address: 10.10.0.5
+  customer-support:
+    hostname: customer-support
+    container_name: customer-support
+    build: ./customer-support/
+    command: tail -F anything
+    privileged: true
+    depends_on: # used in each service that depends on the database
+      business-database:
+        condition: service_healthy
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.5
 
-  # foreign-currency:
-  #   hostname: foreign-currency
-  #   container_name: foreign-currency
-  #   build: ./foreign-currency/
-  #   command: tail -F anything
-  #   privileged: true
-  #   networks:
-  #     labnet.io:
-  #       ipv4_address: 10.10.0.6
+  foreign-currency:
+    hostname: foreign-currency
+    container_name: foreign-currency
+    build: ./foreign-currency/
+    command: tail -F anything
+    privileged: true
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.6
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.4
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:legacy
+    environment:
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
+      DB_VENDOR: POSTGRES
+      DB_ADDR: 10.10.0.4
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 8080:8080
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.3
+    depends_on:
+      - postgres
 
 networks:
   labnet.io:

@@ -2,7 +2,12 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import settings from "../utils/settings.json";
 import { Recommendation } from "../utils/interfaces";
 
-const RecommendationsForm = () => {
+interface Props {
+	update: () => void;
+}
+
+const RecommendationsForm = (props: Props) => {
+	const { update } = props;
 	const [recommendationSent, setRecommendationSent] = useState(false);
 	const [formData, setFormData] = useState<Recommendation>({
 		id: 0,
@@ -42,6 +47,7 @@ const RecommendationsForm = () => {
 					setRecommendationSent(false);
 				}, 3000);
 			}, 2000);
+		update();
 	}
 
 	function onInputChange(

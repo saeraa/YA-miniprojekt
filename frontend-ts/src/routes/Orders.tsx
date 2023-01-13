@@ -58,7 +58,11 @@ const Orders = () => {
 		if (exists) {
 			return;
 		}
-		const result = await fetch(url + `/order/${id}`);
+		const result = await fetch(url + `/order/${id}`, {
+			headers: {
+				Authorization: `Bearer ${keycloak.token}`
+			}
+		});
 		const data = await result.json();
 		setOrderRows((prevData) => {
 			return [...prevData, ...data];

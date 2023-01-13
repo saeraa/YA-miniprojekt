@@ -13,13 +13,17 @@ import java.util.List;
 @Service
 public class SupportIssueService {
 
-	String baseURL = "http://localhost:8282/api/v1";
-	WebClient client = WebClient.create(baseURL);
+	private final WebClient webClient;
+
+	public SupportIssueService(WebClient webClient) {
+		this.webClient = webClient;
+	}
+	String baseURL = "http://support-issues:8282/api/v1";
 
 	public ResponseEntity<?> getIssuesForCustomer (String customerId) {
-		var results = client
+		var results = webClient
 				.get()
-				.uri("/tasks/" + customerId)
+				.uri(baseURL + "/tasks/" + customerId)
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<SupportIssue>>() {
 				})
@@ -33,9 +37,9 @@ public class SupportIssueService {
 	}
 
 	public ResponseEntity<?> getAllIssues () {
-		var results = client
+		var results = webClient
 				.get()
-				.uri("/tasks")
+				.uri(baseURL + "/tasks")
 				.retrieve()
 				.bodyToMono(new ParameterizedTypeReference<List<SupportIssue>>() {
 				})
@@ -46,12 +50,13 @@ public class SupportIssueService {
 	}
 
 	public ResponseEntity<?> updateIssue (SupportIssue issue) {
-		var results = client
+		var results = webClient
 				.put()
-				.uri("/task")
+				.uri(baseURL + "/task")
 				.body(Mono.just(issue), SupportIssue.class)
 				.retrieve()
-				.bodyToMono(ResponseEntity.class)
+				.bodyToMono(new ParameterizedTypeReference<SupportIssue>() {
+				})
 				.block();
 		return results == null ?
 				new ResponseEntity<>("Something went wrong. Did you enter the correct task " +
@@ -61,9 +66,9 @@ public class SupportIssueService {
 	}
 
 	public ResponseEntity<?> addIssue (SupportIssue issue) {
-		var results = client
+		var results = webClient
 				.post()
-				.uri("/task")
+				.uri(baseURL + "/task")
 				.body(Mono.just(issue), SupportIssue.class)
 				.retrieve()
 				.bodyToMono(SupportIssue.class)
@@ -76,9 +81,9 @@ public class SupportIssueService {
 	}
 
 	public ResponseEntity<?> removeIssue (String customerId) {
-		var results = client
+		var results = webClient
 				.delete()
-				.uri("/tasks/" + customerId)
+				.uri(baseURL + "/tasks/" + customerId)
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();

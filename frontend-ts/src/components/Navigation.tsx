@@ -12,6 +12,12 @@ const Navigation = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [username, setUserName] = useState("");
 
+	const logout = () => {
+		keycloak.logout();
+		setLoggedIn(false);
+		setUserName("");
+	};
+
 	useEffect(() => {
 		if (keycloak.authenticated) {
 			setLoggedIn(true);
@@ -19,28 +25,22 @@ const Navigation = () => {
 		}
 	}, [loggedIn]);
 
+	const button = loggedIn ? (
+		<button className="nav-login" onClick={logout}>
+			Logout ({username})
+		</button>
+	) : (
+		<button className="nav-login" onClick={() => keycloak.login()}>
+			Login
+		</button>
+	);
+
 	return (
 		<div className="app">
 			<nav>
 				<div className="nav-container">
 					<div className="nav-logo">
-						{loggedIn ? (
-							<button
-								type="button"
-								className="nav-login"
-								onClick={() => keycloak.logout()}
-							>
-								Logout ({username})
-							</button>
-						) : (
-							<button
-								type="button"
-								className="nav-login"
-								onClick={() => keycloak.login()}
-							>
-								Login
-							</button>
-						)}
+						{button}
 						<NavLink to={"/"}>
 							<Logo />
 						</NavLink>
