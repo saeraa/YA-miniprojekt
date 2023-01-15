@@ -1,6 +1,10 @@
 # Microservices in Spring
 
+## Project overview
+
 ![ya-miniproject drawio (1)](https://user-images.githubusercontent.com/99484730/212542334-f7e34c56-8f51-4264-a08f-5eb7cfbf6177.png)
+
+---
 
 ## Project description
 > • A company is planning to move its core business system to a microservice architecture 
@@ -12,6 +16,18 @@ core API to provide prices in other currencies.
 their recommendations for products.  
 • Additional functionality also include a customer support service where customers can 
 manage their support requests.  
+
+---
+
+## Project tools
+
+Java 11. Spring Boot 2.7 with Maven: Spring Security, OAuth, Spring Docs & Asciidocs, Spring Cloud (Eureka), Lombok.
+MySQL. PostgreSQL. Docker. Keycloak. 
+Frontend: React 18 with React Router v6. Vite. TypeScript. Sass. Axios. Keycloak.js.
+
+---
+
+## Project components
 
 ### docker-compose 
 This project is built to run in a docker compose environment. All parts of the program are registered in the /docker-compose.yml file and can be run by `docker-compose up`.
