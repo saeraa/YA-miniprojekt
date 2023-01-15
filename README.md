@@ -10,3 +10,6 @@ core API to provide prices in other currencies.
 their recommendations for products.  
 • Additional functionality also include a customer support service where customers can 
 manage their support requests.  
+
+
+![2023-01-15](https://user-images.githubusercontent.com/99484730/212541220-f9566ca9-e504-4c25-b258-ddb63b38eb2d.png)
