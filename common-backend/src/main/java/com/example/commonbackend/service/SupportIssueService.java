@@ -62,7 +62,7 @@ public class SupportIssueService {
 				new ResponseEntity<>("Something went wrong. Did you enter the correct task " +
 						"format? \n" + issue,
 						HttpStatus.BAD_REQUEST) :
-				new ResponseEntity<>(results, HttpStatus.OK);
+				new ResponseEntity<>(results, HttpStatus.NO_CONTENT);
 	}
 
 	public ResponseEntity<?> addIssue (SupportIssue issue) {
@@ -77,7 +77,7 @@ public class SupportIssueService {
 				new ResponseEntity<>("Something went wrong. Did you enter the correct task " +
 						"format? \n" + issue,
 						HttpStatus.BAD_REQUEST) :
-				new ResponseEntity<>(results, HttpStatus.OK);
+				new ResponseEntity<>(results, HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<?> removeIssue (String customerId) {

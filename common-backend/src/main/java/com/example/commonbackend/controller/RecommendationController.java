@@ -22,7 +22,6 @@ public class RecommendationController {
 		return recommendationService.getRecommendations();
 	}
 
-	@CrossOrigin
 	@PostMapping("/recommendation")
 	public ResponseEntity<?> addRecommendation (@RequestBody Recommendation recommendation) {
 		return recommendationService.addRecommendation(recommendation);

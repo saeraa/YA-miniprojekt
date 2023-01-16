@@ -54,23 +54,47 @@ use of HTTP status codes.
 | The requested resource did not exist
 |===
 
-[[resources-index]]
-== Index
+[[resources-order]]
+== Orders
 
 The index provides the entry point into the service.
 
-[[resources-index-access]]
-=== Accessing the index
+[[resources-order-get]]
+=== Get orders
 
-A `GET` request is used to access the index
+A `GET` request is used to get a list of all available orders.
 
-==== Request structure
-include::{snippets}/create-order-example/http-request.adoc[]
+[[resources-order-getrows]]
+=== Get order rows
+
+A `GET` request is used to get the order rows for a specific order.
+
+[[resources-order-delete]]
+=== Delete order
+
+A `DELETE` request is used to delete the specified order.
+
+[[resources-order-add]]
+=== Add order for customer
+
+A `POST` request is used to create a new empty order for a specified customer.
+
+==== Example request
+include::{snippets}/order-post/http-request.adoc[]
+Request body
+include::{snippets}/order-post/request-fields.adoc[]
 
 ==== Example response
 
-include::{snippets}/create-order-example/http-response.adoc[]
+include::{snippets}/order-post/http-response.adoc[]
 
-==== CURL request
+[[resources-order-addwithid]]
+=== Add order with product for customer
 
-include::{snippets}/create-order-example/curl-request.adoc[]
+A `POST` request is used to create a new order with the specified product.
+
+==== Example request
+include::{snippets}/order-post-withId/http-request.adoc[]
+
+==== Example response
+include::{snippets}/order-post/http-response.adoc[]

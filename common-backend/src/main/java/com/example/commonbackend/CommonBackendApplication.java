@@ -1,5 +1,6 @@
 package com.example.commonbackend;
 
+import com.github.javafaker.Faker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

@@ -1,5 +1,6 @@
 package com.example.commonbackend.config;
 
+import com.github.javafaker.Faker;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    Faker faker() {
+        return new Faker();
+    }
 
     @Bean
     public KeycloakSpringBootConfigResolver keycloakSpringBootConfigResolver() {

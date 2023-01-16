@@ -51,48 +51,7 @@ class CommonBackendApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-	@Test
-	void getOrders() throws Exception {
-		MvcResult result = mockMvc.perform(get("/orders"))
-				.andExpect(status().isOk())
-				.andReturn();
 
-		ObjectMapper mapper = new ObjectMapper();
-		List<Order> actual = mapper
-				.readValue(result
-								.getResponse()
-								.getContentAsString(),
-						new TypeReference<>() {
-						});
-	}
-
-	@Test
-	void postOrder() throws	Exception {
-		this.mockMvc.perform(post("/orders")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\n" +
-						"    \"customerID\": \"VINET\"\n" +
-						"}"))
-				.andExpect(status().isCreated())
-				.andDo(document("create-order-example",
-						requestFields(fieldWithPath("customerID")
-								.description("The customer's ID."),
-								fieldWithPath("id").optional().type(JsonFieldType.STRING)
-										.description("The id of the order."),
-								fieldWithPath("orderDate").optional().type(JsonFieldType.STRING)
-										.description("The order date."),
-								fieldWithPath("shippedDate").optional().type(JsonFieldType.STRING)
-										.description("The shipping date.")),
-						responseFields(fieldWithPath("customerID")
-								.description("The customer's ID"),
-								fieldWithPath("id")
-										.description("Order ID"),
-								fieldWithPath("orderDate")
-								.description("Order date of order."),
-								fieldWithPath("shippedDate")
-										.description("Shipped date of order."))
-				));
-	}
 
 	@Test
 	void getCustomers() throws Exception {
