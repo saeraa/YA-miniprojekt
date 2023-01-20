@@ -1,9 +1,8 @@
 package com.example.recommendation.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity(name = "RECOMMENDATION")
 @Getter
