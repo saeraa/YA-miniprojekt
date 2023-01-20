@@ -3,7 +3,6 @@ import settings from "../utils/settings.json";
 import SupportIssueItem from "../components/SupportIssueItem";
 import SupportIssueForm from "../components/SupportIssueForm";
 import { SupportIssue } from "../utils/interfaces";
-import { keycloak } from "../utils/keycloak";
 
 const SupportIssues = () => {
 	const [update, setUpdate] = useState(false);
@@ -17,9 +16,7 @@ const SupportIssues = () => {
 	useEffect(() => {
 		const getData = async () => {
 			const results = await fetch(url + "/supportissues", {
-				headers: {
-					Authorization: `Bearer ${keycloak.token}`
-				}
+				headers: {}
 			});
 			const data = await results.json();
 			if (data.status === 500) {

@@ -5,7 +5,6 @@ import com.example.commonbackend.model.OrderRow;
 import com.example.commonbackend.repository.CustomerRepository;
 import com.example.commonbackend.repository.OrderRepository;
 import com.example.commonbackend.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,7 +20,6 @@ public class OrderService {
 	private final CustomerRepository customerRepository;
 	private final ProductRepository productRepository;
 
-	@Autowired
 	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate,
 						 CustomerRepository customerRepository,
 						 ProductRepository productRepository) {

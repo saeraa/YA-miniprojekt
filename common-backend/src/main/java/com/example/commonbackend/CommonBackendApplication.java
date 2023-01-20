@@ -1,15 +1,17 @@
 package com.example.commonbackend;
 
+import com.example.commonbackend.config.RsaKeyProperties;
 import com.github.javafaker.Faker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
-@EnableEurekaClient
+@EnableConfigurationProperties(RsaKeyProperties.class)
 public class CommonBackendApplication {
 
 	public static void main (String[] args) {
@@ -23,8 +25,18 @@ public class CommonBackendApplication {
 	}
 
 	@Bean
+	Faker faker() {
+		return new Faker();
+	}
+
+	@Bean
 	WebClient webClient(WebClient.Builder builder) {
 		return builder.build();
+	}
+
+	@Bean
+	HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+		return new HiddenHttpMethodFilter();
 	}
 
 }

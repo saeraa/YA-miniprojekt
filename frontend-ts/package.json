@@ -11,15 +11,15 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@react-keycloak/web": "^3.4.0",
 		"axios": "^1.2.2",
-		"keycloak-js": "^20.0.2",
+		"buffer": "^6.0.3",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-jwt": "^1.1.8",
 		"react-router-dom": "^6.6.1"
 	},
 	"devDependencies": {
-		"@types/keycloak-js": "^3.4.1",
+		"@types/node": "^18.11.18",
 		"@types/react": "^18.0.26",
 		"@types/react-dom": "^18.0.9",
 		"@vitejs/plugin-react": "^3.0.0",

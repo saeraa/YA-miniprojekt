@@ -3,7 +3,6 @@ import settings from "../utils/settings.json";
 import ProductItems from "../components/ProductItem";
 import ProductCart from "../components/ProductCart";
 import { Product } from "../utils/interfaces";
-import { keycloak } from "../utils/keycloak";
 //import ProductsArray from "../utils/products";
 
 const Products = () => {
@@ -22,9 +21,7 @@ const Products = () => {
 
 		const getData = async () => {
 			const results = await fetch(url + "/products", {
-				headers: {
-					Authorization: `Bearer ${keycloak.token}`
-				}
+				headers: {}
 			});
 			const data = await results.json();
 			setOriginalProducts(() => {

@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class CurrencyController {
 
 	private final CurrencyService currencyService;
@@ -17,7 +18,6 @@ public class CurrencyController {
 	}
 
 	@PostMapping("/convertCurrency")
-	@CrossOrigin
 	public ResponseEntity<String> getPrice (@RequestBody Price price) {
 		return currencyService.getPrice(price);
 	}

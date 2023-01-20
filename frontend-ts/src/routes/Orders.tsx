@@ -1,10 +1,13 @@
-import { useState, useEffect, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent, useContext } from "react";
 import OrderItems from "../components/OrderItem";
 import { Order, OrderRowType } from "../utils/interfaces";
-import { keycloak } from "../utils/keycloak";
 import settings from "../utils/settings.json";
+import { SignInContext } from "../utils/signInContext";
+import { Buffer } from "buffer";
+import { useAxiosFetch } from "../utils/useAxiosFetch";
 
 const Orders = () => {
+	const { token } = useContext(SignInContext);
 	const [search, setSearch] = useState<string>("");
 	const [originalOrders, setOriginalOrders] = useState<Order[] | []>([]);
 	const [orders, setOrders] = useState<Order[] | []>([]);
@@ -12,22 +15,23 @@ const Orders = () => {
 
 	const url = settings.api_url + ":" + settings.api_port;
 
+	const getDataParams = {
+		method: "GET",
+		url: url + "/orders",
+		headers: {
+			Authorization: "Bearer " + token
+		}
+	};
+
+	const [data, error, loading, fetchData] = useAxiosFetch(getDataParams);
+
 	useEffect(() => {
 		const getData = async () => {
-			const results = await fetch(url + "/orders", {
-				headers: {
-					Authorization: `Bearer ${keycloak.token}`
-				}
-			});
-			//console.log(results);
-			const data = await results.json();
-			setOriginalOrders(() => {
-				return [...data];
-			});
-			setOrders(() => {
-				return [...data];
-			});
+			await fetchData();
+			setOriginalOrders(data);
+			setOrders(data);
 		};
+
 		getData().catch((error) => console.log(error));
 	}, []);
 
@@ -59,9 +63,7 @@ const Orders = () => {
 			return;
 		}
 		const result = await fetch(url + `/order/${id}`, {
-			headers: {
-				Authorization: `Bearer ${keycloak.token}`
-			}
+			headers: {}
 		});
 		const data = await result.json();
 		setOrderRows((prevData) => {

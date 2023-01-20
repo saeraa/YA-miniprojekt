@@ -1,4 +1,4 @@
-package com.example.commonbackend;
+package com.example.commonbackend.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
-public class CustomerTests {
+public class CurrencyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

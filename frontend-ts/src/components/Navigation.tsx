@@ -5,34 +5,21 @@ import order from "/order.svg";
 import recommendation from "/recommendation.svg";
 import supportissue from "/supportissue.svg";
 import product from "/product.svg";
-import { keycloak } from "../utils/keycloak";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SignInContext } from "../utils/signInContext";
 
 const Navigation = () => {
-	const [loggedIn, setLoggedIn] = useState(false);
-	const [username, setUserName] = useState("");
-
-	const logout = () => {
-		keycloak.logout();
-		setLoggedIn(false);
-		setUserName("");
-	};
-
-	useEffect(() => {
-		if (keycloak.authenticated) {
-			setLoggedIn(true);
-			setUserName(keycloak.tokenParsed?.preferred_username);
-		}
-	}, [loggedIn]);
+	const { loggedIn, setLoggedIn, token, setToken, username } =
+		useContext(SignInContext);
 
 	const button = loggedIn ? (
-		<button className="nav-login" onClick={logout}>
+		<button className="nav-login" onClick={() => setLoggedIn(false)}>
 			Logout ({username})
 		</button>
 	) : (
-		<button className="nav-login" onClick={() => keycloak.login()}>
-			Login
-		</button>
+		<NavLink to="login">
+			<button className="nav-login">Login</button>
+		</NavLink>
 	);
 
 	return (

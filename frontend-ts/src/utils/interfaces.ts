@@ -51,3 +51,22 @@ export interface SupportIssue {
 	priority: string;
 	statusType: string;
 }
+
+export interface SignIn {
+	setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+	loggedIn: boolean;
+	token: string;
+	setToken: React.Dispatch<React.SetStateAction<string>>;
+	username: string;
+	setUsername: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface MyToken {
+	exp: number;
+	iat: number;
+	iss: string;
+	scope: string;
+	sub: string;
+	reEvaluateToken: (token: string) => void;
+	isExpired: boolean;
+}

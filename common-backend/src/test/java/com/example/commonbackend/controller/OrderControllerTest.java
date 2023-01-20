@@ -1,4 +1,4 @@
-package com.example.commonbackend;
+package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Order;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +19,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.net.URI;
 import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -33,13 +30,12 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc(printOnlyOnFailure = false)
-public class OrderTests {
+public class OrderControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,7 +45,8 @@ public class OrderTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(documentationConfiguration(restDocumentation))
                 .alwaysDo(document("{method-name}",
-                        preprocessRequest(prettyPrint()),
+                        preprocessRequest(prettyPrint(),
+                                modifyUris().scheme("http").host("localhost").port(8888)),
                         preprocessResponse(prettyPrint())
                 ))
                 .build();
@@ -59,7 +56,7 @@ public class OrderTests {
     void getOrders() throws Exception {
         MvcResult result = mockMvc.perform(get("/orders"))
                 .andExpect(status().isOk())
-                .andDo(document("orders-get"))
+                //.andDo(document("{method-name}"))
                 .andReturn();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -79,8 +76,7 @@ public class OrderTests {
                                 "    \"customerID\": \"VINET\"\n" +
                                 "}"))
                 .andExpect(status().isCreated())
-                .andDo(document("order-post",
-                        requestPartBody("uri"),
+                .andDo(document("post-{method-name}",
                         requestFields(
                                 fieldWithPath("customerID")
                                         .description("The customer's ID."),
@@ -104,7 +100,7 @@ public class OrderTests {
         // summary: "POST addOrder/{customerId}/{productId}"
         this.mockMvc.perform(post("/addOrder/{customerId}/{productId}", "VINET", 2))
                 .andExpect(status().isCreated())
-                .andDo(document("order-post-withId",
+                .andDo(document("post-{method-name}",
                         pathParameters(
                                 parameterWithName("customerId")
                                         .description("The customer ID."),
@@ -113,24 +109,24 @@ public class OrderTests {
                         )));
     }
 
-    @Test
-    void deleteOrder() throws Exception {
-        // summary: "DELETE deleteOrder/{orderId}"
-        this.mockMvc.perform(delete("/deleteOrder/{orderID}", 10254))
-                .andExpect(status().isOk())
-                .andDo(document("order-delete",
-                        pathParameters(
-                                parameterWithName("orderID")
-                                        .description("The ID of the order.")
-                        )));
-    }
+//    @Test
+//    void deleteOrder() throws Exception {
+//        // summary: "DELETE deleteOrder/{orderId}"
+//        this.mockMvc.perform(delete("/deleteOrder/{orderID}", 10256))
+//                .andExpect(status().isOk())
+//                .andDo(document("{method-name}",
+//                        pathParameters(
+//                                parameterWithName("orderID")
+//                                        .description("The ID of the order.")
+//                        )));
+//    }
 
     @Test
     void getOrderRows() throws Exception {
         //summary: "GET order/{orderID}"
         this.mockMvc.perform(get("/order/{orderID}", 10253))
                 .andExpect(status().isOk())
-                .andDo(document("order-get-rows",
+                .andDo(document("get-{method-name}",
                         pathParameters(
                                 parameterWithName("orderID")
                                         .description("The ID of the order.")

@@ -57,22 +57,46 @@ use of HTTP status codes.
 [[resources-order]]
 == Orders
 
-The index provides the entry point into the service.
-
 [[resources-order-get]]
 === Get orders
 
 A `GET` request is used to get a list of all available orders.
+
+==== Example request
+include::{snippets}/get-orders/http-request.adoc[]
+
+==== Example response
+
+.See list of orders
+[%collapsible]
+====
+include::{snippets}/get-orders/http-response.adoc[]
+====
 
 [[resources-order-getrows]]
 === Get order rows
 
 A `GET` request is used to get the order rows for a specific order.
 
+==== Example request
+include::{snippets}/get-order-rows/http-request.adoc[]
+include::{snippets}/get-order-rows/path-parameters.adoc[]
+
+==== Example response
+include::{snippets}/get-order-rows/http-response.adoc[]
+
 [[resources-order-delete]]
 === Delete order
 
 A `DELETE` request is used to delete the specified order.
+
+==== Example request
+include::{snippets}/delete-order/http-request.adoc[]
+
+include::{snippets}/delete-order/path-parameters.adoc[]
+
+==== Example response
+include::{snippets}/delete-order/http-response.adoc[]
 
 [[resources-order-add]]
 === Add order for customer
@@ -80,13 +104,12 @@ A `DELETE` request is used to delete the specified order.
 A `POST` request is used to create a new empty order for a specified customer.
 
 ==== Example request
-include::{snippets}/order-post/http-request.adoc[]
+include::{snippets}/post-order/http-request.adoc[]
 Request body
-include::{snippets}/order-post/request-fields.adoc[]
+include::{snippets}/post-order/request-fields.adoc[]
 
 ==== Example response
-
-include::{snippets}/order-post/http-response.adoc[]
+include::{snippets}/post-order/http-response.adoc[]
 
 [[resources-order-addwithid]]
 === Add order with product for customer
@@ -94,7 +117,9 @@ include::{snippets}/order-post/http-response.adoc[]
 A `POST` request is used to create a new order with the specified product.
 
 ==== Example request
-include::{snippets}/order-post-withId/http-request.adoc[]
+include::{snippets}/add-order-with-product-id/http-request.adoc[]
+include::{snippets}/add-order-with-product-id/path-parameters.adoc[]
+
 
 ==== Example response
-include::{snippets}/order-post/http-response.adoc[]
+include::{snippets}/add-order-with-product-id/http-response.adoc[]

@@ -4,7 +4,6 @@ import RecommendationsForm from "../components/RecommendationForm";
 import RecommendationItem from "../components/RecommendationItem";
 //import recommendationsDummy from "../utils/recommendations";
 import { Recommendation } from "../utils/interfaces";
-import { keycloak } from "../utils/keycloak";
 
 const Recommendations = () => {
 	const [update, setUpdate] = useState(false);
@@ -23,9 +22,7 @@ const Recommendations = () => {
 
 		const getData = async () => {
 			const results = await fetch(url + "/recommendations", {
-				headers: {
-					Authorization: `Bearer ${keycloak.token}`
-				}
+				headers: {}
 			});
 			const data = await results.json();
 			console.log(data);
