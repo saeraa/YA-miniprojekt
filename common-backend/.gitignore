@@ -35,3 +35,5 @@ build/
 
 ### Tokens
 *.pem
+
+!**/src/main/resources/certs/private.pem
