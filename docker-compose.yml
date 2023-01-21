@@ -1,9 +1,5 @@
 version: "3.0"
 
-volumes:
-  postgres_data:
-    driver: local
-
 services:
   common-backend:
     hostname: common-backend
@@ -14,8 +10,12 @@ services:
     ports:
       - 8888:8888
     depends_on: # used in each service that depends on the database
+      eureka-service:
+        condition: service_started
       business-database:
         condition: service_healthy
+    links:
+      - eureka-service
     networks:
       labnet.io:
         ipv4_address: 10.10.0.2
@@ -38,11 +38,27 @@ services:
     command: tail -F anything
     privileged: true
     depends_on: # used in each service that depends on the database
+      eureka-service:
+        condition: service_started
       business-database:
         condition: service_healthy
+    links:
+      - eureka-service
     networks:
       labnet.io:
         ipv4_address: 10.10.0.7
+
+  eureka-service:
+    hostname: eureka-service
+    container_name: eureka
+    build: ./eureka-service/
+    command: tail -F anything
+    privileged: true
+    ports:
+      - 8761:8761
+    networks:
+      labnet.io:
+        ipv4_address: 10.10.0.6
 
   business-database:
     hostname: business-database
@@ -66,8 +82,12 @@ services:
     command: tail -F anything
     privileged: true
     depends_on: # used in each service that depends on the database
+      eureka-service:
+        condition: service_started
       business-database:
         condition: service_healthy
+    links:
+      - eureka-service
     networks:
       labnet.io:
         ipv4_address: 10.10.0.5
@@ -78,41 +98,14 @@ services:
     build: ./foreign-currency/
     command: tail -F anything
     privileged: true
-    networks:
-      labnet.io:
-        ipv4_address: 10.10.0.6
-
-  postgres:
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
+    depends_on:
+      eureka-service:
+        condition: service_started
+    links:
+      - eureka-service
     networks:
       labnet.io:
         ipv4_address: 10.10.0.4
-
-  keycloak:
-    image: quay.io/keycloak/keycloak:legacy
-    environment:
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
-      DB_VENDOR: POSTGRES
-      DB_ADDR: 10.10.0.4
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_SCHEMA: public
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-    ports:
-      - 8080:8080
-    networks:
-      labnet.io:
-        ipv4_address: 10.10.0.3
-    depends_on:
-      - postgres
 
 networks:
   labnet.io:

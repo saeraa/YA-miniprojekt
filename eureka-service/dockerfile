@@ -1,8 +1,8 @@
-FROM maven:3.8-amazoncorretto-11 as builder
+FROM maven:3.8-amazoncorretto-17 as builder
 WORKDIR /app
 COPY . /app
 RUN mvn package -DskipTests
 
-FROM openjdk:11-jre-slim
+FROM amazoncorretto:17.0.6
 COPY --from=builder /app/target/*.jar /home/app/myapp.jar
 ENTRYPOINT [ "java", "-jar", "/home/app/myapp.jar" ]
