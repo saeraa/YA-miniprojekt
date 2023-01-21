@@ -2,7 +2,8 @@
 
 ## Project overview
 
-![ya-miniproject drawio (1)](https://user-images.githubusercontent.com/99484730/212542334-f7e34c56-8f51-4264-a08f-5eb7cfbf6177.png)
+![ya-miniproject drawio](https://user-images.githubusercontent.com/99484730/213866214-ea7e26c2-18a7-4830-9d8e-5914e61c6b65.svg)
+
 
 ---
 
@@ -21,9 +22,9 @@ manage their support requests.
 
 ## Project tools
 
-Java 11. Spring Boot 2.7 with Maven: Spring Security, OAuth, Spring Docs & Asciidocs, Spring Cloud (Eureka), Lombok.
-MySQL. PostgreSQL. Docker. Keycloak. 
-Frontend: React 18 with React Router v6. Vite. TypeScript. Sass. Axios. Keycloak.js.
+Java 11. Spring Boot 2.7 with Maven: Spring Security, OAuth2, Spring Docs & Asciidocs, Spring Cloud (Eureka), Lombok.
+MySQL. Docker. 
+Frontend: React 18 with React Router v6. Vite. TypeScript. Sass. Axios. React-jwt. Buffer.
 
 ---
 
@@ -35,8 +36,8 @@ This project is built to run in a docker compose environment. All parts of the p
 ### business-database
 The MySQL database server containing the databases Northwind, Recommendation and SupportIssues.
 
-### keycloak
-The frontend client and common-api are secured with Keycloak. No requests will be made without proper authorization. Example login is guest/guest. Once the project is up and running, the Keycloak admin panel can be reached at http://localhost:8080/. Realm, client and user information saved in its own PostgreSQL database.
+### spring security
+The frontend client and common-api are secured with Oauth2 using JWT tokens. No requests will be allowed without proper authorization. Example login is user/password. 
 
 ### eureka-service
 The service registration Netflix Eureka Server where all the parts are registered. Allows the different microservices to communicate with each other by name rather than address. Server details at http://localhost:8761/.
