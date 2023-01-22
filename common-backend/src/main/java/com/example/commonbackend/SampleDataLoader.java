@@ -25,14 +25,14 @@ public class SampleDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<Recommendation> recommendations = IntStream.rangeClosed(1,30)
-                .mapToObj(i -> new Recommendation(
-                    faker.internet().emailAddress(),
-                        faker.chuckNorris().fact(),
-                        faker.number().numberBetween(1,77),
-                        faker.number().numberBetween(1,10)
-                )).collect(Collectors.toList());
+        // List<Recommendation> recommendations = IntStream.rangeClosed(1,30)
+        //         .mapToObj(i -> new Recommendation(
+        //             faker.internet().emailAddress(),
+        //                 faker.chuckNorris().fact(),
+        //                 faker.number().numberBetween(1,77),
+        //                 faker.number().numberBetween(1,10)
+        //         )).collect(Collectors.toList());
 
-        recommendations.forEach(recommendationService::addRecommendation);
+        // recommendations.forEach(recommendationService::addRecommendation);
     }
 }

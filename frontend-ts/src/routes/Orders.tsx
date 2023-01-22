@@ -46,7 +46,7 @@ const Orders = () => {
 		getData().catch((error) => console.log(error));
 	}, []);
 
-	const deleteItem = (id: number) => {
+	const deleteItem = async (id: number) => {
 		const filteredItems = originalOrders.filter((order) => {
 			return order.id !== id;
 		});
@@ -56,10 +56,12 @@ const Orders = () => {
 		setOrders(() => {
 			return [...filteredItems];
 		});
-		fetch(url + "/deleteOrder/" + id, {
-			method: "DELETE"
-		}).catch(function () {
-			console.log("error");
+		const response = await axios.request({
+			method: "DELETE",
+			url: url + `/deleteOrder/${id}`,
+			headers: {
+				Authorization: "Bearer " + token
+			}
 		});
 	};
 
@@ -80,7 +82,6 @@ const Orders = () => {
 				Authorization: "Bearer " + token
 			}
 		});
-		//const data = await response.data;
 		setOrderRows((prevData) => {
 			return [...prevData, ...response.data];
 		});

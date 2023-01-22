@@ -23,8 +23,8 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const url = settings.api_url + ":" + settings.api_port;
-	const [user, setUser] = useState("");
-	const [password, setPassword] = useState("");
+	const [user, setUser] = useState("user");
+	const [password, setPassword] = useState("password");
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [data, error, loading, fetchData] = useAxiosLogin({
@@ -70,7 +70,7 @@ const Login = () => {
 
 	function onInputChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target;
-		if (name == "user") {
+		if (name == "username") {
 			setUser(value);
 		} else if (name == "password") {
 			setPassword(value);
