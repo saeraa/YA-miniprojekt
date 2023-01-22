@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import settings from "../utils/settings.json";
 import ProductItems from "../components/ProductItem";
 import ProductCart from "../components/ProductCart";
-import { Product } from "../utils/interfaces";
-//import ProductsArray from "../utils/products";
+import { Product } from "../utils/productInterfaces";
+import { SignInContext } from "../utils/signInContext";
+import { useAxiosFetch } from "../utils/useAxiosFetch";
 
 const Products = () => {
+	const { token, loggedIn } = useContext(SignInContext);
 	const [originalProducts, setOriginalProducts] = useState<Product[] | []>([]);
 	const [products, setProducts] = useState<Product[] | []>([]);
 	const [search, setSearch] = useState<string>("");
@@ -14,25 +16,38 @@ const Products = () => {
 
 	const url = settings.api_url + ":" + settings.api_port;
 
+	const getDataParams = {
+		method: "GET",
+		url: url + "/products",
+		headers: {
+			Authorization: "Bearer " + token
+		}
+	};
+
+	const [data, error, loading, fetchData] = useAxiosFetch(getDataParams);
+
+	const getProductsFromAPI = async () => {
+		await fetchData();
+		setProducts((prevdata) => data);
+	};
+
 	useEffect(() => {
-		// dummydata example
-		// setOriginalProducts(ProductsArray);
-		// setProducts(ProductsArray);
+		if (data) {
+			setProducts(data);
+			setOriginalProducts(data);
+		}
+	}, [data]);
 
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+		}
 		const getData = async () => {
-			const results = await fetch(url + "/products", {
-				headers: {}
-			});
-			const data = await results.json();
-			setOriginalProducts(() => {
-				return [...data];
-			});
-			setProducts(() => {
-				return [...data];
-			});
+			await fetchData();
 		};
-
-		getData().catch((error) => console.log(error));
+		if (loggedIn) {
+			getData().catch((error) => console.log(error));
+		} else return;
 	}, []);
 
 	const updateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,44 +79,55 @@ const Products = () => {
 		});
 	};
 
-	const productItems = products.map((product) => {
-		return (
-			<ProductItems
-				product={product}
-				key={product.productID}
-				buyItem={buyItem}
-			/>
-		);
-	});
+	let productItems =
+		products !== null
+			? products.map((product) => {
+					return (
+						<ProductItems
+							product={product}
+							key={product.productID}
+							buyItem={buyItem}
+						/>
+					);
+			  })
+			: "No results";
 
 	return (
-		<>
-			<h1>Products</h1>
-			<header className="App-header">
-				<div>
-					{cartProducts.length > 0 && (
-						<ProductCart cartProducts={cartProducts} subTotal={subTotal} />
-					)}
-				</div>
-				<div id="search-div">
-					<input
-						placeholder="Search product"
-						id="customer-search"
-						type="text"
-						value={search}
-						onChange={updateSearch}
-					/>
-				</div>
-				<div className="table table-products">
-					<div className="table-head">ProductID</div>
-					<div className="table-head">ProductName</div>
-					<div className="table-head">Quantity per unit</div>
-					<div className="table-head">Unit price</div>
-					<div className="table-head">🧺</div>
-					{productItems.length > 0 && productItems}
-				</div>
-			</header>
-		</>
+		<div className="App">
+			{!loggedIn ? (
+				<h1>You need to log in.</h1>
+			) : (
+				<>
+					<h1>
+						Products <span onClick={getProductsFromAPI}>🔄️</span>
+					</h1>
+					<header className="App-header">
+						<div>
+							{cartProducts.length > 0 && (
+								<ProductCart cartProducts={cartProducts} subTotal={subTotal} />
+							)}
+						</div>
+						<div id="search-div">
+							<input
+								placeholder="Search product"
+								id="customer-search"
+								type="text"
+								value={search}
+								onChange={updateSearch}
+							/>
+						</div>
+						<div className="table table-products">
+							<div className="table-head">ProductID</div>
+							<div className="table-head">ProductName</div>
+							<div className="table-head">Quantity per unit</div>
+							<div className="table-head">Unit price</div>
+							<div className="table-head">🧺</div>
+							{productItems.length > 0 && productItems}
+						</div>
+					</header>
+				</>
+			)}
+		</div>
 	);
 };
 

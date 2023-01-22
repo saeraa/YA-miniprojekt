@@ -13,5 +13,20 @@ export const SignInContext = createContext<SignIn>({
 	username: "",
 	setUsername: function (value: SetStateAction<string>): void {
 		throw new Error("Function not implemented.");
+	},
+	reEvaluateToken: function (value: SetStateAction<string>): void {
+		throw new Error("Function not implemented.");
+	},
+	isExpired: false,
+	decodedToken: {
+		exp: 1,
+		iat: 1,
+		iss: "",
+		scope: "",
+		sub: "",
+		reEvaluateToken: function (value: SetStateAction<string>): void {
+			throw new Error("Function not implemented.");
+		},
+		isExpired: true
 	}
 });

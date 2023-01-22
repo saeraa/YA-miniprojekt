@@ -23,17 +23,9 @@ function App() {
 	const [username, setUsername] = useState("");
 	const { decodedToken, isExpired, reEvaluateToken } = useJwt<MyToken>(token);
 
-	function logOut() {
-		setLoggedIn(false);
-	}
-	function logIn() {
-		setLoggedIn(true);
-	}
-
 	useEffect(() => {
 		const tokenFromLocalStorage: string | null = getTokenFromLocalStorage();
 		if (tokenFromLocalStorage) {
-			reEvaluateToken(tokenFromLocalStorage);
 			if (isExpired) {
 				storeTokenInLocalStorage("");
 			} else {
@@ -58,13 +50,17 @@ function App() {
 					token,
 					setToken,
 					username,
-					setUsername
+					setUsername,
+					decodedToken,
+					isExpired,
+					reEvaluateToken
 				}}
 			>
 				<Routes>
 					<Route path="/" element={<Navigation />}>
 						<Route path="/" element={<Welcome />} />
 						<Route path="login" element={<Login />} />
+
 						<Route path="products" element={<Products />} />
 						<Route path="currency" element={<Currency />} />
 						<Route path="orders" element={<Orders />} />

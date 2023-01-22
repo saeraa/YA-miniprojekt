@@ -5,23 +5,29 @@ import {
 	storeTokenInLocalStorage
 } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
-import { useAxiosFetch } from "../utils/useAxiosFetch";
 import settings from "../utils/settings.json";
-import { useJwt } from "react-jwt";
 import { Buffer } from "buffer";
+import { useAxiosLogin } from "../utils/useAxiosLogin";
 
 const Login = () => {
-	const { loggedIn, setLoggedIn, token, setToken } = useContext(SignInContext);
+	const {
+		loggedIn,
+		setLoggedIn,
+		token,
+		setToken,
+		reEvaluateToken,
+		isExpired,
+		decodedToken,
+		setUsername
+	} = useContext(SignInContext);
 	const navigate = useNavigate();
 
 	const url = settings.api_url + ":" + settings.api_port;
-	const [user, setUser] = useState("user");
-	const [password, setPassword] = useState("password");
+	const [user, setUser] = useState("");
+	const [password, setPassword] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { decodedToken, isExpired, reEvaluateToken } = useJwt(token);
-
-	const [data, error, loading, fetchData] = useAxiosFetch({
+	const [data, error, loading, fetchData] = useAxiosLogin({
 		method: "POST",
 		url: url + "/token",
 		headers: {
@@ -40,7 +46,10 @@ const Login = () => {
 				setToken(tokenFromLocalStorage);
 				setIsLoading(false);
 				setLoggedIn(true);
-				//navigate("/");
+				if (decodedToken != null) {
+					setUsername(decodedToken.sub);
+				}
+				navigate("/");
 			}
 		} else {
 			return;
@@ -49,10 +58,8 @@ const Login = () => {
 
 	async function submitForm() {
 		setIsLoading(true);
-		console.log("submitForm method ", { loggedIn });
 		setTimeout(() => {
 			fetchData();
-			console.log(data);
 			reEvaluateToken(data);
 			if (!isExpired) {
 				storeTokenInLocalStorage(data);

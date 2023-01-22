@@ -1,9 +1,4 @@
-import { Product } from "../utils/interfaces";
-
-interface ProductCartProps {
-	subTotal: number;
-	cartProducts: Product[];
-}
+import { ProductCartProps } from "../utils/productInterfaces";
 
 const ProductCart = (props: ProductCartProps) => {
 	const { subTotal, cartProducts: productEntries } = props;

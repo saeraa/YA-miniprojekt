@@ -1,28 +1,3 @@
-export interface Order {
-	orderDate: string;
-	shippedDate: string;
-	customerID: string;
-	id: number;
-}
-
-export interface OrderRowType {
-	productName: string;
-	quantity: number;
-	unitPrice: number;
-	orderID: number;
-	discount: number;
-	productID: number;
-}
-
-export interface Product {
-	productID: number;
-	productName: string;
-	categoryID: number;
-	unitPrice: number;
-	quantityPerUnit: string;
-	unitsInStock: number;
-}
-
 export interface CurrencyType {
 	euroPrice: number;
 	currency: string;
@@ -59,6 +34,9 @@ export interface SignIn {
 	setToken: React.Dispatch<React.SetStateAction<string>>;
 	username: string;
 	setUsername: React.Dispatch<React.SetStateAction<string>>;
+	reEvaluateToken: (token: string) => void;
+	isExpired: boolean;
+	decodedToken: MyToken | null;
 }
 
 export interface MyToken {

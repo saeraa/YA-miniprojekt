@@ -1,13 +1,13 @@
 import { useState, useEffect, SyntheticEvent, useContext } from "react";
 import OrderItems from "../components/OrderItem";
-import { Order, OrderRowType } from "../utils/interfaces";
+import { Order, OrderRowType } from "../utils/orderInterfaces";
 import settings from "../utils/settings.json";
 import { SignInContext } from "../utils/signInContext";
-import { Buffer } from "buffer";
 import { useAxiosFetch } from "../utils/useAxiosFetch";
+import axios from "axios";
 
 const Orders = () => {
-	const { token } = useContext(SignInContext);
+	const { token, loggedIn } = useContext(SignInContext);
 	const [search, setSearch] = useState<string>("");
 	const [originalOrders, setOriginalOrders] = useState<Order[] | []>([]);
 	const [orders, setOrders] = useState<Order[] | []>([]);
@@ -25,11 +25,22 @@ const Orders = () => {
 
 	const [data, error, loading, fetchData] = useAxiosFetch(getDataParams);
 
+	const getOrdersFromAPI = async () => {
+		await fetchData();
+		setOrders(data);
+	};
+
+	useEffect(() => {
+		// console.log("data");
+		if (data) {
+			setOriginalOrders(data);
+			setOrders(data);
+		}
+	}, [data]);
+
 	useEffect(() => {
 		const getData = async () => {
 			await fetchData();
-			setOriginalOrders(data);
-			setOrders(data);
 		};
 
 		getData().catch((error) => console.log(error));
@@ -62,12 +73,16 @@ const Orders = () => {
 		if (exists) {
 			return;
 		}
-		const result = await fetch(url + `/order/${id}`, {
-			headers: {}
+		const response = await axios.request({
+			method: "GET",
+			url: url + `/order/${id}`,
+			headers: {
+				Authorization: "Bearer " + token
+			}
 		});
-		const data = await result.json();
+		//const data = await response.data;
 		setOrderRows((prevData) => {
-			return [...prevData, ...data];
+			return [...prevData, ...response.data];
 		});
 	};
 
@@ -80,54 +95,58 @@ const Orders = () => {
 		setOrders([...filteredOrders]);
 	};
 
-	const orderDisplay = orders.map((item) => {
-		return (
-			<OrderItems
-				key={item.id}
-				order={item}
-				deleteItem={() => deleteItem(item.id)}
-				showDetails={() => showDetails(item.id)}
-				orderRows={orderRows.filter(
-					(rows: OrderRowType) => rows.orderID === item.id
-				)}
-			/>
-		);
-	});
+	const orderDisplay =
+		orders !== null
+			? orders.map((item) => {
+					return (
+						<OrderItems
+							key={item.id}
+							order={item}
+							deleteItem={() => deleteItem(item.id)}
+							showDetails={() => showDetails(item.id)}
+							orderRows={orderRows.filter(
+								(rows: OrderRowType) => rows.orderID === item.id
+							)}
+						/>
+					);
+			  })
+			: "No results";
 
 	return (
 		<div className="App">
-			<h1>Orders</h1>
-			<header className="App-header">
-				<div id="search-div">
-					<input
-						placeholder="Search customer"
-						id="customer-search"
-						type="text"
-						value={search}
-						onChange={updateSearch}
-					/>
-				</div>
-				<div className="table table-orders">
-					<div className="table-head">OrderID</div>
-					<div className="table-head">CustomerID</div>
-					<div className="table-head">Order date</div>
-					<div className="table-head">Shipping date</div>
-					<div className="table-head"></div>
-					<div className="table-head"></div>
+			{!loggedIn ? (
+				<h1>You need to log in.</h1>
+			) : (
+				<>
+					<h1>
+						Orders <span onClick={getOrdersFromAPI}>🔄️</span>
+					</h1>
 
-					{orderDisplay}
-				</div>
-			</header>
+					<header className="App-header">
+						<div id="search-div">
+							<input
+								placeholder="Search customer"
+								id="customer-search"
+								type="text"
+								value={search}
+								onChange={updateSearch}
+							/>
+						</div>
+						<div className="table table-orders">
+							<div className="table-head">OrderID</div>
+							<div className="table-head">CustomerID</div>
+							<div className="table-head">Order date</div>
+							<div className="table-head">Shipping date</div>
+							<div className="table-head"></div>
+							<div className="table-head"></div>
+
+							{orderDisplay}
+						</div>
+					</header>
+				</>
+			)}
 		</div>
 	);
 };
 
 export default Orders;
-
-/* 
-fetch('https://localhost:8888/orders', {method:'GET', 
-headers: {'Authorization': 'Basic ' + btoa('user:password')}})
-.then(response => response.json())
-.then(json => console.log(json));
-
-*/

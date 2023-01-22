@@ -5,12 +5,11 @@ import order from "/order.svg";
 import recommendation from "/recommendation.svg";
 import supportissue from "/supportissue.svg";
 import product from "/product.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SignInContext } from "../utils/signInContext";
 
 const Navigation = () => {
-	const { loggedIn, setLoggedIn, token, setToken, username } =
-		useContext(SignInContext);
+	const { loggedIn, setLoggedIn, username } = useContext(SignInContext);
 
 	const button = loggedIn ? (
 		<button className="nav-login" onClick={() => setLoggedIn(false)}>

@@ -16,6 +16,10 @@
 	grid-template-columns: repeat(6, 1fr);
 	margin-top: 1rem;
 
+	&-orders {
+		grid-template-columns: repeat(4, 1fr) 15% 8%;
+	}
+
 	&-recommendations {
 		grid-template-columns: repeat(4, 1fr);
 	}
@@ -39,6 +43,5 @@
 		border: 1px solid rgba($c-gray-dark, 0.5);
 		background-color: rgba($c-gray-dark, 0.2);
 		display: grid;
-		place-content: center;
 	}
 }

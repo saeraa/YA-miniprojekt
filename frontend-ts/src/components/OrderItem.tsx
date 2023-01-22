@@ -1,12 +1,5 @@
-import { Order, OrderRowType } from "../utils/interfaces.js";
+import { OrderItemProps } from "../utils/orderInterfaces";
 import OrderRow from "./OrderRow.jsx";
-
-interface OrderItemProps {
-	showDetails: (id: number) => Promise<void>;
-	deleteItem: (id: number) => void;
-	order: Order;
-	orderRows: [] | OrderRowType[];
-}
 
 const OrderItem = (props: OrderItemProps) => {
 	const { showDetails, deleteItem } = props;
@@ -37,30 +30,3 @@ const OrderItem = (props: OrderItemProps) => {
 };
 
 export default OrderItem;
-
-/* 
-
-click on order row to get details
-make fetch call ->
-GET http://localhost:8888/order/{id}
-
-result into table:
-
-[
-    {
-        "orderID": 10265,
-        "productID": 17,
-        "unitPrice": 31.2,
-        "quantity": 30,
-        "discount": 0.0,
-        "productName": "Alice Mutton"
-    },
-    {
-        "orderID": 10265,
-        "productID": 70,
-        "unitPrice": 12.0,
-        "quantity": 20,
-        "discount": 0.0,
-        "productName": "Outback Lager"
-    }
-*/

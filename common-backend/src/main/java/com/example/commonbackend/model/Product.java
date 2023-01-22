@@ -23,10 +23,13 @@ public class Product {
 	private String productName;
 	@Column(name = "CategoryID")
 	private int categoryID;
-	@Column(name = "UnitPrice", nullable = false)
+	@Column(name = "UnitPrice")
 	private Double unitPrice;
 	@Column(name = "QuantityPerUnit")
 	private String quantityPerUnit;
 	@Column(name = "UnitsInStock")
 	private Integer unitsInStock;
+
+	@Column(name = "ReorderLevel")
+	private Integer reorderLevel;
 }

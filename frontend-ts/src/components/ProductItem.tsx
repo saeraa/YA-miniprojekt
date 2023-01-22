@@ -1,9 +1,4 @@
-import { Product } from "../utils/interfaces";
-
-interface ProductItemProps {
-	buyItem: (arg0: Product) => void;
-	product: Product;
-}
+import { ProductItemProps } from "../utils/productInterfaces";
 
 const ProductItem = (props: ProductItemProps) => {
 	const { buyItem } = props;

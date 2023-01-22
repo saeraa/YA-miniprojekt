@@ -6,6 +6,7 @@
 @import "./table";
 @import "./typography";
 @import "./product-list";
+@import "./currency";
 
 :root {
 	font-family: $font;
@@ -81,4 +82,12 @@ main {
 	flex-direction: column;
 	padding-left: 1rem;
 	box-sizing: border-box;
+}
+
+h1 span {
+	cursor: pointer;
+}
+
+summary {
+	cursor: pointer;
 }

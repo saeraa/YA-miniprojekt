@@ -1,8 +1,4 @@
-import { OrderRowType } from "../utils/interfaces";
-
-interface OrderRowProps {
-	order: OrderRowType;
-}
+import { OrderRowProps } from "../utils/orderInterfaces";
 
 const OrderRow = (props: OrderRowProps) => {
 	const { productName, quantity, unitPrice } = props.order;

@@ -7,6 +7,13 @@ const Welcome = () => {
 				Spring Boot.
 			</p>
 			<p>
+				Read more about this project on{" "}
+				<a href="https://github.com/saeraa/YA-miniprojekt" target="_blank">
+					Github
+				</a>
+				.
+			</p>
+			<p>
 				Made with 🧡 by <a href="https://github.com/saeraa">Sara</a>.
 			</p>
 		</>

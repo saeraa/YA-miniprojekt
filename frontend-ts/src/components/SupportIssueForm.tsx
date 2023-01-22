@@ -1,13 +1,12 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent, useContext } from "react";
 import { Customer } from "../utils/interfaces";
 import settings from "../utils/settings.json";
 import { useAxiosFetch } from "../utils/useAxiosFetch";
+import { SignInContext } from "../utils/signInContext";
+import axios from "axios";
 
-interface Props {
-	update: () => void;
-}
-
-const SupportIssueForm = (props: Props) => {
+const SupportIssueForm = (props: { update: () => void }) => {
+	const { token, loggedIn } = useContext(SignInContext);
 	const { update } = props;
 	const [supportIssueSent, setSupportIssueSent] = useState(false);
 	const [formData, setFormData] = useState({
@@ -19,10 +18,15 @@ const SupportIssueForm = (props: Props) => {
 	const [sending, setSending] = useState(false);
 	const [customers, setCustomers] = useState<Customer[] | []>([]);
 
-	const [data, error, loading, fetchData] = useAxiosFetch({
+	const params = {
 		method: "GET",
-		url: "/customers"
-	});
+		url: "/customers",
+		headers: {
+			Authorization: "Bearer " + token
+		}
+	};
+
+	const [data, error, loading, fetchData] = useAxiosFetch(params);
 
 	useEffect(() => {
 		if (data) {
@@ -42,14 +46,16 @@ const SupportIssueForm = (props: Props) => {
 
 	async function callAPI() {
 		const baseURL = url + "/supportissue/" + formData.customerId;
-		const apiResponse = await fetch(baseURL, {
-			headers: {
-				"Content-Type": "application/json"
-			},
+		const apiResponse = await axios.request({
 			method: "POST",
-			body: JSON.stringify(formData)
+			url: baseURL,
+			data: JSON.stringify(formData),
+			headers: {
+				Authorization: "Bearer " + token,
+				"Content-Type": "application/json"
+			}
 		});
-		const result = await apiResponse.json();
+		const result = apiResponse.data;
 
 		return result;
 	}

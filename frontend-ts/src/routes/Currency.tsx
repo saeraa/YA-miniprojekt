@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import settings from "../utils/settings.json";
 import { CurrencyType } from "../utils/interfaces";
+import { SignInContext } from "../utils/signInContext";
+import axios from "axios";
 
 const Currency = () => {
+	const { loggedIn, token } = useContext(SignInContext);
 	const currencies = [
 		"USD",
 		"JPY",
@@ -46,17 +49,19 @@ const Currency = () => {
 	});
 
 	async function callAPI() {
-		const baseURL = settings.base_url + "/convertCurrency/";
-		const apiResponse = await fetch(baseURL, {
-			headers: {
-				"Content-Type": "application/json"
-			},
+		if (!loggedIn) return;
+		const baseURL = settings.base_url + "/convertCurrency";
+		const apiResponse = await axios.request({
 			method: "POST",
-			body: JSON.stringify(formData)
-			// sends an object { euroPrice: x.yy, currency: xyz }
+			url: baseURL,
+			data: JSON.stringify(formData),
+			headers: {
+				Authorization: "Bearer " + token,
+				"Content-Type": "application/json"
+			}
 		});
-		const result = await apiResponse.text();
-		// if you receive json data as a response, change .text() in the above line to .json()
+		const result = apiResponse.data;
+
 		return result;
 	}
 
@@ -90,38 +95,46 @@ const Currency = () => {
 	}
 
 	return (
-		<div className="app">
-			<h1>Currency</h1>
-			<form onSubmit={submitForm}>
-				<label htmlFor="amount">Enter amount to calculate</label>
-				<input
-					className="currency-amount"
-					name="euroPrice"
-					onChange={onInputChange}
-					type="number"
-					id="amount"
-				/>
+		<div className="App">
+			{!loggedIn ? (
+				<h1>You need to log in.</h1>
+			) : (
+				<>
+					<h1>Currency</h1>
+					<form onSubmit={submitForm}>
+						<label htmlFor="amount">Enter amount to calculate</label>
+						<input
+							className="currency-amount"
+							name="euroPrice"
+							onChange={onInputChange}
+							type="number"
+							id="amount"
+						/>
 
-				<label htmlFor="currency">Choose currency</label>
-				<select
-					value={formData.currency}
-					onChange={onInputChange}
-					className="currency-currency"
-					id="currency"
-					name="currency"
-				>
-					{currencies.map((currency) => (
-						<option key={currency} value={currency}>
-							{currency}
-						</option>
-					))}
-				</select>
+						<label htmlFor="currency">Choose currency</label>
+						<select
+							value={formData.currency}
+							onChange={onInputChange}
+							className="currency-currency"
+							id="currency"
+							name="currency"
+						>
+							{currencies.map((currency) => (
+								<option key={currency} value={currency}>
+									{currency}
+								</option>
+							))}
+						</select>
 
-				<input type="submit" value="Calculate" />
-			</form>
+						<input type="submit" value="Calculate" />
+					</form>
 
-			{calculatedPrice.price && (
-				<div className="currency-output">{calculatedPrice.resultString}</div>
+					{calculatedPrice.price && (
+						<div className="currency-output">
+							{calculatedPrice.resultString}
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);

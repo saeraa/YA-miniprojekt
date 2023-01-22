@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query(value = "select 0 as dtype, ProductID, ProductName, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, Discontinued from products;",
+    @Query(value = "select 0 as dtype, ProductID, ProductName, CategoryID, QuantityPerUnit, UnitPrice, ReorderLevel, UnitsInStock, SupplierID, UnitsOnOrder, Discontinued from products;",
     nativeQuery = true)
     List<Product> findAllProducts();
 
