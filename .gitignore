@@ -6,3 +6,4 @@ keycloak/
 *.env
 docker-compose-keycloak.yml
 *.pem
+*.txt

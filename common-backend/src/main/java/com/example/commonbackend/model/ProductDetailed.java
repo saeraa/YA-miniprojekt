@@ -18,8 +18,8 @@ import jakarta.persistence.Entity;
 public class ProductDetailed extends Product {
 	@Column(name = "Discontinued")
 	private Boolean discontinued;
-//	@Column(name = "ReorderLevel")
-//	private Integer reorderLevel;
+	@Column(name = "ReorderLevel")
+	private Integer reorderLevel;
 	@Column(name = "SupplierID")
 	private int supplierID;
 	@Column(name = "UnitsOnOrder")

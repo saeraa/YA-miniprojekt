@@ -41,4 +41,9 @@ public class SupportIssueController {
 	public ResponseEntity<?> removeIssue (@PathVariable String customerId) {
 		return supportIssueService.removeIssue(customerId);
 	}
+
+	@PostMapping("/supportissue/dummy-data")
+	public ResponseEntity<?> addDummyData() {
+		return supportIssueService.addDummyData();
+	}
 }

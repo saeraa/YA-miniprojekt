@@ -1,6 +1,8 @@
 package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.SupportIssue;
+import com.example.commonbackend.repository.CustomerRepository;
+import com.github.javafaker.Faker;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,14 +11,20 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
 
 @Service
 public class SupportIssueService {
 
 	private final WebClient webClient;
+	private final Faker faker;
+	private final CustomerRepository customerRepository;
 
-	public SupportIssueService(WebClient webClient) {
+	public SupportIssueService(WebClient webClient, Faker faker, CustomerRepository customerRepository) {
 		this.webClient = webClient;
+		this.faker = faker;
+		this.customerRepository = customerRepository;
 	}
 	String baseURL = "http://support-issues:8282/api/v1";
 
@@ -100,4 +108,19 @@ public class SupportIssueService {
 						pluralOrNot, customerId
 				), HttpStatus.OK);
 	}
+
+    public ResponseEntity<?> addDummyData() {
+
+		 List<SupportIssue> supportIssues = IntStream.rangeClosed(1,10)
+		         .mapToObj(i -> new SupportIssue(
+		            customerRepository.getRandomCustomer().getCustomerId(),
+					SupportIssue.Priority.values()[faker.number().numberBetween(0,3)],
+					faker.harryPotter().quote(),
+					SupportIssue.StatusType.values()[faker.number().numberBetween(0,3)]
+		         )).toList();
+
+		 supportIssues.forEach(this::addIssue);
+
+		 return ResponseEntity.ok().body("All good.");
+    }
 }

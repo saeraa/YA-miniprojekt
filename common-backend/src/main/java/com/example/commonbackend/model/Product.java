@@ -30,6 +30,6 @@ public class Product {
 	@Column(name = "UnitsInStock")
 	private Integer unitsInStock;
 
-	@Column(name = "ReorderLevel")
-	private Integer reorderLevel;
+//	@Column(name = "ReorderLevel")
+//	private Integer reorderLevel;
 }
