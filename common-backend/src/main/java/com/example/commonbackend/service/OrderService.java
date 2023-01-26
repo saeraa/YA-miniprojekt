@@ -1,32 +1,32 @@
 package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.Order;
-import com.example.commonbackend.model.OrderRow;
+import com.example.commonbackend.model.OrderDetails;
 import com.example.commonbackend.repository.CustomerRepository;
+import com.example.commonbackend.repository.OrderDetailsRepository;
 import com.example.commonbackend.repository.OrderRepository;
 import com.example.commonbackend.repository.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 @Service
 public class OrderService {
 
 	private final OrderRepository orderRepository;
-	private final JdbcTemplate jdbcTemplate;
 	private final CustomerRepository customerRepository;
 	private final ProductRepository productRepository;
+	private final OrderDetailsRepository orderDetailsRepository;
 
-	public OrderService (OrderRepository orderRepository, JdbcTemplate jdbcTemplate,
+	public OrderService (OrderRepository orderRepository,
 						 CustomerRepository customerRepository,
-						 ProductRepository productRepository) {
-		Assert.notNull(orderRepository, "OrderRepository must not be null!");
-		Assert.notNull(jdbcTemplate, "JDBCTemplate must not be null!");
+						 ProductRepository productRepository, OrderDetailsRepository orderDetailsRepository) {
+		this.orderDetailsRepository = orderDetailsRepository;
 		this.orderRepository = orderRepository;
-		this.jdbcTemplate = jdbcTemplate;
 		this.customerRepository = customerRepository;
 		this.productRepository = productRepository;
 	}
@@ -50,16 +50,8 @@ public class OrderService {
 	}
 
 	public ResponseEntity<?> getOrderRows (int orderID) {
-		String query = "SELECT `order details`.OrderID, `order details`.ProductID, `order details`" +
-				".Quantity, `order details`.UnitPrice, `order details`.Discount, " +
-				"`products`" +
-				".ProductName FROM `order" +
-				" details` " +
-				"INNER JOIN " +
-				"`products`	ON `order details`.ProductID=`products`.ProductID WHERE " +
-				"OrderID=" + orderID + ";";
-		var results =
-				jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(OrderRow.class));
+		List<OrderDetails> results = orderDetailsRepository.findAllByOrderID(orderID);
+
 		return results.size() == 0 ?
 				new ResponseEntity<>(String.format("Order rows not found for ID: %s.", orderID),
 						HttpStatus.NOT_FOUND) :
@@ -90,13 +82,10 @@ public class OrderService {
 			return new ResponseEntity<>(String.format("Product with the ID: %s not found.", productId),
 					HttpStatus.NOT_FOUND);
 		}
-		Order order = orderRepository.save(new Order(customerId));
-		int orderId = order.getId();
 
-		String orderRowQuery = String.format("INSERT INTO northwind.`order details` (OrderID, " +
-				"ProductID) VALUES (%s, %s)", orderId, productId);
-		jdbcTemplate.update(orderRowQuery);
+		int orderId = orderRepository.save(new Order(customerId)).getId();
+		orderRepository.addOrderRow(orderId, productId);
 
-		return new ResponseEntity<>(order, HttpStatus.CREATED);
+		return new ResponseEntity<>(orderId, HttpStatus.CREATED);
 	}
 }

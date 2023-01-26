@@ -13,4 +13,14 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = "delete from `order details` where OrderID=:orderID", nativeQuery = true)
     int deleteOrderRow(@Param("orderID") Integer orderID);
 
+    @Modifying
+    @Transactional
+    @Query(value = """
+            INSERT INTO northwind.`order details` (OrderID,
+            ProductID) 
+            VALUES (:orderID, :productID)\
+            """,
+        nativeQuery = true)
+    int addOrderRow(int orderID, int productID);
+
 }
