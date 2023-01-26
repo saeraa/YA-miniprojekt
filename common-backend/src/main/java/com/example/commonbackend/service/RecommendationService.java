@@ -1,6 +1,7 @@
 package com.example.commonbackend.service;
 
 import com.example.commonbackend.model.Recommendation;
+import com.github.javafaker.Faker;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +10,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class RecommendationService {
 
 	private final WebClient webClient;
 
+	private final Faker faker;
+
+
 	String baseURL = "http://recommendation:8181/api/v1";
 
-	public RecommendationService(WebClient webClient) {
+	public RecommendationService(WebClient webClient, Faker faker) {
 		this.webClient = webClient;
+		this.faker = faker;
 	}
 
 	public ResponseEntity<?> getRecommendations () {
@@ -76,5 +82,19 @@ public class RecommendationService {
 				new ResponseEntity<>(
 						String.format("%s recommendation(s) for the productID: %s were deleted.",
 								results, productId), HttpStatus.OK);
+	}
+
+	public ResponseEntity<?> addDummyData() {
+		 List<Recommendation> recommendations = IntStream.rangeClosed(1,30)
+		         .mapToObj(i -> new Recommendation(
+		             faker.internet().emailAddress(),
+		                 faker.chuckNorris().fact(),
+		                 faker.number().numberBetween(1,77),
+		                 faker.number().numberBetween(1,10)
+		         )).toList();
+
+		recommendations.forEach(this::addRecommendation);
+
+		return ResponseEntity.ok().body("All good.");
 	}
 }

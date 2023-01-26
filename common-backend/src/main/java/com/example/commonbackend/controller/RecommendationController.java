@@ -37,4 +37,8 @@ public class RecommendationController {
 		return recommendationService.removeRecommendation(productId);
 	}
 
+	@PostMapping("/recommendations/dummy-data")
+	public ResponseEntity<?> addDummyData() {
+		return recommendationService.addDummyData();
+	}
 }

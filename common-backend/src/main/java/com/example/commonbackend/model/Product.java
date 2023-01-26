@@ -13,8 +13,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
-@DiscriminatorValue("0")
-public class Product {
+public class Product extends SuperProduct {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ProductID", nullable = false)
@@ -29,7 +28,4 @@ public class Product {
 	private String quantityPerUnit;
 	@Column(name = "UnitsInStock")
 	private Integer unitsInStock;
-
-//	@Column(name = "ReorderLevel")
-//	private Integer reorderLevel;
 }

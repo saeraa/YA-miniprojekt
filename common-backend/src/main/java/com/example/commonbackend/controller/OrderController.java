@@ -1,10 +1,10 @@
 package com.example.commonbackend.controller;
 
 import com.example.commonbackend.model.Order;
+import com.example.commonbackend.repository.OrderRepository;
 import com.example.commonbackend.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
 	private final OrderService orderService;
+	private final OrderRepository orderRepository;
 
-	public OrderController (OrderService orderService) {
-		Assert.notNull(orderService, "Order Service may not be null.");
+	public OrderController (OrderService orderService,
+							OrderRepository orderRepository) {
 		this.orderService = orderService;
+		this.orderRepository = orderRepository;
 	}
 
 	@GetMapping("/orders")
@@ -34,6 +36,7 @@ public class OrderController {
 				new ResponseEntity<>("That didn't work. Did you forget to include order details?",
 						HttpStatus.BAD_REQUEST) : orderService.addOrder(order);
 	}
+
 	@DeleteMapping("/deleteOrder/{orderId}")
 	public ResponseEntity<?> deleteOrder (@PathVariable int orderId) {
 		return orderService.deleteOrder(orderId);
@@ -43,5 +46,10 @@ public class OrderController {
 	public ResponseEntity<?> addOrderWithRows (@PathVariable String customerId,
 			@PathVariable int productId) {
 		return orderService.addOrderWithRows(customerId, productId);
+	}
+
+	@PostMapping("/addorders")
+	public Integer addOrders (@RequestBody(required = false) Order order) {
+		return orderRepository.save(order).getId();
 	}
 }

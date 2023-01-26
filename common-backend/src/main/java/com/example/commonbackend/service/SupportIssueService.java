@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.stream.IntStream;
 
-
 @Service
 public class SupportIssueService {
 
