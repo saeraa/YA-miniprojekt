@@ -1,5 +1,6 @@
 package com.example.commonbackend.controller;
 
+import com.example.commonbackend.model.Product;
 import com.example.commonbackend.model.ProductDetailed;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -43,7 +45,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    void getProducts() throws Exception {
+    void getProductsDetailed() throws Exception {
         MvcResult result = mockMvc.perform(get("/productsdetailed"))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -55,6 +57,25 @@ public class ProductControllerTest {
                                 .getContentAsString(),
                         new TypeReference<>() {
                         });
+
+        actual.forEach(i -> Assert.isInstanceOf(ProductDetailed.class, i));
+    }
+
+    @Test
+    void getProducts() throws Exception {
+        MvcResult result = mockMvc.perform(get("/products"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Product> actual = mapper
+                .readValue(result
+                                .getResponse()
+                                .getContentAsString(),
+                        new TypeReference<>() {
+                        });
+
+        actual.forEach(i -> Assert.isInstanceOf(Product.class, i));
     }
 
 }

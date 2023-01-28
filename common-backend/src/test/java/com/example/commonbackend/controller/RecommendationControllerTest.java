@@ -1,6 +1,7 @@
 package com.example.commonbackend.controller;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,5 +33,34 @@ public class RecommendationControllerTest {
                 .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .build();
     }
+
+    @Test
+    void getRecommendations() throws Exception {
+        // TODO: implement this
+    }
+
+    @Test
+    void getRecommendationsForProductID() throws Exception {
+        /*
+        @GetMapping("/recommendations/{productId}")
+         @PathVariable int productId
+         */
+        // TODO: implement this
+    }
+
+    @Test
+    void postRecommendation() throws Exception {
+        // @RequestBody Recommendation recommendation
+        // TODO: implement this
+    }
+
+    @Test
+    void removeRecommendation() throws Exception {
+        // @PathVariable int productId
+        // @DeleteMapping("/recommendation/{productId}")
+        // TODO: implement this
+    }
+
+
 
 }

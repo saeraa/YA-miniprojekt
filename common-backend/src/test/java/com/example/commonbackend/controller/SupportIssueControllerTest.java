@@ -1,6 +1,7 @@
 package com.example.commonbackend.controller;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,6 +32,41 @@ public class SupportIssueControllerTest {
                 .apply(documentationConfiguration(restDocumentation))
                 .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .build();
+    }
+
+    @Test
+    void getSupportIssues() throws Exception {
+        // @GetMapping("/supportissues")
+        // TODO: Implement this
+    }
+
+    @Test
+    void getSupportIssuesForCustomer() throws Exception {
+        //@GetMapping("/supportissues/{customerId}")
+        // @PathVariable String customerId
+        // TODO: Implement this
+    }
+
+    @Test
+    void updateSupportIssue() throws Exception {
+        // @PutMapping("/supportissue")
+        //  @RequestBody SupportIssue issue
+        // TODO: Implement this
+    }
+
+    @Test
+    void addSupportIssue() throws Exception {
+        // @PostMapping("/supportissue/{customerId}")
+        // @PathVariable String customerId,
+        //    @RequestBody SupportIssue issue
+        // TODO: Implement this
+    }
+
+    @Test
+    void deleteSupportIssue() throws Exception {
+        // @DeleteMapping("/supportissue/{customerId}")
+        // @PathVariable String customerId,
+        // TODO: Implement this
     }
 
 }

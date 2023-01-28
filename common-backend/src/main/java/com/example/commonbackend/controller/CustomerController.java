@@ -27,10 +27,10 @@ public class CustomerController {
     }
 
     @PostMapping("/customer")
-    public String addCustomer(@Validated @NonNull @RequestBody Customer customer) {
+    public ResponseEntity addCustomer(@Validated @NonNull @RequestBody Customer customer) {
         System.out.println(customer.getCustomerId());
         System.out.println(customer.getCompanyName());
         customerRepository.save(customer);
-        return "OK";
+        return  ResponseEntity.status(201).body("OK");
     }
 }
